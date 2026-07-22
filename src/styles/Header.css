@@ -1,0 +1,293 @@
+/* ============================================================================
+   Custom Header Styles (Header.css)
+   ============================================================================ */
+
+.mg-site-header {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(10, 78, 203, 0.08);
+  z-index: 99999;
+  transition: all 0.3s ease;
+}
+
+/* 滚动后状态 */
+.mg-site-header.scrolled {
+  background: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(10, 78, 203, 0.06);
+  height: 60px;
+}
+
+.mg-header-container {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo 区域 */
+.mg-header-logo-container {
+  display: flex;
+  align-items: center;
+  max-height: 50px;
+}
+
+.mg-header-logo-container img {
+  max-height: 40px;
+  width: auto;
+  display: block;
+}
+
+.mg-header-logo {
+  font-size: 20px;
+  font-weight: 800;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text, #1e1b2e);
+}
+
+.mg-logo-glow {
+  width: 8px;
+  height: 8px;
+  background: var(--blue-bright, #0A4ECB);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--blue-bright, #0A4ECB);
+  animation: logoPulse 2s infinite ease-in-out;
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+/* 菜单导航样式 */
+.mg-header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.mg-header-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mg-header-nav ul li {
+  position: relative;
+}
+
+.mg-header-nav ul li a {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dim, #4a4a6a);
+  text-decoration: none;
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.25s ease;
+  display: block;
+}
+
+.mg-header-nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue, #0A4ECB), var(--cyan, #0066cc));
+  transition: width 0.25s ease;
+}
+
+.mg-header-nav ul li a:hover {
+  color: var(--text, #1e1b2e);
+}
+
+.mg-header-nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* 菜单激活项 */
+.mg-header-nav ul li.current-menu-item a {
+  color: var(--blue, #0A4ECB);
+}
+
+.mg-header-nav ul li.current-menu-item a::after {
+  width: 100%;
+}
+
+/* 头部右侧 CTA 按钮 */
+.mg-header-action {
+  display: flex;
+  align-items: center;
+}
+
+.mg-header-btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, var(--blue, #0A4ECB), var(--cyan, #0066cc));
+  color: #ffffff;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.2);
+  transition: all 0.25s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mg-header-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(10, 78, 203, 0.35);
+}
+
+/* 纯 CSS 汉堡菜单复选框 (隐藏) */
+.mg-menu-toggle {
+  display: none;
+}
+
+.mg-burger-icon {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 100000;
+}
+
+.mg-burger-line {
+  width: 24px;
+  height: 2px;
+  background-color: var(--text, #1e1b2e);
+  transition: all 0.3s ease;
+}
+
+/* ==================== 响应式自适应 ==================== */
+@media (max-width: 900px) {
+  .mg-burger-icon {
+    display: flex;
+  }
+
+  .mg-header-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 260px;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    z-index: 99998;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-left: 1px solid rgba(10, 78, 203, 0.08);
+    padding-top: 100px;
+    align-items: flex-start;
+  }
+
+  .mg-header-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+
+  .mg-header-nav ul li {
+    width: 100%;
+  }
+
+  .mg-header-nav ul li a {
+    padding: 16px 24px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mg-header-nav ul li a::after {
+    display: none;
+  }
+
+  .mg-header-action {
+    display: none;
+  }
+
+  /* 汉堡按钮交互 (React 中建议使用 state 类名，但这里保留复选框驱动以实现零 JS 优雅退化) */
+  .mg-menu-toggle:checked ~ .mg-header-nav {
+    right: 0;
+  }
+
+  .mg-menu-toggle:checked ~ .mg-burger-icon .mg-burger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mg-menu-toggle:checked ~ .mg-burger-icon .mg-burger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mg-menu-toggle:checked ~ .mg-burger-icon .mg-burger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+
+/* ================= 页眉搜索栏样式 ================= */
+.mg-header-right-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mg-header-search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mg-header-search-input {
+  width: 170px;
+  height: 36px;
+  padding: 0 34px 0 14px;
+  font-size: 13px;
+  color: #1d1d1f;
+  background: #f4f7fb;
+  border: 1px solid rgba(10, 78, 203, 0.18);
+  border-radius: 9999px;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mg-header-search-input:focus {
+  width: 220px;
+  background: #ffffff;
+  border-color: #0A4ECB;
+  box-shadow: 0 4px 14px rgba(10, 78, 203, 0.15);
+}
+
+.mg-header-search-btn {
+  position: absolute;
+  right: 6px;
+  background: none;
+  border: none;
+  color: #0A4ECB;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.mg-header-search-btn:hover {
+  background: rgba(10, 78, 203, 0.08);
+}
