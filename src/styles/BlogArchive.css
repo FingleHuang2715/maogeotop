@@ -1,0 +1,617 @@
+/* ============================================================================
+   猫哥技术专区 · 博客列表页 精致 CSS 样式
+   ============================================================================ */
+
+.mg-archive-wrapper {
+  padding: 2.5rem 0 4rem 0;
+  background: #f8fafc;
+  min-height: 80vh;
+}
+
+.mg-archive-container {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 35px;
+}
+
+@media (max-width: 992px) {
+  .mg-archive-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}
+
+/* ===== 顶部 Header Card ===== */
+.mg-archive-header-card {
+  grid-column: 1 / -1;
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.12);
+  border-radius: 12px;
+  padding: 2.2rem 2.5rem;
+  box-shadow: 0 10px 30px rgba(10, 78, 203, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .mg-archive-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+  }
+}
+
+/* 🌟 微光玻璃感精细 Badge */
+.mg-archive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0A4ECB;
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.08) 0%, rgba(37, 99, 235, 0.12) 100%);
+  border: 1px solid rgba(10, 78, 203, 0.22);
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 8px rgba(10, 78, 203, 0.06);
+  transition: all 0.25s ease;
+}
+
+.mg-archive-badge:hover {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.12) 0%, rgba(37, 99, 235, 0.18) 100%);
+  border-color: rgba(10, 78, 203, 0.35);
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.12);
+}
+
+.mg-archive-badge-svg {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.mg-archive-breadcrumbs {
+  font-size: 0.85rem;
+  color: #86868b;
+  margin-bottom: 0.5rem;
+}
+
+.mg-archive-breadcrumbs a {
+  color: #515154;
+  text-decoration: none;
+}
+
+.mg-archive-breadcrumbs a:hover {
+  color: #0A4ECB;
+}
+
+.mg-archive-main-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1d1d1f;
+  margin: 0 0 0.6rem 0;
+  letter-spacing: -0.02em;
+}
+
+.mg-archive-sub-desc {
+  font-size: 0.95rem;
+  color: #515154;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 800px;
+}
+
+/* 分类过滤栏 */
+.mg-archive-cats-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.mg-cat-item-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #515154;
+  background: #f4f7fb;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  padding: 6px 16px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.mg-cat-item-link:hover,
+.mg-cat-item-link.active {
+  color: #ffffff;
+  background: #0A4ECB;
+  border-color: #0A4ECB;
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.2);
+}
+
+/* ===== 文章列表 Card ===== */
+.mg-archive-main-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mg-feed-item {
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  border-radius: 12px;
+  padding: 1.6rem 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mg-feed-item:hover {
+  transform: translateY(-3px);
+  border-color: #0A4ECB;
+  box-shadow: 0 12px 30px rgba(10, 78, 203, 0.1);
+}
+
+@media (max-width: 640px) {
+  .mg-feed-item {
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+}
+
+.mg-feed-thumb {
+  flex: 0 0 220px;
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mg-feed-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.mg-feed-item:hover .mg-feed-thumb img {
+  transform: scale(1.05);
+}
+
+.mg-feed-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mg-feed-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 0 0 10px 0;
+}
+
+.mg-feed-title a {
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mg-feed-title a:hover {
+  color: #0A4ECB;
+}
+
+.mg-feed-sticky-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #0A4ECB;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.mg-feed-excerpt {
+  font-size: 0.9rem;
+  color: #515154;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 🌟 全新全分类全标签展示区域 */
+.mg-feed-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #86868b;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.06);
+}
+
+.mg-feed-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mg-feed-meta-author {
+  font-weight: 700;
+  color: #0A4ECB;
+}
+
+.mg-meta-label {
+  font-size: 0.75rem;
+  color: #86868b;
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+/* 分类胶囊 */
+.mg-feed-cats-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mg-feed-cat-pill {
+  color: #0A4ECB;
+  text-decoration: none;
+  background: rgba(10, 78, 203, 0.08);
+  border: 1px solid rgba(10, 78, 203, 0.15);
+  padding: 2px 9px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.mg-feed-cat-pill:hover {
+  background: #0A4ECB;
+  color: #ffffff;
+}
+
+/* 标签胶囊 */
+.mg-feed-tags-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mg-feed-tag-pill {
+  color: #4b5563;
+  text-decoration: none;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.mg-feed-tag-pill:hover {
+  background: #0A4ECB;
+  color: #ffffff;
+  border-color: #0A4ECB;
+}
+
+/* 翻页按钮 */
+.mg-pagination-wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.mg-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0A4ECB;
+  background: #ffffff;
+  border: 1.5px solid #0A4ECB;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.mg-page-btn:hover:not(.disabled) {
+  background: #0A4ECB;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(10, 78, 203, 0.2);
+}
+
+.mg-page-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  border-color: #d2d2d7;
+  color: #86868b;
+}
+
+/* ===== 侧边栏 Sidebar (跟随页面滚动 Sticky) ===== */
+.mg-archive-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 90px;
+  align-self: start;
+}
+
+@media (max-width: 992px) {
+  .mg-archive-sidebar {
+    position: static;
+  }
+}
+
+.mg-sidebar-widget {
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+}
+
+.mg-widget-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1d1d1f;
+  margin: 0 0 1rem 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #0A4ECB;
+}
+
+.mg-sidebar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mg-sidebar-tag-link {
+  font-size: 0.8rem;
+  color: #515154;
+  background: #f4f7fb;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  padding: 4px 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mg-sidebar-tag-link:hover,
+.mg-sidebar-tag-link.active {
+  background: #0A4ECB !important;
+  color: #ffffff !important;
+  border-color: #0A4ECB;
+}
+
+/* ============================================================================
+   🌟 极致知乎/掘金风格 主理人名片卡片 (Author Card) 专有 CSS
+   ============================================================================ */
+
+.mg-zhihu-author-card {
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.12);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(10, 78, 203, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow 0.3s ease;
+}
+
+.mg-zhihu-author-card:hover {
+  box-shadow: 0 12px 32px rgba(10, 78, 203, 0.09);
+}
+
+/* 头像与头部 */
+.mg-ac-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mg-ac-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: none;
+  box-shadow: 0 2px 10px rgba(10, 78, 203, 0.08);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mg-ac-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mg-ac-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.mg-ac-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.mg-ac-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1d1d1f;
+  letter-spacing: -0.01em;
+}
+
+.mg-ac-rank-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #0A4ECB;
+  background: rgba(10, 78, 203, 0.08);
+  border: 1px solid rgba(10, 78, 203, 0.18);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+
+.mg-ac-position {
+  font-size: 0.8rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 数据统计栏 (知乎风格 count-container) */
+.mg-ac-stats-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #f8fafc;
+  border: 1px solid rgba(10, 78, 203, 0.06);
+  border-radius: 8px;
+  padding: 10px 6px;
+  text-align: center;
+}
+
+.mg-ac-stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mg-ac-stat-count {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0A4ECB;
+  line-height: 1.2;
+}
+
+.mg-ac-stat-label {
+  font-size: 0.72rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.mg-ac-stat-divider {
+  width: 1px;
+  height: 24px;
+  background: #e5e7eb;
+}
+
+/* 核心优势精简点列表 */
+.mg-ac-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mg-ac-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.mg-ac-hl-icon-svg {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(10, 78, 203, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.mg-ac-hl-text strong {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* 复制微信号操作按钮 (满宽优雅交互) */
+.mg-ac-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.mg-ac-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.mg-ac-copy-btn {
+  background: linear-gradient(135deg, #0A4ECB 0%, #2563eb 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(10, 78, 203, 0.25);
+}
+
+.mg-ac-copy-btn:hover {
+  background: linear-gradient(135deg, #083eb1 0%, #1d4ed8 100%);
+  box-shadow: 0 6px 18px rgba(10, 78, 203, 0.35);
+  transform: translateY(-1px);
+}
+
+.mg-ac-copy-btn.is-copied {
+  background: #10b981;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
