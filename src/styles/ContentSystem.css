@@ -1,0 +1,707 @@
+/* ============================================================
+   Section 8 — 不用担心不会整理高质量的网站内容
+   CSS类名前缀：coms-
+   全局变量来自 :root（外部主题已定义）
+   ============================================================ */
+
+/* ===== 主容器 ===== */
+.coms-cosmic {
+  position: relative;
+  background: var(--deep, #f9fafb); /* 浅灰白底 */
+  padding: 100px 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+/* ===== 背景光晕（左侧蓝紫） ===== */
+.coms-bg-aura {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 左侧主光晕 */
+.coms-aura--left {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(41, 151, 255, 0.1) 0%, rgba(0, 102, 204, 0.06) 40%, transparent 70%);
+  top: -100px;
+  left: -150px;
+  border-radius: 50%;
+  animation: comsAuraBreath 8s ease-in-out infinite;
+}
+
+/* 中央偏左柔和光晕 */
+.coms-aura--center {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(10, 78, 203, 0.06) 0%, transparent 70%);
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  animation: comsAuraBreath 10s ease-in-out infinite 2s;
+}
+
+/* 光晕呼吸动画 */
+@keyframes comsAuraBreath {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.7; }
+}
+
+.coms-aura--center {
+  animation-name: comsAuraCenterBreath;
+}
+
+@keyframes comsAuraCenterBreath {
+  0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+  50% { transform: translateY(-50%) scale(1.1); opacity: 0.7; }
+}
+
+/* ===== 内容容器（左右分栏） ===== */
+.coms-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  align-items: flex-start;
+  gap: 60px;
+}
+
+/* ===================== 左侧内容区 ===================== */
+.coms-left {
+  flex: 0 0 42%;
+  padding-top: 8px;
+}
+
+/* --- 步骤小标签 --- */
+.coms-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid rgba(41, 151, 255, 0.2);
+  border-radius: 100px;
+  background: rgba(41, 151, 255, 0.06);
+  margin-bottom: 28px;
+}
+
+.coms-badge__dot {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(41, 151, 255, 0.5);
+  animation: comsDotPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes comsDotPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(41, 151, 255, 0.5); transform: scale(1); }
+  50% { box-shadow: 0 0 14px rgba(41, 151, 255, 0.8); transform: scale(1.15); }
+}
+
+.coms-badge__num {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A4ECB;
+  letter-spacing: 0.05em;
+}
+
+.coms-badge__sep {
+  color: rgba(41, 151, 255, 0.3);
+  font-size: 12px;
+}
+
+.coms-badge__text {
+  font-size: 12px;
+  color: var(--text-muted, #7a7a9a);
+  letter-spacing: 0.08em;
+}
+
+/* --- 主标题 --- */
+.coms-title {
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text, #1e1b2e);
+  margin: 0 0 22px 0;
+  letter-spacing: -0.01em;
+}
+
+/* --- 描述文字 --- */
+.coms-desc {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-dim, #4a4a6a);
+  margin: 0 0 24px 0;
+}
+
+.coms-desc strong {
+  color: #0A4ECB;
+  font-weight: 700;
+}
+
+/* --- 谷歌 Helpful Content 引用 --- */
+.coms-quote {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  background: rgba(41, 151, 255, 0.05);
+  border-left: 3px solid #0A4ECB;
+  border-radius: 0 10px 10px 0;
+  margin: 0 0 36px 0;
+  position: relative;
+}
+
+.coms-quote__icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.coms-quote__text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-dim, #4a4a6a);
+  font-style: italic;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.coms-quote__source {
+  font-size: 12px;
+  color: var(--text-muted, #7a7a9a);
+  display: block;
+}
+
+/* --- 5个功能项列表 --- */
+.coms-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coms-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+  cursor: default;
+}
+
+.coms-feature-item:hover {
+  background: rgba(41, 151, 255, 0.06);
+  transform: translateX(4px);
+}
+
+/* 圆形蓝紫图标容器 */
+.coms-feature__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, rgba(41, 151, 255, 0.12), rgba(0, 102, 204, 0.08));
+  border: 1px solid rgba(41, 151, 255, 0.18);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.coms-feature-item:hover .coms-feature__icon {
+  box-shadow: 0 0 14px rgba(41, 151, 255, 0.25);
+  transform: scale(1.08);
+}
+
+.coms-feature__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 2px;
+}
+
+.coms-feature__text strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text, #1e1b2e);
+  display: block;
+}
+
+.coms-feature__text span {
+  font-size: 13px;
+  color: var(--text-muted, #7a7a9a);
+  line-height: 1.5;
+}
+
+/* ===================== 右侧 COMS UI 卡片 ===================== */
+.coms-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* COMS 卡片主体（毛玻璃 + 阴影） */
+.coms-ui-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(41, 151, 255, 0.14);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(10, 78, 203, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: comsCardIn 0.7s ease 0.2s both;
+  /* 悬停整卡上浮 */
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.coms-ui-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 36px 80px rgba(10, 78, 203, 0.15),
+    0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+@keyframes comsCardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 顶部标题栏（深色系统风格） */
+.coms-ui-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #1e1b2e 0%, #1a1730 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* macOS 风格操作点 */
+.coms-ui-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.coms-ui-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: block;
+}
+
+.coms-ui-dot--red { background: #ff5f57; }
+.coms-ui-dot--yellow { background: #febc2e; }
+.coms-ui-dot--green { background: #28c840; }
+
+/* 系统名称 */
+.coms-ui-sysname {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  justify-content: center;
+}
+
+/* 运行状态指示 */
+.coms-ui-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.coms-ui-status__dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
+  animation: comsStatusBlink 2s ease-in-out infinite;
+}
+
+@keyframes comsStatusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* 卡片主体（侧边导航+内容区） */
+.coms-ui-body {
+  display: flex;
+  min-height: 0;
+}
+
+/* 左侧导航栏 */
+.coms-ui-nav {
+  width: 100px;
+  background: rgba(30, 27, 46, 0.04);
+  border-right: 1px solid rgba(41, 151, 255, 0.1);
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.coms-ui-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  color: rgba(30, 27, 46, 0.4);
+  font-weight: 500;
+  cursor: default;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-align: center;
+}
+
+.coms-ui-nav__item--active {
+  background: rgba(41, 151, 255, 0.1);
+  color: #0A4ECB;
+}
+
+.coms-ui-nav__item:hover:not(.coms-ui-nav__item--active) {
+  background: rgba(41, 151, 255, 0.05);
+  color: rgba(30, 27, 46, 0.65);
+}
+
+/* 主内容区 */
+.coms-ui-main {
+  flex: 1;
+  padding: 18px 20px;
+  min-width: 0;
+}
+
+/* 搜索栏（装饰性） */
+.coms-ui-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(30, 27, 46, 0.04);
+  border: 1px solid rgba(41, 151, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: rgba(30, 27, 46, 0.3);
+}
+
+/* 文档条目列表 */
+.coms-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+/* 单条文档条目 */
+.coms-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: rgba(30, 27, 46, 0.025);
+  border: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  cursor: default;
+}
+
+.coms-doc-item:hover {
+  background: rgba(41, 151, 255, 0.06);
+  border-color: rgba(41, 151, 255, 0.15);
+}
+
+.coms-doc-item--done {
+  border-color: rgba(16, 185, 129, 0.1);
+}
+
+.coms-doc-item--inprogress {
+  border-color: rgba(41, 151, 255, 0.15);
+  background: rgba(41, 151, 255, 0.03);
+}
+
+/* 勾选图标 */
+.coms-doc-item__check {
+  flex-shrink: 0;
+}
+
+/* 文档信息 */
+.coms-doc-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.coms-doc-item__name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text, #1e1b2e);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.coms-doc-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 类型标签 */
+.coms-doc-item__type {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.coms-doc-item__type--page { background: rgba(41, 151, 255, 0.1); color: #0A4ECB; }
+.coms-doc-item__type--category { background: rgba(0, 102, 204, 0.12); color: #0066cc; }
+.coms-doc-item__type--product { background: rgba(6, 182, 212, 0.12); color: #06b6d4; }
+.coms-doc-item__type--blog { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+
+.coms-doc-item__words {
+  font-size: 10.5px;
+  color: var(--text-muted, #7a7a9a);
+}
+
+/* 进度条容器 */
+.coms-doc-item__progress {
+  width: 70px;
+  height: 4px;
+  background: rgba(30, 27, 46, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 进度条填充 */
+.coms-doc-item__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #0A4ECB, #10b981);
+  border-radius: 2px;
+  transition: width 0.8s ease;
+}
+
+.coms-doc-item__progress-bar--purple {
+  background: linear-gradient(90deg, #0A4ECB, #0066cc);
+}
+
+/* 评分数字 */
+.coms-doc-item__score {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  width: 28px;
+  text-align: right;
+}
+
+.coms-doc-item__score--high { color: #10b981; }
+.coms-doc-item__score--mid { color: #0A4ECB; }
+
+/* E-E-A-T 徽章 */
+.coms-eeat-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.06), rgba(41, 151, 255, 0.06));
+  border: 1px solid rgba(66, 133, 244, 0.2);
+  border-radius: 12px;
+}
+
+.coms-eeat-badge__icon {
+  flex-shrink: 0;
+}
+
+.coms-eeat-badge__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.coms-eeat-badge__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text, #1e1b2e);
+}
+
+.coms-eeat-badge__sub {
+  font-size: 10.5px;
+  color: var(--text-muted, #7a7a9a);
+  letter-spacing: 0.03em;
+}
+
+.coms-eeat-badge__check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* 卡片底部说明文字 */
+.coms-card-footnote {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-muted, #7a7a9a);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.coms-card-footnote span {
+  color: #0A4ECB;
+}
+
+/* ===================== 响应式布局 ===================== */
+
+/* --- 平板横屏（≤1024px） --- */
+@media (max-width: 1024px) {
+  .coms-cosmic {
+    padding: 80px 0;
+  }
+
+  .coms-inner {
+    padding: 0 36px;
+    gap: 44px;
+  }
+
+  .coms-left {
+    flex: 0 0 42%;
+  }
+
+  /* 导航栏稍窄 */
+  .coms-ui-nav {
+    width: 85px;
+  }
+}
+
+/* --- 平板竖屏（≤768px）：切换为竖排 --- */
+@media (max-width: 768px) {
+  .coms-cosmic {
+    padding: 70px 0;
+  }
+
+  .coms-inner {
+    flex-direction: column;
+    padding: 0 24px;
+    gap: 48px;
+  }
+
+  .coms-left {
+    flex: none;
+    width: 100%;
+  }
+
+  .coms-right {
+    width: 100%;
+  }
+
+  .coms-title {
+    font-size: 28px;
+  }
+
+  /* 导航栏在小屏改为横排 */
+  .coms-ui-nav {
+    width: 100%;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid rgba(41, 151, 255, 0.1);
+    padding: 10px 12px;
+    overflow-x: auto;
+    gap: 4px;
+  }
+
+  .coms-ui-nav__item {
+    flex-direction: row;
+    white-space: nowrap;
+    padding: 8px 12px;
+  }
+
+  .coms-ui-body {
+    flex-direction: column;
+  }
+
+  /* 进度条缩短一点 */
+  .coms-doc-item__progress {
+    width: 50px;
+  }
+}
+
+/* --- 手机（≤480px） --- */
+@media (max-width: 480px) {
+  .coms-cosmic {
+    padding: 56px 0;
+  }
+
+  .coms-inner {
+    padding: 0 18px;
+    gap: 36px;
+  }
+
+  .coms-title {
+    font-size: 24px;
+  }
+
+  .coms-ui-main {
+    padding: 14px 14px;
+  }
+
+  /* 小屏隐藏导航栏（简化） */
+  .coms-ui-nav {
+    display: none;
+  }
+
+  /* 文档名字可换行 */
+  .coms-doc-item__name {
+    white-space: normal;
+    font-size: 12px;
+  }
+
+  /* 进度条和评分隐藏（空间不足） */
+  .coms-doc-item__progress {
+    display: none;
+  }
+
+  .coms-doc-item__score {
+    display: none;
+  }
+
+  .coms-eeat-badge__sub {
+    display: none;
+  }
+}
