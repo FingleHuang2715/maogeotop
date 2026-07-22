@@ -1,0 +1,335 @@
+/* ============================================================================
+   PageSpeed Showcase (Google PageSpeed 90-100分绿标展示 - 左右分栏精简版)
+   ============================================================================ */
+
+.pagespeed-cosmic-section {
+  position: relative;
+  background: linear-gradient(135deg, #0a0c18 0%, #101428 50%, #080912 100%);
+  padding: 7rem 0;
+  color: #ffffff;
+  overflow: hidden;
+  font-family: 'Outfit', 'PingFang SC', sans-serif;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pagespeed-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 1.5vw;
+}
+
+/* 头部 */
+.pagespeed-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.pagespeed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 78, 203, 0.12);
+  border: 1px solid rgba(10, 78, 203, 0.3);
+  padding: 6px 16px;
+  border-radius: 0 !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0A4ECB;
+  margin-bottom: 1.2rem;
+}
+
+.pagespeed-badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #27c93f;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #27c93f;
+  animation: pageSpeedPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes pageSpeedPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+.pagespeed-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.3;
+  margin: 0;
+  color: #ffffff;
+}
+
+.pagespeed-gradient-text {
+  background: linear-gradient(135deg, #0A4ECB 0%, #0A4ECB 50%, #1b63e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 左右分栏主体网格 */
+.pagespeed-main-grid {
+  display: grid;
+  grid-template-columns: 48% 48%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+  gap: 2rem;
+}
+
+/* 左侧：精简版 3D 魔方 (480px 宽度) */
+.pagespeed-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pagespeed-box-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.pagespeed-nav-btn {
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 0 !important;
+  transition: all 0.25s ease;
+}
+
+.pagespeed-nav-btn:hover {
+  background: #0A4ECB;
+  border-color: #0A4ECB;
+}
+
+.pagespeed-prev-btn { margin-right: 0.8rem; }
+.pagespeed-next-btn { margin-left: 0.8rem; }
+
+.pagespeed-box-viewport {
+  width: 480px;
+  height: 280px;
+  perspective: 1000px;
+  overflow: visible;
+}
+
+.pagespeed-box-cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pagespeed-cube-face {
+  position: absolute;
+  width: 480px;
+  height: 280px;
+  background: #0d111d;
+  border: 1px solid rgba(10, 78, 203, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 0 !important;
+}
+
+.pagespeed-cube-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pagespeed-face-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.pagespeed-cube-face:hover .pagespeed-face-overlay {
+  opacity: 1;
+}
+
+/* 4 面定位 (深度 halfDepth = 240px) */
+.pagespeed-face-front { transform: rotateY(0deg) translateZ(240px); }
+.pagespeed-face-right { transform: rotateY(90deg) translateZ(240px); }
+.pagespeed-face-back  { transform: rotateY(180deg) translateZ(240px); }
+.pagespeed-face-left  { transform: rotateY(270deg) translateZ(240px); }
+
+.pagespeed-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagespeed-dot {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagespeed-dot.active {
+  background: #0A4ECB;
+  width: 24px;
+}
+
+/* 右侧：重要性说明列表 */
+.pagespeed-right-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.importance-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.4;
+  border-left: 3px solid #0A4ECB;
+  padding-left: 12px;
+}
+
+.importance-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.importance-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 1rem 1.2rem;
+  border-radius: 0 !important;
+  transition: all 0.3s ease;
+}
+
+.importance-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(10, 78, 203, 0.3);
+  transform: translateX(4px);
+}
+
+.importance-icon-box {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: rgba(10, 78, 203, 0.15);
+  border: 1px solid rgba(10, 78, 203, 0.3);
+  color: #0A4ECB;
+  font-size: 0.85rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.importance-card h4 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.3rem 0;
+}
+
+.importance-card p {
+  font-size: 0.88rem;
+  color: #ffffff !important;
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* 4 大得分指标网格 */
+.pagespeed-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.metric-score-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-radius: 0 !important;
+  transition: all 0.3s ease;
+}
+
+.metric-score-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(39, 201, 63, 0.4);
+  transform: translateY(-4px);
+}
+
+.score-ring-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 0.4rem;
+}
+
+.score-num {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #27c93f;
+  line-height: 1;
+}
+
+.score-unit {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(39, 201, 63, 0.7);
+}
+
+.score-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e5e5e7;
+}
+
+/* 响应式自适应 */
+@media (max-width: 1024px) {
+  .pagespeed-main-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .pagespeed-box-viewport, .pagespeed-cube-face {
+    width: 85vw;
+    height: 240px;
+  }
+  .pagespeed-face-front { transform: rotateY(0deg) translateZ(42.5vw); }
+  .pagespeed-face-right { transform: rotateY(90deg) translateZ(42.5vw); }
+  .pagespeed-face-back  { transform: rotateY(180deg) translateZ(42.5vw); }
+  .pagespeed-face-left  { transform: rotateY(270deg) translateZ(42.5vw); }
+}
+
+@media (max-width: 600px) {
+  .pagespeed-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
