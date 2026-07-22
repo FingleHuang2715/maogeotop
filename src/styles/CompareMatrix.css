@@ -1,0 +1,672 @@
+/* ============================================================
+   Section 12 CSS — 提供最靠谱的外贸建站服务
+   主容器: .compare-cosmic
+   包含：顶部标题 + 双列顾虑/方案对比 + 8行4列对比表格
+   ============================================================ */
+
+/* ===== 主容器 ===== */
+.compare-cosmic {
+  position: relative;
+  background: var(--deep, #f9fafb);
+  padding: 100px 24px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+/* ===== 背景光晕 ===== */
+.compare-cosmic__glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+  z-index: 0;
+}
+.compare-cosmic__glow--right {
+  right: -150px;
+  top: 10%;
+  background: radial-gradient(circle, rgba(0, 102, 204, 0.13) 0%, transparent 70%);
+  animation: compare-glow-pulse 9s ease-in-out infinite;
+}
+.compare-cosmic__glow--left {
+  left: -100px;
+  bottom: 10%;
+  background: radial-gradient(circle, rgba(10, 78, 203, 0.1) 0%, transparent 70%);
+  animation: compare-glow-pulse 11s ease-in-out infinite reverse;
+}
+@keyframes compare-glow-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+/* ===== 内容容器 ===== */
+.compare-cosmic__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* =============================================
+   顶部居中标题区
+   ============================================= */
+.compare-cosmic__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+/* --- 小标签 --- */
+.compare-cosmic__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.08), rgba(0, 102, 204, 0.06));
+  border: 1px solid rgba(10, 78, 203, 0.2);
+  border-radius: 100px;
+  padding: 6px 18px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue, #0A4ECB);
+  letter-spacing: 0.5px;
+}
+.compare-cosmic__badge-icon {
+  font-size: 14px;
+}
+
+/* --- 主标题 --- */
+.compare-cosmic__title {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 800;
+  color: var(--text, #1e1b2e);
+  line-height: 1.25;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+
+/* --- 副标题 --- */
+.compare-cosmic__subtitle {
+  font-size: 15px;
+  color: var(--text-muted, #7a7a9a);
+  margin: 0;
+}
+
+/* =============================================
+   上部双列：顾虑 VS 解决方案
+   ============================================= */
+.compare-cosmic__versus {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 64px;
+}
+
+/* --- 列头部 --- */
+.compare-cosmic__col-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 20px;
+  border-radius: 14px 14px 0 0;
+  margin-bottom: 2px;
+}
+.compare-cosmic__col-header--concern {
+  background: rgba(107, 114, 128, 0.08);
+  color: #4b5563;
+  border: 1px solid rgba(107, 114, 128, 0.15);
+  border-bottom: none;
+}
+.compare-cosmic__col-header--solution {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.1), rgba(0, 102, 204, 0.08));
+  color: var(--blue, #0A4ECB);
+  border: 1px solid rgba(10, 78, 203, 0.2);
+  border-bottom: none;
+}
+.compare-cosmic__col-icon {
+  font-size: 20px;
+}
+
+/* --- 顾虑列 --- */
+.compare-cosmic__concern-col,
+.compare-cosmic__solution-col {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 0 0 16px 16px;
+  border: 1px solid rgba(107, 114, 128, 0.12);
+  border-top: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+.compare-cosmic__solution-col {
+  border-color: rgba(10, 78, 203, 0.15);
+  box-shadow: 0 4px 32px rgba(10, 78, 203, 0.1);
+}
+
+/* --- 顾虑列整体包裹（含列头） --- */
+.compare-cosmic__concern-col {
+  /* 包含列头 + 列表 */
+}
+
+.compare-cosmic__concern-list,
+.compare-cosmic__solution-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.compare-cosmic__concern-item,
+.compare-cosmic__solution-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 13.5px;
+  transition: background 0.2s ease;
+}
+.compare-cosmic__concern-item:last-child,
+.compare-cosmic__solution-item:last-child {
+  border-bottom: none;
+}
+
+/* 顾虑列悬停 */
+.compare-cosmic__concern-item:hover {
+  background: rgba(107, 114, 128, 0.04);
+}
+.compare-cosmic__solution-item:hover {
+  background: rgba(10, 78, 203, 0.04);
+}
+
+/* 顾虑列文字（弱化颜色） */
+.compare-cosmic__concern-item {
+  color: var(--text-muted, #7a7a9a);
+}
+.compare-cosmic__solution-item {
+  color: var(--text-dim, #4a4a6a);
+  font-weight: 500;
+}
+
+/* 圆形问号图标（顾虑） */
+.compare-cosmic__concern-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(107, 114, 128, 0.1);
+  color: #9ca3af;
+  border: 1.5px solid rgba(107, 114, 128, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* 大拇指图标（解决方案） */
+.compare-cosmic__solution-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  animation: compare-thumb-bounce 2.5s ease-in-out infinite;
+}
+.compare-cosmic__solution-item:nth-child(odd) .compare-cosmic__solution-icon {
+  animation-delay: 0.4s;
+}
+.compare-cosmic__solution-item:nth-child(3n) .compare-cosmic__solution-icon {
+  animation-delay: 0.8s;
+}
+@keyframes compare-thumb-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* --- 中间箭头分隔 --- */
+.compare-cosmic__arrow-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 60px;
+  min-height: 120px;
+}
+.compare-cosmic__arrow-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(to bottom, transparent, rgba(10, 78, 203, 0.3), transparent);
+  max-height: 80px;
+}
+.compare-cosmic__arrow-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(10, 78, 203, 0.4);
+  flex-shrink: 0;
+  animation: compare-arrow-pulse 2s ease-in-out infinite;
+}
+@keyframes compare-arrow-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(10, 78, 203, 0.4); }
+  50% { box-shadow: 0 6px 30px rgba(10, 78, 203, 0.6), 0 0 20px rgba(0, 102, 204, 0.3); }
+}
+
+/* =============================================
+   下部对比表格区
+   ============================================= */
+.compare-cosmic__table-wrapper {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  box-shadow:
+    0 8px 48px rgba(10, 78, 203, 0.1),
+    0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+/* 表格标题区 */
+.compare-cosmic__table-header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid rgba(10, 78, 203, 0.08);
+}
+.compare-cosmic__table-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text, #1e1b2e);
+  margin: 0;
+}
+
+/* 表格滚动容器（宽屏正常，窄屏横向滚动） */
+.compare-cosmic__table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 表格本体 */
+.compare-cosmic__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+/* ===== 表头 ===== */
+.compare-cosmic__thead-row {
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+}
+.compare-cosmic__th {
+  padding: 18px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.3px;
+  border: none;
+}
+.compare-cosmic__th--item {
+  text-align: left;
+  width: 22%;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+}
+.compare-cosmic__th--template {
+  width: 22%;
+  background: rgba(0, 0, 0, 0.08);
+}
+.compare-cosmic__th--custom {
+  width: 22%;
+  background: rgba(255, 255, 255, 0.06);
+}
+.compare-cosmic__th--maoge {
+  width: 34%;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+}
+.compare-cosmic__th-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.compare-cosmic__th-sub {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.5px;
+}
+.compare-cosmic__th-sub--best {
+  color: #fde68a;
+  font-weight: 700;
+}
+
+/* ===== 表体行 ===== */
+.compare-cosmic__tr {
+  transition: background 0.2s ease;
+}
+.compare-cosmic__tr:hover {
+  background: rgba(10, 78, 203, 0.02);
+}
+.compare-cosmic__tr--alt {
+  background: rgba(249, 250, 251, 0.8);
+}
+.compare-cosmic__tr--alt:hover {
+  background: rgba(10, 78, 203, 0.03);
+}
+
+/* ===== 单元格 ===== */
+.compare-cosmic__td {
+  padding: 16px 20px;
+  font-size: 13px;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(10, 78, 203, 0.06);
+  text-align: center;
+  line-height: 1.6;
+}
+.compare-cosmic__tr:last-child .compare-cosmic__td {
+  border-bottom: none;
+}
+
+/* 对比项目列（最左列） */
+.compare-cosmic__td--item {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text, #1e1b2e);
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.compare-cosmic__td-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* 模板网站列（弱化） */
+.compare-cosmic__td--template {
+  color: var(--text-muted, #7a7a9a);
+}
+
+/* 定制网站列（中性） */
+.compare-cosmic__td--custom {
+  color: var(--text-dim, #4a4a6a);
+}
+
+/* 猫哥建站列（高亮） */
+.compare-cosmic__td--maoge {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.05), rgba(0, 102, 204, 0.04));
+  font-weight: 600;
+  color: var(--text, #1e1b2e);
+  border-left: 2px solid rgba(10, 78, 203, 0.2);
+  border-right: 2px solid rgba(10, 78, 203, 0.2);
+  font-size: 12.5px;
+}
+
+/* ===== Badge 样式 ===== */
+
+/* 差评Badge（无/不支持） */
+.compare-cosmic__badge-bad {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 中性Badge（部分支持） */
+.compare-cosmic__badge-neutral {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(107, 114, 128, 0.08);
+  color: #6b7280;
+  border: 1px solid rgba(107, 114, 128, 0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 优评Badge（猫哥最佳） */
+.compare-cosmic__badge-best {
+  font-size: 14px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* 警告Badge（基础） */
+.compare-cosmic__badge-warn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 158, 11, 0.08);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 小徽章/tag（在猫哥列内使用） */
+.compare-cosmic__mini-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.12), rgba(0, 102, 204, 0.1));
+  border: 1px solid rgba(10, 78, 203, 0.25);
+  color: #0A4ECB;
+  font-size: 10.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-top: 4px;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+/* =============================================
+   底部 CTA 区
+   ============================================= */
+.compare-cosmic__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 56px;
+  text-align: center;
+}
+.compare-cosmic__cta-text {
+  font-size: 17px;
+  color: var(--text-dim, #4a4a6a);
+  line-height: 1.6;
+  margin: 0;
+}
+.compare-cosmic__cta-text strong {
+  color: var(--text, #1e1b2e);
+}
+
+/* CTA按钮（依赖全局 .gradient-btn 或自定义） */
+.compare-cosmic__cta-btn,
+.gradient-btn.compare-cosmic__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 16px 40px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 8px 32px rgba(10, 78, 203, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.compare-cosmic__cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.compare-cosmic__cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 48px rgba(10, 78, 203, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.12);
+  filter: brightness(1.05);
+}
+.compare-cosmic__cta-btn:hover::before {
+  opacity: 1;
+}
+.compare-cosmic__cta-btn:active {
+  transform: translateY(-1px);
+}
+
+/* =============================================
+   响应式 — 1024px
+   ============================================= */
+@media (max-width: 1024px) {
+  .compare-cosmic {
+    padding: 80px 20px;
+  }
+  .compare-cosmic__versus {
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .compare-cosmic__th-label {
+    font-size: 12.5px;
+  }
+  .compare-cosmic__title {
+    font-size: 36px;
+  }
+}
+
+/* =============================================
+   响应式 — 768px
+   ============================================= */
+@media (max-width: 768px) {
+  .compare-cosmic {
+    padding: 60px 16px;
+  }
+
+  /* 双列变单列堆叠 */
+  .compare-cosmic__versus {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .compare-cosmic__concern-col,
+  .compare-cosmic__solution-col {
+    border-radius: 0;
+  }
+  .compare-cosmic__arrow-divider {
+    flex-direction: row;
+    padding-top: 0;
+    min-height: auto;
+    padding: 16px 20px;
+    background: rgba(10, 78, 203, 0.03);
+    border-top: 1px solid rgba(10, 78, 203, 0.1);
+    border-bottom: 1px solid rgba(10, 78, 203, 0.1);
+  }
+  .compare-cosmic__arrow-line {
+    width: auto;
+    height: 2px;
+    flex: 1;
+    max-height: none;
+    max-width: 80px;
+    background: linear-gradient(to right, transparent, rgba(10, 78, 203, 0.3), transparent);
+  }
+
+  .compare-cosmic__table-header {
+    padding: 20px;
+  }
+  .compare-cosmic__table-title {
+    font-size: 17px;
+  }
+  .compare-cosmic__title {
+    font-size: 26px;
+  }
+  .compare-cosmic__header {
+    margin-bottom: 40px;
+  }
+  .compare-cosmic__versus {
+    margin-bottom: 40px;
+  }
+}
+
+/* =============================================
+   响应式 — 480px
+   ============================================= */
+@media (max-width: 480px) {
+  .compare-cosmic {
+    padding: 48px 12px;
+  }
+  .compare-cosmic__title {
+    font-size: 22px;
+  }
+  .compare-cosmic__col-header {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+  .compare-cosmic__concern-item,
+  .compare-cosmic__solution-item {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  .compare-cosmic__concern-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+  .compare-cosmic__table-header {
+    padding: 16px;
+  }
+  .compare-cosmic__table-scroll {
+    /* 提示可横向滚动 */
+    position: relative;
+  }
+  .compare-cosmic__cta-btn {
+    padding: 14px 30px;
+    font-size: 14px;
+  }
+  .compare-cosmic__cta-text {
+    font-size: 15px;
+  }
+
+  /* 左侧对比项列在极小屏可换行 */
+  .compare-cosmic__td--item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 12px;
+  }
+  .compare-cosmic__td-icon {
+    display: none;
+  }
+}
