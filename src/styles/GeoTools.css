@@ -1,0 +1,1638 @@
+/* ============================================================================
+   猫哥 GEO 智能系统 —— 官网单页面 (CSS 样式表)
+   视觉调性：未来主义暗黑模式、极光绿 + 渐变蓝紫霓虹氛围、磨砂玻璃态边框发光
+   所有类名均带 geo- 前缀以保证完全隔离
+   ============================================================================ */
+
+/* 基础重置 & 全局 CSS 变量 */
+:root {
+  --geo-dark-bg: #f5f5f7;           /* 深空墨黑背景 */
+  --geo-card-bg: #ffffff; /* 磨砂玻璃态卡片底色 */
+  --geo-border-color: rgba(0, 0, 0, 0.06);
+  --geo-border-glow: rgba(10, 78, 203, 0.08);
+  
+  /* 品牌高亮配色 */
+  --geo-neon-green: #10b981;        /* 极光绿 (收录) */
+  --geo-neon-indigo: #0A4ECB;       /* 算力冷光蓝 */
+  --geo-neon-violet: #0066cc;       /* 紫色 */
+  --geo-text-white: #1d1d1f;
+  --geo-text-dim: #434344;
+  --geo-text-muted: #86868b;
+  
+  --geo-font-sans: 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --geo-font-serif: 'Noto Serif SC', 'Georgia', serif;
+}
+
+/* ==================== 通用工具样式 ==================== */
+.gradient-text {
+  background: linear-gradient(135deg, var(--geo-neon-indigo) 0%, var(--geo-neon-violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  display: inline-block;
+}
+
+.geo-container-wide {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0; /* 两边无间距 */
+  box-sizing: border-box;
+}
+
+.geo-container {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 1.5vw;
+}
+
+
+
+/* ==================== 模块：四大功能聚焦区 (Tencent Cloud Slider Style) ==================== */
+.geo-functions-section {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)), url('https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721010110868.webp');
+  background-size: cover;
+  background-position: center center;
+  padding: 3rem 0 0 0;
+  position: relative;
+  overflow: visible;
+  font-family: var(--geo-font-sans);
+  color: var(--geo-text-white);
+  box-sizing: border-box;
+}
+
+/* 背景虚化微光装饰 */
+.geo-functions-section::before {
+  content: '';
+  position: absolute;
+  top: 10%; right: -10%;
+  width: 45vw; height: 45vw;
+  background: radial-gradient(circle, rgba(10, 78, 203, 0.06) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.geo-functions-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  align-items: center;
+  gap: 4rem;
+  padding-bottom: 2.5rem; /* 预留底部间距 */
+}
+
+.geo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--geo-neon-green);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.06);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+  margin-bottom: 1.2rem;
+}
+
+.geo-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--geo-neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--geo-neon-green);
+  animation: geoPulse 1.8s infinite;
+}
+
+@keyframes geoPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* Slides container & transitions */
+.geo-slides-container {
+  position: relative;
+  min-height: 220px;
+}
+
+.geo-slide-item {
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(15px);
+}
+
+.geo-slide-item.active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  z-index: 5;
+}
+
+.geo-section-title {
+  font-family: var(--geo-font-serif);
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem); /* 进一步缩小字号 */
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--geo-text-white);
+  margin-bottom: 0.8rem;
+}
+
+.geo-section-subtitle {
+  font-size: 0.95rem;
+  color: var(--geo-text-dim);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  max-width: 90%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Slider dynamic button */
+.geo-slider-btn-wrap {
+  margin-top: 1rem;
+}
+
+.geo-slider-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--geo-neon-indigo), var(--geo-neon-violet));
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.15);
+}
+
+.geo-slider-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(10, 78, 203, 0.25);
+}
+
+.geo-slider-btn-text {
+  position: relative;
+}
+
+.geo-slider-btn-icon {
+  font-size: 13px;
+  transition: transform 0.2s ease;
+}
+
+.geo-slider-btn:hover .geo-slider-btn-icon {
+  transform: translateX(4px);
+}
+
+/* 🌟 腾讯云风格导航栏 (无卡片，横向全宽，分割线风格) */
+.geo-slider-nav-wrap {
+  position: relative;
+  z-index: 10;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  background: #ffffff; /* 区分于 Hero 区域的浅灰底色 */
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.geo-slider-nav-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0; /* 零 Gap，完全贴合 */
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.geo-slider-nav-tab {
+  background: transparent;
+  border: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.08); /* 竖直分割线 */
+  border-radius: 0;
+  padding: 16px 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+
+.geo-slider-nav-tab:first-child {
+  border-left: none; /* 第一个标签移除左边线 */
+}
+
+/* 最后一个标签右侧加上分割线以配合全包围感 */
+.geo-slider-nav-tab:last-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.geo-slider-nav-tab:hover, .geo-slider-nav-tab.active {
+  background: rgba(10, 78, 203, 0.02); /* 极淡的底色反馈 */
+}
+
+.geo-nav-tab-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--geo-text-white);
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.geo-slider-nav-tab.active .geo-nav-tab-title,
+.geo-slider-nav-tab:hover .geo-nav-tab-title {
+  color: var(--geo-neon-indigo); /* 激活/悬停字变蓝 */
+}
+
+.geo-nav-tab-desc {
+  font-size: 11px;
+  color: var(--geo-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.geo-nav-tab-progress {
+  position: absolute;
+  bottom: 0; left: 0; width: 100%;
+  height: 3px;
+  background: rgba(10, 78, 203, 0.05);
+}
+
+.geo-nav-tab-progress-inner {
+  width: 0%;
+  height: 100%;
+  background: var(--geo-neon-indigo);
+  transition: width 6s linear;
+}
+
+.geo-slider-nav-tab.active .geo-nav-tab-progress-inner {
+  width: 100%;
+}
+/* ==================== 3D 魔方效果样式容器 (同高层兼容) ==================== */
+.geo-functions-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.hero-cube-wrapper {
+  width: 220px;
+  height: 220px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: geoCubeFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes geoCubeFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+
+.hero-cube {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateY(30deg);
+  will-change: transform;
+}
+
+.cube-face {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(10, 78, 203, 0.08), inset 0 0 15px rgba(255, 255, 255, 0.03);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+  backface-visibility: visible;
+}
+
+.cube-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 3D 闭合默认定位 */
+.face-front  { transform: rotateY(0deg) translateZ(110px); }
+.face-back   { transform: rotateY(180deg) translateZ(110px); }
+.face-left   { transform: rotateY(-90deg) translateZ(110px); }
+.face-right  { transform: rotateY(90deg) translateZ(110px); }
+.face-top    { transform: rotateX(90deg) translateZ(110px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(110px); }
+
+/* Hover 爆炸展开 */
+.hero-cube-wrapper:hover .face-front  { transform: rotateY(0deg) translateZ(140px); border-color: var(--geo-neon-indigo); }
+.hero-cube-wrapper:hover .face-back   { transform: rotateY(180deg) translateZ(140px); border-color: var(--geo-neon-indigo); }
+.hero-cube-wrapper:hover .face-left   { transform: rotateY(-90deg) translateZ(140px); border-color: var(--geo-neon-indigo); }
+.hero-cube-wrapper:hover .face-right  { transform: rotateY(90deg) translateZ(140px); border-color: var(--geo-neon-indigo); }
+.hero-cube-wrapper:hover .face-top    { transform: rotateX(90deg) translateZ(140px); border-color: var(--geo-neon-indigo); }
+.hero-cube-wrapper:hover .face-bottom { transform: rotateX(-90deg) translateZ(140px); border-color: var(--geo-neon-indigo); }
+
+
+/* ==================== 模块：系统核心优势 (Tencent Cloud ModelHub Style) ==================== */
+.geo-advantages-section {
+  background: #ffffff; /* 浅底白色区分 */
+  padding: 6rem 0;
+  font-family: var(--geo-font-sans);
+  color: var(--geo-text-white);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.geo-advantages-inner {
+  display: grid;
+  grid-template-columns: 0.38fr 0.62fr; /* 38% vs 62% 对齐 */
+  gap: 3rem;
+  align-items: start;
+}
+
+/* 左侧 featured 风格卡片 */
+.geo-advantages-featured {
+  background: var(--geo-dark-bg, #f5f5f7);
+  border: 1px solid var(--geo-border-color);
+  border-radius: 24px;
+  padding: 2.2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 520px;
+}
+
+.geo-featured-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--geo-neon-indigo);
+  background: rgba(10, 78, 203, 0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.geo-featured-title {
+  font-family: var(--geo-font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  color: var(--geo-text-white);
+}
+
+.geo-featured-title p {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+}
+
+.geo-featured-desc {
+  font-size: 0.92rem;
+  color: var(--geo-text-dim);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.geo-featured-media {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+  line-height: 0;
+}
+
+.geo-featured-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.geo-featured-actions {
+  margin-top: auto;
+}
+
+.geo-featured-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--geo-neon-indigo), var(--geo-neon-violet));
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.15);
+  transition: all 0.3s;
+}
+
+.geo-featured-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(10, 78, 203, 0.25);
+}
+
+/* 右侧优势列表 3x2 网格 */
+.geo-advantages-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.geo-advantage-item {
+  background: #ffffff;
+  border: 1px solid var(--geo-border-color);
+  border-radius: 20px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.geo-advantage-item:hover {
+  border-color: rgba(10, 78, 203, 0.2);
+  box-shadow: 0 12px 30px rgba(10, 78, 203, 0.04);
+  transform: translateY(-4px);
+}
+
+.geo-advantage-item-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.geo-advantage-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  line-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.geo-advantage-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.geo-advantage-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.geo-advantage-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.geo-advantage-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--geo-text-white);
+}
+
+.geo-advantage-tag {
+  font-size: 9.5px;
+  color: var(--geo-neon-indigo);
+  background: rgba(10, 78, 203, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.geo-advantage-desc {
+  font-size: 12.5px;
+  color: var(--geo-text-dim);
+  line-height: 1.5;
+}
+
+
+/* ==================== 模块：六大核心深度能力 ==================== */
+.geo-capabilities-section {
+  background: #ffffff;
+  padding: 8rem 0;
+  font-family: var(--geo-font-sans);
+  color: var(--geo-text-white);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.geo-section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.geo-section-header .geo-section-subtitle {
+  margin: 0 auto;
+}
+
+.geo-capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.geo-capability-card {
+  position: relative;
+  overflow: hidden; /* 溢出裁剪，隐藏圆形向外扩展的边际 */
+  z-index: 1;
+  background: #ffffff; /* 卡片默认白底 */
+  border: 1px solid var(--geo-border-color, rgba(0, 0, 0, 0.08)); /* 浅色外边框 */
+  padding: 2.5rem 2rem; /* 🌟 核心改进：为卡片增加大内边距，确保内容与卡片边缘有舒适的留白边距 */
+  box-sizing: border-box;
+}
+
+/* 🌟 圆形自中向外漫射膨胀的亮蓝色渐变背景 (使用猫哥亮蓝主题色) */
+.geo-capability-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320%;
+  height: 320%;
+  border-radius: 50%;
+  /* 🌟 使用主题特有的亮蓝色渐变 (#0A4ECB 极地冷光蓝 + #3b82f6 闪耀亮蓝) */
+  background: linear-gradient(135deg, #0A4ECB 0%, #3b82f6 100%); 
+  transform: translate(-50%, -50%) scale(0);
+  /* 延长过渡时间至 0.8s，使其呈平滑漫射渐变过去 */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.geo-capability-card:hover {
+  transform: translateY(-8px);
+  border-color: #0A4ECB; /* 亮蓝色外边框 */
+  box-shadow: 0 20px 40px rgba(10, 78, 203, 0.18);
+}
+
+.geo-capability-card:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.geo-capability-num {
+  font-family: var(--geo-font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.06); /* 浅色底下淡黑色编号 */
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  /* 渐变时间对齐 0.6s，使其平滑淡入淡出 */
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 悬停时数字标题不要绿色，转为微妙的白色半透明水印效果，极其高档 */
+.geo-capability-card:hover .geo-capability-num {
+  color: rgba(255, 255, 255, 0.18); 
+}
+
+.geo-capability-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: #1e1b2e; /* 默认黑字 */
+  position: relative;
+  z-index: 2;
+  /* 渐变时间对齐 0.6s，平滑偏色 */
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.geo-capability-card:hover .geo-capability-title {
+  color: #ffffff; /* 渐变转为纯白色 */
+}
+
+.geo-capability-desc {
+  font-size: 0.88rem;
+  color: var(--geo-text-dim); /* 默认灰色描述 */
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+  /* 渐变时间对齐 0.6s，实现真正的渐变融合偏色 */
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.geo-capability-card:hover .geo-capability-desc {
+  color: #ffffff !important; /* 强制纯白，绝不受任何第三方样式干扰 */
+}
+
+
+
+
+
+/* ==================== 模块：主流AI模型优化 (Scroll Semicircle Cockpit Steering Wheel - 1400px Screen Wide - 强直角) ==================== */
+.geo-compass-section {
+  background: #06070c; /* 更加纯净深邃的太空暗色背景，强化对比 */
+  padding: 6rem 0 0 0; 
+  font-family: var(--geo-font-sans);
+  color: #ffffff;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  position: relative;
+}
+
+.geo-compass-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center bottom;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.geo-compass-wrapper {
+  position: relative;
+  width: 100%;
+  height: 680px; /* 增高以完全容纳并露出 610px 轨道的完整上半圆，防止顶部被挡住 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 2rem;
+  z-index: 5;
+}
+
+/* 驾驶舱左右两侧立柱 */
+.geo-cockpit-pillar {
+  position: absolute;
+  bottom: 0;
+  width: 160px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.geo-cockpit-pillar.left { left: 2%; align-items: flex-start; }
+.geo-cockpit-pillar.right { right: 2%; align-items: flex-end; }
+
+.geo-pillar-line {
+  width: 2px;
+  height: 60%;
+  background: linear-gradient(to top, var(--geo-neon-indigo) 20%, transparent 100%);
+  position: relative;
+}
+
+.geo-pillar-line::after {
+  content: '';
+  position: absolute;
+  top: 20%; left: -4px;
+  width: 10px; height: 10px;
+  background: var(--geo-neon-indigo);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--geo-neon-indigo);
+}
+
+.geo-pillar-data {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--geo-text-muted);
+  margin-top: 10px;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+/* 巨大化罗盘盘体：宽度为 1400px (约合 95vw)，紧贴屏幕两侧边缘 */
+.geo-compass-dial-container {
+  position: relative;
+  width: 1400px;
+  height: 1400px;
+  transform: translateY(700px); /* 圆心下沉 700px，在底部正好构成 1400px 巨幅半圆拱弧 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+/* 🚀 飞船方向盘 (大圆盘，1300px 尺寸) */
+.geo-cockpit-steering-wheel {
+  position: absolute;
+  width: 1300px;
+  height: 1300px;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  animation: cockpitSpin 45s linear infinite;
+}
+
+.geo-wheel-ring-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(10, 78, 203, 0.22);
+  box-shadow: 0 0 40px rgba(10, 78, 203, 0.1);
+}
+
+.geo-wheel-ring-dashed {
+  position: absolute;
+  inset: 24px;
+  border-radius: 50%;
+  border: 1px dashed rgba(10, 78, 203, 0.35);
+}
+
+.geo-wheel-ring-inner {
+  position: absolute;
+  inset: 90px;
+  border-radius: 50%;
+  border: 1px solid rgba(10, 78, 203, 0.12);
+}
+
+.geo-wheel-ticks {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(10, 78, 203, 0.2) 0deg 1deg,
+    transparent 1deg 6deg
+  );
+  -webkit-mask-image: radial-gradient(circle, transparent 630px, black 631px);
+  mask-image: radial-gradient(circle, transparent 630px, black 631px);
+}
+
+.geo-wheel-radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(10, 78, 203, 0.18) 0deg,
+    rgba(10, 78, 203, 0.01) 60deg,
+    transparent 180deg
+  );
+}
+
+/* 🚀 飞船正中央悬浮圆形全息仪表盘 (完全独立于旋转容器，静态悬浮在圆心上面一点/底部上面一点) */
+.geo-compass-center-hub {
+  position: absolute;
+  bottom: 40px; /* 放在 wrapper 底部上面一点 (比如 40px 位置)，完全浮置在半圆圆盘中央上方 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 240px; /* 适度锁高，做成扁平高科技 HUD 圆角卡片 */
+  z-index: 15;
+  box-sizing: border-box;
+}
+
+/* 深色高透毛玻璃背景，所有文字使用明显的浅色字，高对比度 */
+.geo-hub-hologram {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 12, 22, 0.9); /* 纯黑底板强化对比 */
+  border: 2px solid var(--geo-neon-indigo);
+  border-radius: 20px; 
+  padding: 24px;
+  box-shadow: 0 0 35px rgba(10, 78, 203, 0.3), inset 0 0 20px rgba(10, 78, 203, 0.15);
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.geo-hologram-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(10, 78, 203,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 78, 203,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.geo-hologram-scanline {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 6px;
+  background: linear-gradient(to bottom, transparent, rgba(10, 78, 203, 0.4), transparent);
+  animation: scanlineMoveCockpit 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanlineMoveCockpit {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(240px); }
+}
+
+.geo-hub-title {
+  font-family: monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--geo-neon-green); /* 明亮绿字，对比度高 */
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* HUD 核心标题：主流AI模型优化与收录 (放在圆心正上方，浅色字，高对比度) */
+.geo-hud-main-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff; /* 纯白浅色字 */
+  letter-spacing: 0.05em;
+  margin: 0 0 8px 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  font-family: var(--geo-font-sans);
+}
+
+.geo-hud-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--geo-neon-indigo);
+  margin-bottom: 12px;
+  box-shadow: 0 0 8px var(--geo-neon-indigo);
+}
+
+/* 浅色字高对比度 */
+.geo-hub-model-name {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: #ffffff; /* 纯白浅色字 */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(10, 78, 203, 0.6);
+}
+
+.geo-hub-model-desc {
+  font-size: 13px;
+  color: #e5e5ea; /* 浅灰色/银白字，对比度高 */
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  min-height: 38px;
+  max-width: 320px;
+}
+
+.geo-hub-action-btn {
+  display: inline-block;
+  background: rgba(10, 78, 203, 0.2);
+  color: #ffffff; /* 浅色字 */
+  border: 1.5px solid var(--geo-neon-indigo);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 6px 22px;
+  border-radius: 0 !important; /* 强直角 */
+  box-shadow: 0 0 10px rgba(10, 78, 203, 0.2);
+  transition: all 0.3s;
+}
+
+.geo-hub-action-btn:hover {
+  background: var(--geo-neon-indigo);
+  box-shadow: 0 0 20px rgba(10, 78, 203, 0.6);
+  transform: translateY(-2px);
+}
+
+/* 🚀 节点容器 (静止底座，节点利用 JS 自主进行圆弧位移，因此容器保持静止) */
+.geo-compass-nodes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  transform-style: preserve-3d;
+}
+
+.geo-compass-node {
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  text-decoration: none;
+  
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -40px;
+  /* 挂载到 610px 轨道半径上，完美平铺贴边 */
+  transform: rotate(var(--angle)) translate(610px) rotate(calc(-1 * var(--angle)));
+}
+
+.geo-node-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(10, 78, 203, 0.15);
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
+}
+
+.geo-node-icon-wrap img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.geo-node-icon-wrap.bg-gradient {
+  background: linear-gradient(135deg, #a1a1a6, #86868b);
+  border: none;
+}
+
+.geo-node-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff; /* 浅色字 */
+  margin-top: 8px;
+  white-space: nowrap;
+  background: rgba(10, 12, 22, 0.95);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 2px 8px;
+  border-radius: 0 !important; /* 强直角 */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, color 0.3s, border-color 0.3s;
+}
+
+/* Hover/Active 状态 */
+.geo-compass-node:hover .geo-node-icon-wrap,
+.geo-compass-node.active .geo-node-icon-wrap {
+  border-color: var(--geo-neon-green);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+.geo-compass-node:hover .geo-node-label,
+.geo-compass-node.active .geo-node-label {
+  color: var(--geo-neon-green);
+  border-color: var(--geo-neon-green);
+  background: #0d0f1a;
+}
+
+@keyframes cockpitSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* ==================== 模块：智能官网对接 (腾讯云市场风格 - 强直角) ==================== */
+.tpm-portal-section {
+  background: #ffffff;
+  padding: 8rem 0;
+  font-family: var(--geo-font-sans);
+}
+
+.tpm-portal-section__inner {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.tpm-portal-section__hd {
+  margin-bottom: 4rem;
+}
+
+.tpm-portal-section__tag {
+  display: inline-block;
+  background: rgba(10, 78, 203, 0.06);
+  color: #0A4ECB;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  border-radius: 0 !important; /* 强制直角 */
+}
+
+.tpm-portal-section__title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1e1b2e;
+  line-height: 1.3;
+}
+
+.tpm-portal-market__inner {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+/* 左侧面板 */
+.tpm-portal-market__panel {
+  background: #f5f5f7; /* 大气浅灰背景 */
+  padding: 3rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0 !important; /* 强直角 */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.tpm-portal-market__panel-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1e1b2e;
+  margin-bottom: 1.5rem;
+}
+
+.tpm-portal-market__panel-desc {
+  font-size: 14px;
+  color: var(--geo-text-dim);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.tpm-portal-market__panel-desc .linear {
+  color: #0A4ECB;
+  font-weight: 700;
+}
+
+.tpm-portal-market__features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tpm-portal-market__feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #1e1b2e;
+  font-weight: 600;
+}
+
+.tpm-portal-market__feature-item::before {
+  content: '✓';
+  color: #0A4ECB;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.tpm-portal-market__panel-btn {
+  display: inline-block;
+  background: #0A4ECB;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 30px;
+  text-align: center;
+  transition: all 0.3s;
+  border-radius: 0 !important; /* 强直角 */
+}
+
+.tpm-portal-market__panel-btn:hover {
+  background: #005ec3;
+  transform: translateY(-2px);
+}
+
+/* 右侧 3 个卡片包装 */
+.tpm-portal-market__cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.tpm-portal-market__card-item {
+  position: relative;
+  height: 100%;
+}
+
+.tpm-portal-market__card {
+  display: block;
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  height: 100%;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 !important; /* 强直角 */
+}
+
+.tpm-portal-market__card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 预留图容器 */
+.tpm-portal-market__card-media {
+  height: 180px;
+  background: #0d0f1a; /* 卡片顶部高科技暗色配景 */
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tpm-portal-market__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* 创意生产 API 的代码占位特效 */
+.tpm-portal-market__anim-creative__code {
+  font-family: monospace;
+  font-size: 10.5px;
+  color: #c5c5d3;
+  text-align: left;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.tpm-portal-market__anim-creative__code-kw { color: #f43f5e; }
+.tpm-portal-market__anim-creative__code-fn { color: #3b82f6; }
+
+/* 微信 Webhook JSON 占位 */
+.geo-code-card-mini {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  font-family: monospace;
+  width: 90%;
+  border-radius: 0 !important;
+}
+
+.geo-code-header-mini {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.geo-code-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.geo-code-dot.red { background: #ff5f56; }
+.geo-code-dot.yellow { background: #ffbd2e; }
+.geo-code-dot.green { background: #27c93f; }
+
+.geo-code-body-mini {
+  margin: 0;
+  font-size: 10.5px;
+  color: #10b981;
+}
+
+/* 决策数据柱状图占位 */
+.tpm-portal-market__report-graphic {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  height: 80px;
+}
+
+.report-bar {
+  width: 16px;
+  background: linear-gradient(to top, #0A4ECB, #3b82f6);
+  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 卡片默认 body */
+.tpm-portal-market__card-body {
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 120px;
+  box-sizing: border-box;
+  background: #ffffff;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.tpm-portal-market__card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e1b2e;
+}
+
+.tpm-portal-market__card-title p {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--geo-text-muted);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.tpm-portal-market__card-link {
+  font-size: 12px;
+  color: #0A4ECB;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+/* 卡片 Hover 激活态遮罩 body (上下结构，直角，变色) */
+.tpm-portal-market__card-body--active {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0A4ECB 0%, #3b82f6 100%); /* 渐变亮蓝 */
+  padding: 1.5rem 1.2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateY(100%); /* 隐藏在底下 */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.tpm-portal-market__card-body--active .tpm-portal-market__card-title {
+  color: #ffffff; /* 亮白 */
+}
+
+.tpm-portal-market__card-body--active .tpm-portal-market__card-title p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tpm-portal-market__card-features {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.tpm-portal-market__card-feature {
+  font-size: 11.5px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 4px 8px;
+  font-weight: 600;
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+.tpm-portal-market__card-body--active .tpm-portal-market__card-link {
+  color: #ffffff;
+}
+
+/* Card Hover Effects */
+.tpm-portal-market__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(10, 78, 203, 0.15);
+  border-color: #0A4ECB;
+}
+
+.tpm-portal-market__card:hover .tpm-portal-market__card-body--active {
+  transform: translateY(180px); /* 🌟 在 hover 时只拉起覆盖到 card-body 区域，而不是遮挡上方预留图！符合用户“上面是预留图，下面内容是上下结构”的布局 */
+  height: 240px; /* 调整高度以只遮住下半截 */
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .tpm-portal-market__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .tpm-portal-market__cards-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+  .tpm-portal-section {
+    padding: 4rem 0;
+  }
+}
+
+/* ==================== 模块：合规与使用声明 ==================== */
+.geo-compliance-section {
+  background: #ffffff;
+  padding: 4rem 0;
+}
+
+.geo-compliance-box {
+  background: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 3rem;
+  box-sizing: border-box;
+}
+
+.geo-compliance-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e1b2e;
+  margin-bottom: 1rem;
+}
+
+.geo-compliance-desc {
+  font-size: 13.5px;
+  color: var(--geo-text-dim);
+  line-height: 1.6;
+}
+
+/* ==================== 模块：CTA 底部行动呼吁区 ==================== */
+.geo-cta-section {
+  position: relative;
+  background-color: #f5f5f7;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), url('https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721010116136.webp');
+  background-size: cover;
+  background-position: center center;
+  padding: 8rem 0;
+  text-align: center;
+}
+
+.geo-cta-box {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.geo-cta-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1e1b2e;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.geo-cta-desc {
+  font-size: 1.1rem;
+  color: var(--geo-text-dim);
+  margin-bottom: 3rem;
+}
+
+.geo-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.geo-cta-btn-primary {
+  background: #0A4ECB;
+  color: #ffffff;
+  padding: 14px 36px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.geo-cta-btn-primary:hover {
+  background: #005ec3;
+  transform: translateY(-2px);
+}
+
+.geo-cta-contact {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 13.5px;
+  color: var(--geo-text-muted);
+}
+
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 1024px) {
+  .geo-functions-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .geo-functions-right {
+    order: -1;
+  }
+  .geo-slider-nav-tabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    padding: 0;
+  }
+  .geo-advantages-inner {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .geo-advantages-featured {
+    min-height: auto !important;
+  }
+  .geo-compass-dial-container {
+    transform: translateY(700px) scale(0.75) !important;
+  }
+  .geo-compass-center-hub {
+    bottom: 30px !important;
+    transform: translateX(-50%) scale(0.85) !important;
+  }
+  .geo-capabilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .geo-webhook-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .geo-platforms-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .tpm-portal-market__inner {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .geo-functions-right {
+    display: none !important; /* 移动端完全隐藏魔方 */
+  }
+  .geo-slider-nav-tabs {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .geo-capabilities-grid {
+    grid-template-columns: 1fr;
+  }
+  .geo-platforms-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .geo-compliance-box {
+    padding: 2rem;
+  }
+  .geo-cta-btn-primary {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+  
+  /* 手机端六个卡片强制变为上下结构，正文字体小一点 */
+  .geo-advantages-list {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem !important;
+  }
+  
+  .geo-advantage-item {
+    border-radius: 0 !important;
+    padding: 1.2rem 1rem !important;
+  }
+
+  .geo-advantage-item-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    gap: 0.8rem !important;
+  }
+
+  .geo-advantage-icon {
+    width: 40px !important;
+    height: 40px !important;
+    flex-shrink: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .geo-advantage-info {
+    width: 100% !important;
+  }
+
+  .geo-advantage-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .geo-advantage-name {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+  }
+
+  .geo-advantage-desc {
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+  }
+
+  .tpm-portal-market__cards-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+  .tpm-portal-section {
+    padding: 4rem 0;
+  }
+}
+
+
+/* ==================== Hero 区域双按钮 (有间距，不同颜色，第二个为白色，直角) ==================== */
+.geo-slider-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem !important; /* 两个按钮之间明显的行内间距 */
+  margin-top: 2.2rem;
+}
+
+.geo-slider-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0A4ECB; /* 第一按钮：亮蓝色 */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 28px;
+  text-decoration: none;
+  border-radius: 0 !important; /* 强制直角 */
+  border: 1.5px solid #0A4ECB;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(10, 78, 203, 0.2);
+}
+
+.geo-slider-btn:hover {
+  background: #005ec3;
+  border-color: #005ec3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(10, 78, 203, 0.3);
+}
+
+/* 第二个按钮：纯白色背景，亮蓝边框与字 */
+.geo-slider-btn-secondary {
+  background: #ffffff !important; /* 第二个按钮为白色 */
+  color: #0A4ECB !important;
+  border: 1.5px solid #0A4ECB !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+}
+
+.geo-slider-btn-secondary:hover {
+  background: rgba(10, 78, 203, 0.06) !important;
+  color: #005ec3 !important;
+  border-color: #005ec3 !important;
+  transform: translateY(-2px);
+}
+
+/* ==================== ⚡ 全局卡片与按钮强制直角法则 (Sharp Right-Angle Rule) ==================== */
+.geo-advantages-featured,
+.geo-advantages-inner,
+.geo-advantage-item,
+.geo-capability-card,
+.geo-code-card,
+.geo-compliance-box,
+.geo-cta-box,
+.geo-hub-hologram,
+.geo-node-label,
+.geo-featured-media,
+.geo-featured-btn,
+.geo-advantage-icon,
+.geo-slider-btn,
+.geo-slider-btn-secondary,
+.geo-cta-btn-primary,
+.tpm-portal-market__panel,
+.tpm-portal-market__card,
+.tpm-portal-market__panel-btn,
+.tpm-portal-market__card-body--active,
+.tpm-portal-market__card-feature {
+  border-radius: 0 !important; /* 以后所有的卡片和按钮都用直角 */
+}
+
+
+
+/* ==================== SKILL.md SVG Cutout Mask Zoom Styles ==================== */
+.geo-svg-mask-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  pointer-events: none;
+  background: transparent;
+}
+
+.geo-svg-mask-element {
+  width: 100%;
+  height: 100%;
+}
+
