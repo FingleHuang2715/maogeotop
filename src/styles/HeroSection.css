@@ -1,0 +1,423 @@
+/* ============================================================================
+   首页 Hero 区块 (CSS)
+   重构要点：
+   1. 背景替换为外链大图，设置极低透明度 (0.08)。
+   2. 下层走马灯细分为独立的液态玻璃质感胶囊卡片（无下划线）。
+   3. 收缩文案与地球间距，消除不协调空白区域。
+   ============================================================================ */
+
+.hero-cosmic {
+  position: relative;
+  height: auto; /* 允许展开自然高度 */
+  background: var(--deep); 
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ================= 静态低不透明度背景图层 ================= */
+.hero-background-image-layer {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://cdn.maogeo.top/wp-content/uploads/2026/07/20260717112908766.webp');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 0.08; /* 超低透明度，极佳烘托底噪 */
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 丁达尔体积光晕 */
+.hero-tyndall-rays { display: none !important; }
+
+@keyframes tyndallShift {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(10%) translateY(10%); }
+}
+
+.hero-cosmic-grain {
+  position: absolute;
+  inset: -50%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: cosmicGrain 8s steps(2) infinite;
+}
+@keyframes cosmicGrain { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-1%, 1%); } }
+
+/* ================= 宽域布局：70/30对齐，拉开距离 ================= */
+.hero-layout-container {
+  position: relative;
+  z-index: 10;
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: 1.5rem 20px 0.8rem 20px !important;
+  box-sizing: border-box !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.hero-content-left {
+  flex: 0 0 58%;
+  max-width: 58%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-content-right {
+  flex: 0 0 38%;
+  max-width: 38%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-cosmic-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.hero-content-center {
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 标签行 */
+.hero-cosmic-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+
+.hero-cosmic-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  padding: 0.35em 1.1em;
+  border-radius: 9999px;
+  border: 1px solid rgba(10, 78, 203, 0.18);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+}
+
+.hero-cosmic-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue-bright);
+  box-shadow: 0 0 8px var(--glow-strong);
+}
+
+/* ================= 主标题 — 70/30 紧凑高质排版 ================= */
+.hero-cosmic-headline {
+  font-family: var(--font-sans) !important;
+  font-size: clamp(2.4rem, 3.8vw, 3.6rem); /* 调整字号，配合70%宽度极具张力 */
+  font-weight: 900;
+  line-height: 1.18;
+  color: var(--text);
+  margin: 0 0 0.8rem 0; /* 压缩 margin，给走马灯留出空间 */
+  letter-spacing: -0.02em;
+}
+
+.hero-cosmic-line {
+  display: block;
+}
+
+/* ===== 第一行：纯黑实色，不使用3D与描边 ===== */
+.hero-black-line {
+  font-size: 1em;
+  font-weight: 900;
+  color: #000000 !important;
+  -webkit-text-stroke: 0px transparent !important;
+  text-shadow: none !important;
+}
+
+/* ===== 第二行：纯净从左到右蓝紫渐变 3D 立体影刻 (双节点叠加法解决渲染 Bug) ===== */
+.hero-gradient-container {
+  font-size: 0.95em; /* 单行完整，防止折行 */
+  font-weight: 900 !important;
+  font-family: var(--font-sans) !important;
+  letter-spacing: -0.015em;
+  position: relative;
+  display: block;
+  z-index: 1;
+}
+
+/* 1. 底层：独立的阴影节点，渲染白色 3D 轮廓及阴影 */
+.hero-gradient-shadow { display: none !important; }
+
+/* 2. 顶层：覆盖在父元素正上方，渲染 100% 纯净蓝紫渐变 */
+.hero-gradient-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  font-weight: 900 !important;
+  font-family: var(--font-sans) !important;
+  
+  /* 融入“了解详细服务”按钮的专属蓝紫渐变填充 (从左到右渐变) */
+  background: #0A4ECB !important;
+  background-size: 100% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  -webkit-text-stroke: 0px transparent !important;
+  text-shadow: none !important;
+}
+
+@keyframes liquidGlassFlow {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+/* ===== 第三行：副说明文字 ===== */
+.hero-cosmic-line-sub {
+  font-size: 0.52em; /* 从 0.45 提升到 0.52，更易读 */
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-dim);
+  margin-top: 0.6em; /* 给副线更多呼吸空间 */
+}
+
+.hero-cosmic-line-sub i {
+  font-style: normal;
+  color: var(--cyan);
+  margin: 0 0.3em;
+  opacity: 0.7;
+}
+
+/* ===== 描述段落：字号加大，文字加粗，颜色更深 ===== */
+.hero-cosmic-desc {
+  font-size: 1.08rem; /* 微降字号，以防推挤走马灯 */
+  font-weight: 500;  
+  color: #000000;    
+  line-height: 1.7;
+  margin: 0 0 1.2rem 0; /* 缩减 margin，防遮挡 */
+}
+
+.hero-cosmic-hl {
+  color: #0A4ECB;
+  font-weight: 700; 
+}
+
+/* ================= 液态玻璃 CTA 按钮 ================= */
+.hero-cta-wrap {
+  display: flex;
+}
+
+.liquid-glass-btn {
+  position: relative;
+  overflow: hidden;
+  background: #0A4ECB !important;
+  border-top: 1px solid rgba(255,255,255,0.8) !important;
+  border-left: 1px solid rgba(255,255,255,0.5) !important;
+  box-shadow: inset 0 -2px 6px rgba(0, 0, 0, 0.1), inset 0 2px 6px rgba(255, 255, 255, 0.5), 0 8px 24px rgba(10, 78, 203, 0.25) !important;
+  border-radius: 9999px;
+  padding: 1rem 2.5rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.liquid-glass-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 -2px 6px rgba(0, 0, 0, 0.1), inset 0 2px 6px rgba(255, 255, 255, 0.5), 0 12px 30px rgba(10, 78, 203, 0.4) !important;
+}
+
+.liquid-glass-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  transform: skewX(-25deg);
+  animation: btnGloss 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes btnGloss { 0% { left: -150%; } 25%, 100% { left: 200%; } }
+
+/* ================= 右侧 WebGL 3D 地球布局 (占30%宽度) ================= */
+.hero-content-right {
+  flex: 0 0 30%; /* 右侧内容占 30% */
+  max-width: 30%;
+  display: flex;
+  justify-content: flex-end; /* 向右对齐，拉开中间距离 */
+  align-items: center;
+}
+
+.hero-globe-wrapper {
+  position: relative;
+  width: 320px; /* 缩减尺寸以适配 30% 宽度，并保障高度不超标 */
+  height: 320px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-globe-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(41, 151, 255, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-globe-canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  cursor: grab;
+}
+
+.hero-globe-canvas-container:active {
+  cursor: grabbing;
+}
+
+/* ================= 下层：走马灯跑马灯滚动区 ================= */
+.hero-marquee-container {
+  width: 100%;
+  border-top: 1px solid rgba(10, 78, 203, 0.05);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  padding: 0.7rem 0; /* 压缩 padding */
+  position: relative;
+  z-index: 12;
+}
+
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: heroMarqueeScroll 48s linear infinite;
+}
+
+.hero-marquee-container:hover .hero-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes heroMarqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hero-marquee-list {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem; /* 精细胶囊间距 */
+  padding-right: 1.2rem;
+}
+
+/* 🌟 液态玻璃卡片风格胶囊卡片 */
+.hero-marquee-item {
+  color: var(--text-dim);
+  text-decoration: none !important; /* 彻底去除下划线 */
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.02em;
+  display: inline-block;
+  
+  /* 液态玻璃样式 */
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px; /* 圆角胶囊 */
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.02);
+}
+
+.hero-marquee-item:hover {
+  color: var(--blue);
+  border-color: rgba(41, 151, 255, 0.35);
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(41, 151, 255, 0.08);
+}
+
+/* GEO/SEO优化总纲 高亮玻璃胶囊 */
+.hero-marquee-item-highlight {
+  background: rgba(41, 151, 255, 0.07);
+  border-color: rgba(41, 151, 255, 0.28);
+  color: var(--blue);
+  box-shadow: 0 4px 15px rgba(41, 151, 255, 0.05);
+}
+
+.hero-marquee-item-highlight:hover {
+  background: rgba(41, 151, 255, 0.15);
+  border-color: rgba(41, 151, 255, 0.45);
+  color: var(--blue-bright);
+}
+
+/* ================= 响应式 ================= */
+@media (max-width: 1024px) {
+  .hero-cosmic {
+    height: auto;
+    min-height: auto;
+    padding-bottom: 0;
+  }
+  .hero-layout-container {
+    flex-direction: column;
+    text-align: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+    gap: 3rem;
+  }
+  .hero-content-left {
+    align-items: center;
+    max-width: 100%;
+  }
+  .hero-cta-wrap {
+    justify-content: center;
+  }
+  .hero-content-right {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-layout-container {
+    padding: 5rem 1.5rem 3rem 1.5rem;
+  }
+  .hero-cosmic-headline {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+  .hero-cosmic-desc {
+    font-size: 1rem;
+  }
+  .hero-globe-wrapper {
+    width: 280px;
+    height: 280px;
+  }
+}

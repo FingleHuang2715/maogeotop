@@ -1,0 +1,387 @@
+/* ============================================================
+   Section 11 CSS — 外贸建站注意事项 FAQ
+   主容器: .faq-cosmic
+   使用原生 <details>/<summary> 无 JS 实现折叠展开
+   含微动画、卡片玻璃质感、响应式布局
+   ============================================================ */
+
+/* ===== 主容器 ===== */
+.faq-cosmic {
+  position: relative;
+  background: #fff;
+  padding: 100px 24px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+/* ===== 背景装饰 ===== */
+.faq-cosmic__bg-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  /* 网格线装饰 */
+  background-image:
+    linear-gradient(rgba(10, 78, 203, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 78, 203, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  /* 中央渐隐 */
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* ===== 内容容器 ===== */
+.faq-cosmic__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* =============================================
+   顶部居中标题区
+   ============================================= */
+.faq-cosmic__header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+/* --- 小标签 --- */
+.faq-cosmic__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(249, 115, 22, 0.06));
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 100px;
+  padding: 6px 18px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  letter-spacing: 0.5px;
+}
+.faq-cosmic__badge-icon {
+  font-size: 14px;
+}
+
+/* --- 主标题 --- */
+.faq-cosmic__title {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  color: var(--text, #1e1b2e);
+  line-height: 1.3;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+
+/* --- 副标题 --- */
+.faq-cosmic__subtitle {
+  font-size: 15px;
+  color: var(--text-muted, #7a7a9a);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* =============================================
+   FAQ 两列网格布局
+   ============================================= */
+.faq-cosmic__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ===== 单列 ===== */
+.faq-cosmic__col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =============================================
+   FAQ 条目 — <details> 样式
+   ============================================= */
+
+/* 外层 details 卡片 */
+.faq-cosmic__item {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 12px rgba(10, 78, 203, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.faq-cosmic__item:hover {
+  box-shadow:
+    0 8px 32px rgba(10, 78, 203, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: rgba(10, 78, 203, 0.2);
+}
+
+/* 展开状态：整体高亮 */
+.faq-cosmic__item[open] {
+  border-color: rgba(10, 78, 203, 0.25);
+  box-shadow:
+    0 8px 40px rgba(10, 78, 203, 0.14),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== summary 问题标题区 ===== */
+.faq-cosmic__summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 22px;
+  cursor: pointer;
+  list-style: none; /* 去掉默认▶ */
+  user-select: none;
+  background: transparent;
+  transition: background 0.25s ease;
+  /* 阻止默认 marker */
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* 去除 WebKit 的默认三角 */
+.faq-cosmic__summary::-webkit-details-marker {
+  display: none;
+}
+.faq-cosmic__summary::marker {
+  display: none;
+  content: '';
+}
+
+/* 展开时 summary 背景微变色 */
+.faq-cosmic__item[open] > .faq-cosmic__summary {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.05), rgba(0, 102, 204, 0.03));
+  border-bottom: 1px solid rgba(10, 78, 203, 0.1);
+}
+.faq-cosmic__summary:hover {
+  background: rgba(10, 78, 203, 0.04);
+}
+.faq-cosmic__summary:focus-visible {
+  outline: 2px solid rgba(10, 78, 203, 0.4);
+  outline-offset: -2px;
+  border-radius: 14px;
+}
+
+/* 序号 */
+.faq-cosmic__q-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(10, 78, 203, 0.3);
+}
+
+/* 问题文字 */
+.faq-cosmic__q-text {
+  flex: 1;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text, #1e1b2e);
+  line-height: 1.5;
+}
+.faq-cosmic__item[open] .faq-cosmic__q-text {
+  color: var(--blue, #0A4ECB);
+}
+
+/* 右侧 +/- 切换图标 */
+.faq-cosmic__q-toggle {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(10, 78, 203, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--blue, #0A4ECB);
+  background: rgba(10, 78, 203, 0.05);
+  transition: background 0.25s ease, transform 0.3s ease, border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.faq-cosmic__item[open] .faq-cosmic__q-toggle {
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  border-color: transparent;
+  transform: rotate(0deg);
+}
+
+/* + 号默认显示，- 号默认隐藏 */
+.faq-cosmic__toggle-plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue, #0A4ECB);
+  transition: opacity 0.2s, transform 0.3s;
+}
+.faq-cosmic__toggle-minus {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: absolute;
+}
+/* 展开时：+ 隐藏，- 显示 */
+.faq-cosmic__item[open] .faq-cosmic__toggle-plus {
+  display: none;
+}
+.faq-cosmic__item[open] .faq-cosmic__toggle-minus {
+  display: inline-flex;
+}
+
+/* ===== 答案区 ===== */
+.faq-cosmic__answer {
+  overflow: hidden;
+  /* 原生details展开时没有transition，通过padding营造空间感 */
+}
+.faq-cosmic__answer-inner {
+  padding: 18px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: faq-answer-in 0.28s ease;
+}
+@keyframes faq-answer-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.faq-cosmic__answer-inner p {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--text-dim, #4a4a6a);
+  margin: 0;
+}
+.faq-cosmic__answer-inner p strong {
+  color: var(--text, #1e1b2e);
+  font-weight: 600;
+}
+
+/* 引用块（Q3谷歌声明） */
+.faq-cosmic__quote {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.06), rgba(0, 102, 204, 0.04));
+  border-left: 3px solid #0A4ECB;
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text-dim, #4a4a6a);
+  font-style: italic;
+}
+
+/* =============================================
+   右列底部 — 猫哥提示卡片
+   ============================================= */
+.faq-cosmic__cta-hint {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.07), rgba(0, 102, 204, 0.05));
+  border: 1px solid rgba(10, 78, 203, 0.18);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-top: 4px;
+  box-shadow: 0 4px 20px rgba(10, 78, 203, 0.08);
+}
+.faq-cosmic__cta-hint-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.faq-cosmic__cta-hint-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-dim, #4a4a6a);
+}
+.faq-cosmic__cta-hint-text strong {
+  color: var(--blue, #0A4ECB);
+  font-weight: 700;
+}
+
+/* =============================================
+   响应式 — 1024px
+   ============================================= */
+@media (max-width: 1024px) {
+  .faq-cosmic {
+    padding: 80px 20px;
+  }
+  .faq-cosmic__grid {
+    gap: 16px;
+  }
+  .faq-cosmic__title {
+    font-size: 32px;
+  }
+}
+
+/* =============================================
+   响应式 — 768px
+   ============================================= */
+@media (max-width: 768px) {
+  .faq-cosmic {
+    padding: 60px 16px;
+  }
+  .faq-cosmic__grid {
+    grid-template-columns: 1fr; /* 折叠为单列 */
+    gap: 16px;
+  }
+  .faq-cosmic__header {
+    margin-bottom: 40px;
+  }
+  .faq-cosmic__title {
+    font-size: 26px;
+  }
+  .faq-cosmic__q-text {
+    font-size: 13.5px;
+  }
+}
+
+/* =============================================
+   响应式 — 480px
+   ============================================= */
+@media (max-width: 480px) {
+  .faq-cosmic {
+    padding: 48px 12px;
+  }
+  .faq-cosmic__title {
+    font-size: 22px;
+  }
+  .faq-cosmic__summary {
+    padding: 16px;
+    gap: 10px;
+  }
+  .faq-cosmic__answer-inner {
+    padding: 14px 16px 18px;
+  }
+  .faq-cosmic__q-num {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+  .faq-cosmic__q-text {
+    font-size: 13px;
+  }
+  .faq-cosmic__answer-inner p {
+    font-size: 13px;
+  }
+}

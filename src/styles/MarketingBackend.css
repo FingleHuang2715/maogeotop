@@ -1,0 +1,385 @@
+/* ============================================================================
+   Section 10 CSS — 持续给外贸人提供网站营销思路
+   主容器: .backend-cosmic
+   视觉调性：亮色底底色 + 蓝紫炫光氛围 (Light Tech Glow)
+   前缀：.backend-cosmic__
+   ============================================================================ */
+
+.backend-cosmic {
+  position: relative;
+  background: var(--deep, #f9fafb);
+  padding: 8rem 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  color: var(--text, #1e1b2e);
+  border-top: 1px solid rgba(10, 78, 203, 0.05);
+}
+
+/* ===== 背景光晕 ===== */
+.backend-cosmic__glow {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.backend-cosmic__glow--left {
+  left: -120px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, rgba(10, 78, 203, 0.08) 0%, transparent 70%);
+}
+
+.backend-cosmic__glow--right {
+  right: -120px;
+  top: 30%;
+  background: radial-gradient(circle, rgba(0, 102, 204, 0.08) 0%, transparent 70%);
+}
+
+/* ===== 内容容器 ===== */
+.backend-cosmic__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5vw;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* =============================================
+   左侧内容区
+   ============================================= */
+.backend-cosmic__left {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- 小标签 --- */
+.backend-cosmic__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 78, 203, 0.08);
+  border: 1px solid rgba(10, 78, 203, 0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 24px;
+  align-self: flex-start;
+}
+
+.backend-cosmic__badge-num {
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.backend-cosmic__badge-text {
+  color: var(--text-dim, #4a4a6a);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* --- 主标题 --- */
+.backend-cosmic__title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text, #1e1b2e);
+  line-height: 1.25;
+  margin: 0 0 20px 0;
+}
+
+/* --- 描述文字 --- */
+.backend-cosmic__desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-dim, #4a4a6a);
+  margin: 0 0 32px 0;
+}
+
+.backend-cosmic__desc strong {
+  color: var(--blue, #0A4ECB);
+  font-weight: 600;
+}
+
+/* --- 功能亮点列表 --- */
+.backend-cosmic__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.backend-cosmic__feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(10, 78, 203, 0.08);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 15px rgba(10, 78, 203, 0.02);
+  transition: all 0.3s;
+}
+
+.backend-cosmic__feature-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 10px 25px rgba(10, 78, 203, 0.06);
+  border-color: rgba(10, 78, 203, 0.2);
+}
+
+.backend-cosmic__feature-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.backend-cosmic__feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.backend-cosmic__feature-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text, #1e1b2e);
+}
+
+.backend-cosmic__feature-text span {
+  font-size: 13px;
+  color: var(--text-muted, #7a7a9a);
+  line-height: 1.6;
+}
+
+/* --- 页面类型标签 --- */
+.backend-cosmic__page-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.backend-cosmic__page-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(10, 78, 203, 0.15);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim, #4a4a6a);
+  transition: all 0.3s;
+  text-decoration: none !important;
+}
+
+.backend-cosmic__page-tag--active {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.06), rgba(0, 102, 204, 0.05));
+  border-color: rgba(10, 78, 203, 0.3);
+  color: var(--blue, #0A4ECB);
+}
+
+.backend-cosmic__page-tag:hover {
+  border-color: rgba(10, 78, 203, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(10, 78, 203, 0.03);
+}
+
+.backend-cosmic__page-tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted, #7a7a9a);
+  display: inline-block;
+}
+
+.backend-cosmic__page-tag--active .backend-cosmic__page-tag-dot {
+  background: var(--blue, #0A4ECB);
+  box-shadow: 0 0 6px rgba(10, 78, 203, 0.5);
+}
+
+/* =============================================
+   右侧 — 模拟浏览器窗口 + 真实后台大图
+   ============================================= */
+.backend-cosmic__right {
+  position: relative;
+  width: 100%;
+}
+
+/* --- 浏览器外框 (仿 Mac 窗口，带 3D 偏转悬停) --- */
+.backend-cosmic__browser {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow:
+    0 20px 50px rgba(10, 78, 203, 0.08),
+    0 0 0 1px rgba(10, 78, 203, 0.08);
+  overflow: hidden;
+  transform: perspective(1200px) rotateY(-3deg) rotateX(2deg);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+.backend-cosmic__browser:hover {
+  transform: perspective(1200px) rotateY(0deg) rotateX(0deg);
+}
+
+/* --- 浏览器顶栏 --- */
+.backend-cosmic__browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f3f9;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.backend-cosmic__browser-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.backend-cosmic__browser-dot--red { background: #ff5f57; }
+.backend-cosmic__browser-dot--yellow { background: #ffbd2e; }
+.backend-cosmic__browser-dot--green { background: #28c840; }
+
+.backend-cosmic__browser-url {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-left: 12px;
+  font-family: monospace;
+}
+
+/* --- 真实原图展示区 (等比例，无裁剪，可点击) --- */
+.backend-cosmic__image-viewport {
+  position: relative;
+  width: 100%;
+  background: #f8fafc;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.backend-cosmic__img-content {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain; /* 确保无裁剪，等比缩放 */
+  transition: transform 0.4s;
+}
+
+.backend-cosmic__image-viewport:hover .backend-cosmic__img-content {
+  transform: scale(1.02);
+}
+
+.backend-cosmic__zoom-tip {
+  position: absolute;
+  bottom: 0; left: 0; width: 100%;
+  background: linear-gradient(to top, rgba(9, 8, 18, 0.75) 0%, rgba(9, 8, 18, 0) 100%);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 1.8rem 0 0.8rem 0;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+.backend-cosmic__image-viewport:hover .backend-cosmic__zoom-tip {
+  opacity: 1;
+}
+
+/* --- 浮动装饰标签 --- */
+.backend-cosmic__float-tag {
+  position: absolute;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+  box-shadow: 0 4px 16px rgba(10, 78, 203, 0.25);
+  white-space: nowrap;
+  z-index: 10;
+  animation: backend-tag-float 4s ease-in-out infinite;
+}
+
+.backend-cosmic__float-tag--top {
+  top: -14px;
+  right: 16px;
+}
+
+.backend-cosmic__float-tag--bottom {
+  bottom: 16px;
+  left: -14px;
+  animation-delay: 2s;
+}
+
+@keyframes backend-tag-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* =============================================
+   响应式设计
+   ============================================= */
+@media (max-width: 1024px) {
+  .backend-cosmic__container {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  .backend-cosmic__left {
+    align-items: center;
+    text-align: center;
+  }
+  .backend-cosmic__badge {
+    align-self: center;
+  }
+  .backend-cosmic__features {
+    align-self: center;
+    max-width: 600px;
+    text-align: left;
+  }
+  .backend-cosmic__page-types {
+    justify-content: center;
+  }
+  .backend-cosmic__right {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .backend-cosmic {
+    padding: 6rem 0;
+  }
+  .backend-cosmic__container {
+    padding: 0 1.5rem;
+  }
+  .backend-cosmic__float-tag {
+    display: none; /* 移动端极其狭窄，隐藏浮动标防止遮挡 */
+  }
+}

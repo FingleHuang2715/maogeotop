@@ -1,0 +1,239 @@
+/* ============================================================================
+   Section Reviews — 3D 圆形旋转卡片轮播 (CSS - 还原原图雪碧图)
+   设计系统规范：
+   - 采用 3D Preserve-3D 空间进行圆环排列，实现 Originkit 视觉风格。
+   - 还原原版雪碧图（Sprite Sheet）切割定位，并对接全局 CSS 变量。
+   - 对接全局变量：--font-sans, --text, --text-muted, --blue, --blue-bright, --cyan, --border-glass
+   ============================================================================ */
+
+:root {
+  /* 反馈图在手机框中的计算宽度与高度 (原比例 1206 * 2622) */
+  --review-item-w: 250px;
+  --review-item-h: 543px; /* 220 * (2622/1206) */
+  
+  --reviews-blue: #0A4ECB;
+  --reviews-blue-bright: #0A4ECB;
+  --reviews-cyan: #0066cc;
+  --reviews-deep: #ffffff; /* 纯白光泽背景 */
+}
+
+.reviews-cosmic {
+  position: relative;
+  background-color: var(--reviews-deep);
+  padding: 8rem 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  color: var(--text);
+  border-top: 1px solid var(--border-glass);
+}
+
+/* 背景光晕装饰 */
+.reviews-bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.reviews-glow-left {
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, var(--reviews-blue-bright) 0%, transparent 80%);
+}
+
+.reviews-glow-right {
+  bottom: -10%;
+  right: -10%;
+  background: radial-gradient(circle, var(--reviews-cyan) 0%, transparent 80%);
+}
+
+.reviews-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 1.5vw;
+  position: relative;
+  z-index: 2;
+}
+
+/* ==================== 顶部标题区 ==================== */
+.reviews-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.reviews-version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 78, 203, 0.04);
+  border: 1px solid var(--border-glass);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.reviews-version-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.reviews-version-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--reviews-blue);
+}
+
+.reviews-title {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.reviews-title-accent {
+  color: var(--reviews-blue);
+  font-weight: 900;
+}
+
+/* ==================== 3D 圆环舞台 ==================== */
+.reviews-carousel-stage {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 2500px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.reviews-carousel-stage:active {
+  cursor: grabbing;
+}
+
+.reviews-carousel-tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(-7deg); /* 精致的微俯视角度 */
+}
+
+.reviews-carousel-ring {
+  position: relative;
+  width: var(--review-item-w);
+  height: var(--review-item-h);
+  transform-style: preserve-3d;
+}
+
+.reviews-carousel-slide {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* 面片基础样式 */
+.reviews-face-front,
+.reviews-face-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  background-image: url('https://maogewordpress.oss-cn-shenzhen.aliyuncs.com/wp-content/uploads/2026/07/20260715230143599-scaled.webp');
+  background-size: calc(var(--review-item-w) * 10) var(--review-item-h);
+  background-repeat: no-repeat;
+  box-shadow: 0 15px 35px rgba(10, 78, 203, 0.12), 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: #f8fafc;
+}
+
+/* 正面面片 */
+.reviews-face-front {
+  cursor: zoom-in;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+}
+
+.reviews-face-front:hover {
+  border-color: var(--reviews-blue-bright);
+}
+
+/* 背面面片 (呈现卡片内部的纵深感) */
+.reviews-face-back {
+  transform: rotateY(180deg);
+  filter: brightness(0.35); /* innerDim 阻暗效果 */
+}
+
+/* 雪碧图切割定位 */
+.reviews-sprite-1 { background-position: 0px 0px; }
+.reviews-sprite-2 { background-position: calc(var(--review-item-w) * -1) 0px; }
+.reviews-sprite-3 { background-position: calc(var(--review-item-w) * -2) 0px; }
+.reviews-sprite-4 { background-position: calc(var(--review-item-w) * -3) 0px; }
+.reviews-sprite-5 { background-position: calc(var(--review-item-w) * -4) 0px; }
+.reviews-sprite-6 { background-position: calc(var(--review-item-w) * -5) 0px; }
+.reviews-sprite-7 { background-position: calc(var(--review-item-w) * -6) 0px; }
+.reviews-sprite-8 { background-position: calc(var(--review-item-w) * -7) 0px; }
+
+/* ==================== 底部提示区 ==================== */
+.reviews-footer-tips {
+  text-align: center;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviews-swipe-icon {
+  font-size: 1.5rem;
+  color: var(--reviews-blue-bright);
+  animation: reviewsBounce 2s infinite ease-in-out;
+}
+
+@keyframes reviewsBounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+.reviews-swipe-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 768px) {
+  :root {
+    --review-item-w: 160px;
+    --review-item-h: 348px;
+  }
+  .reviews-cosmic {
+    padding: 6rem 0;
+  }
+  .reviews-carousel-stage {
+    height: 380px;
+    perspective: 1500px;
+  }
+  .reviews-face-front,
+  .reviews-face-back {
+    border-radius: 16px;
+  }
+}
+
+/* ==================== 减弱动画适配 ==================== */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-swipe-icon {
+    animation: none;
+  }
+}

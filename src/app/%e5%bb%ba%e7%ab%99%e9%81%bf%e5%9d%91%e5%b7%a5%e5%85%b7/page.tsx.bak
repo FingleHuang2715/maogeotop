@@ -1,0 +1,986 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import "@/styles/AuditTool.css";
+
+interface QuizQuestion {
+  id: number;
+  title: string;
+  options: { text: string; score: number }[];
+  explanation: string;
+}
+
+interface PostItem {
+  title: string;
+  slug: string;
+  views: number;
+}
+
+export default function AuditToolPage() {
+  const [activeTab, setActiveTab] = useState<"vendor" | "seo" | "exposure">("vendor");
+  
+  // Quiz states
+  const [currentStep, setCurrentStep] = useState(0); // 0 = welcome, 1-10 = core, 11-15 = secondary, 999 = result
+  const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: { score: number; text: string } }>({});
+  const [showChoicePanel, setShowChoicePanel] = useState(false);
+
+  // Exposure form states
+  const [expCompany, setExpCompany] = useState("");
+  const [expPlatform, setExpPlatform] = useState("");
+  const [expEmail, setExpEmail] = useState("");
+  const [expExperience, setExpExperience] = useState("");
+  const [expMathAns, setExpMathAns] = useState("");
+  const [mathChallenge, setMathChallenge] = useState({ n1: 0, n2: 0, ans: 0 });
+  const [exposureNotice, setExposureNotice] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+
+  const vendorQuestions: QuizQuestion[] = [
+  {
+    "id": 1,
+    "title": "1. 对方与您对接时，是否拉了一个很大的工作群，但群内很多头像雷同且几乎不发言？",
+    "options": [
+      {
+        "text": "是的，拉了 10+ 人的群，日常说话的只有 1-2 人",
+        "score": 10
+      },
+      {
+        "text": "没有，群内只有 2-3 个核心人员直接对接沟通",
+        "score": 0
+      }
+    ],
+    "explanation": "部分低端网络公司会拉入许多公司内部闲置账号或机器人充当假托，给您营造团队实力宏大的假象。实际上做事的只有 1-2 人。此外，如果是真人大公司，也代表着极高的人员运营开支和提成，报价水分非常高。"
+  },
+  {
+    "id": 2,
+    "title": "2. 对方在推销时，是否给出极具诱惑力的排名指标（如：保证 3 个月内 500 个关键词排在谷歌首页）？",
+    "options": [
+      {
+        "text": "是的，给出了明确的快速排名前列承诺，称达不到退款",
+        "score": 25
+      },
+      {
+        "text": "没有，对方明确表示排名受谷歌算法和优化周期影响，不能承诺死时限",
+        "score": 0
+      }
+    ],
+    "explanation": "谷歌官方搜索指南强调：“千万不要相信声称能绝对保证排名的公司”。承诺快速上词通常是使用黑帽 SEO 技术（极易被谷歌降权封站），或者做一堆毫无搜索量、无人检索的极冷门长尾词来糊弄客户，对网站带来不了任何真实的询盘。"
+  },
+  {
+    "id": 3,
+    "title": "3. 对方提供的网站，在合同中是否明确指出“支持 100% 源码及数据库完全交付”，允许自由搬迁服务器？",
+    "options": [
+      {
+        "text": "不支持源码交付，必须绑定他们的云系统，或者合同里只字未提",
+        "score": 30
+      },
+      {
+        "text": "支持，100% 提供整站源码和数据库，不绑定服务器，支持自由打包迁移",
+        "score": 0
+      }
+    ],
+    "explanation": "不能迁移服务器、不给源码包的建站是最大的陷阱！这意味着您只有网站的使用权，没有所有权。以后服务商涨价、服务态度变差或者关门倒闭，您的网站就成了废品，无法迁移，所有推广成本付诸东流。"
+  },
+  {
+    "id": 4,
+    "title": "4. 对方给您看过的精美案例网站，其首屏打开速度测分是否能达到 80+ 分以上？",
+    "options": [
+      {
+        "text": "案例站打开速度慢，测速分数低，有很多臃肿代码",
+        "score": 15
+      },
+      {
+        "text": "案例站秒开，手机端/电脑端 PageSpeed Insights 评分良好",
+        "score": 0
+      }
+    ],
+    "explanation": "案例网站如果加载时间超过 3-5 秒，会在出海推广中造成极高的用户流失率。如果案例本身就很慢，说明对方只是在网上买来的商业大路货模板，没有进行过任何代码级和服务器层面的速度调优。"
+  },
+  {
+    "id": 5,
+    "title": "5. 对方在准备阶段，是否提供系统的“关键词调研与布局建议”，还是直接催您提交资料上线？",
+    "options": [
+      {
+        "text": "催促直接交产品简介和图片，怎么发怎么做，没提过关键词和内容规划",
+        "score": 20
+      },
+      {
+        "text": "有，做过详尽的蓝海词/长尾词调研，并对每个主页面的内容进行了规划",
+        "score": 0
+      }
+    ],
+    "explanation": "建站前没有做关键词研究，就相当于盖楼没有图纸。直接把产品核心词贴上去，新站上线后很难获取排名，甚至谷歌都无法准确识别网页的相关性，直接导致网站长期没有自然流量。"
+  },
+  {
+    "id": 6,
+    "title": "6. 对方的报价单中，是否将“SSL 安全加密证书”作为高额年费或者必买附加项进行单独高收费？",
+    "options": [
+      {
+        "text": "是的，SSL 证书年费昂贵，或者作为强行收费项",
+        "score": 15
+      },
+      {
+        "text": "不是，证书免费配置安装，或明确指出可使用免费证书",
+        "score": 0
+      }
+    ],
+    "explanation": "目前 SSL 加密证书（https）已经是行业标配，很多国际服务商提供永久免费的证书（如 Let's Encrypt）。将免费证书打包成每年几百上千元的维护费向客户收取，是建站商惯用的隐性收费手段。"
+  },
+  {
+    "id": 7,
+    "title": "7. 对方在合同中，是否愿意将“首屏加载速度时间（如：GTmetrix B 级以上或 PageSpeed 80 分以上）”写入验收标准？",
+    "options": [
+      {
+        "text": "不愿意，称速度影响因素太多，不能写在合同的验收标准内",
+        "score": 20
+      },
+      {
+        "text": "愿意，接受主流测速工具 of 规范指标作为验收交付红线",
+        "score": 0
+      }
+    ],
+    "explanation": "如果服务商拒绝在合同中为打开速度做保证，说明对方对自己的前端技术完全没有信心，大概率直接套用未优化的大型模板。合同中没有速度指标限制，网站最终卡慢也只能自认倒霉。"
+  },
+  {
+    "id": 8,
+    "title": "8. 对方提供的网站后台系统是使用主流、易于第三方拓展的 WordPress，还是他们自己独立闭源研发的后台？",
+    "options": [
+      {
+        "text": "是对方自主研发的闭源小后台，界面简单，没有开放的插件生态",
+        "score": 20
+      },
+      {
+        "text": "是标准的 WordPress 后台，支持按需安装插件和二次改造",
+        "score": 0
+      }
+    ],
+    "explanation": "使用闭源独立后台意味着技术完全被该公司捆绑。一旦您想加一些新功能（如特定的询盘追踪、社媒分享、富媒体卡片等），必须支付高昂费用请对方定制。而 WordPress 拥有全球最大插件库，绝大多数功能都可以免费插件扩展。"
+  },
+  {
+    "id": 9,
+    "title": "9. 对方是否为每个产品页面配置了“Schema 结构化数据（如 Product / FAQ 富媒体标签）”，以利于谷歌 AI 检索和展示？",
+    "options": [
+      {
+        "text": "不清楚，没听过，对方方案中没有提过这一项",
+        "score": 15
+      },
+      {
+        "text": "提供，在每个产品及博客页面会按谷歌规范生成 Schema JSON-LD 代码",
+        "score": 0
+      }
+    ],
+    "explanation": "结构化数据是目前谷歌 AI（Overviews）以及普通蜘蛛理解网页数据类型的‘快速通道’。部署了 FAQ 或 Product Schema 的网页，在谷歌搜索结果中能呈现小问答、星级评分、价格区间等富媒体样式，大幅拉升点击率。"
+  },
+  {
+    "id": 10,
+    "title": "10. 对方除首期建站费外，是否收取极高昂的“每年维护服务年费”？",
+    "options": [
+      {
+        "text": "是的，每年必须交上千元甚至数千元的服务器及系统维护费，不交就关站",
+        "score": 20
+      },
+      {
+        "text": "不是，服务费仅包含服务器/域名成本，或允许我们自行管理服务器",
+        "score": 0
+      }
+    ],
+    "explanation": "正常的服务器和域名一年费用仅需几百元。很多低价建站公司第一年收费极低，但第二年开始收取数千元高昂的“维护年费”。如果不交就把网站彻底关闭，形同滚雪球式的隐形绑架消费。"
+  }
+];
+  const vendorSecondaryQuestions: QuizQuestion[] = [
+  {
+    "id": 11,
+    "title": "11. 对方案例站点的产品图片，是否都进行了关键词 ALT 属性标注？",
+    "options": [
+      {
+        "text": "没有，很多图片就是直接拼音或随便数字命名，无 ALT 描述",
+        "score": 10
+      },
+      {
+        "text": "有，每一张核心产品图都带有贴合关键词的中文或英文 ALT 标签",
+        "score": 0
+      }
+    ],
+    "explanation": "谷歌爬虫是读不懂图片画面内容的，它只能读取 `<img alt='描述'>` 中的标签属性。不写 ALT 属性的图片不仅无法参与谷歌图片搜索排名，更浪费了页面整体的关键词语义加分。"
+  },
+  {
+    "id": 12,
+    "title": "12. 对方案例中，大图和产品图是否全部进行了压缩并采用现代 WebP 格式？",
+    "options": [
+      {
+        "text": "全都是几 MB 的大 PNG 或 JPG 原始图，导致页面非常卡顿",
+        "score": 10
+      },
+      {
+        "text": "使用了 WebP 现代轻量化图片格式，压缩率高且保持高清",
+        "score": 0
+      }
+    ],
+    "explanation": "一张几 MB 的原始图片就会把手机端用户的流量和加载速度全部拖垮。图片格式的无损/有损压缩是建站商做事是否专业、细致的试金石。"
+  },
+  {
+    "id": 13,
+    "title": "13. 对方是否为网站部署了出海 On-Page SEO 的“多语言互链（Hreflang）标签”？",
+    "options": [
+      {
+        "text": "没提过，或者他们的多语言网站之间并没有正确的头关联代码",
+        "score": 10
+      },
+      {
+        "text": "有，如果是多语言站点，头文件中会精确输出 Hreflang 对应语言链接",
+        "score": 0
+      }
+    ],
+    "explanation": "做外贸站少不了多语言页面。如果在代码中没有添加 hreflang 声明，谷歌在收录时会把不同语言但内容结构相似的页面判为“重复内容”，严重分散主站权重，降低流量。"
+  },
+  {
+    "id": 14,
+    "title": "14. 页面中是否预留了 SNS（如 Facebook, LinkedIn, Twitter）一键分享和 Open Graph 社交协议支持？",
+    "options": [
+      {
+        "text": "没有做，或者只是几个无用的静态图标链接，无法分享内容",
+        "score": 10
+      },
+      {
+        "text": "有，配置了 Open Graph 标签，能够以精美卡片形式一键分享到海外社媒",
+        "score": 0
+      }
+    ],
+    "explanation": "外贸站需要与海外社媒互动。如果代码中没有配置 Open Graph 社交卡片协议，您的产品链接被分享到 Facebook 或 LinkedIn 时将无法抓取缩略图和摘要，变成一片空白的丑陋链接，极大地折损点击率。"
+  },
+  {
+    "id": 15,
+    "title": "15. 建站商是否免费在后台为您安装了谷歌 GA4 与谷歌站长工具 (Search Console)，并进行了表单询盘漏斗埋点？",
+    "options": [
+      {
+        "text": "没有，只做好了基础前台，数据分析代码需要自己找人或者另外付钱安",
+        "score": 15
+      },
+      {
+        "text": "免费做好了 GA4 和 GSC 代码配置，并针对询盘提交表单进行了转化漏斗追踪",
+        "score": 0
+      }
+    ],
+    "explanation": "不知道网站每天多少人访问、不知道询盘从哪个词来，网站就等于闭眼运行。GA4 和 GSC 是独立站分析流量的绝对核心工具。如果交付时不帮忙安装并配置好转化漏斗，您在推广时根本无法追踪真实的广告成效。"
+  }
+];
+  const seoQuestions: QuizQuestion[] = [
+  {
+    "id": 1,
+    "title": "1. 对方在为您建站时，是否支持将 URL 路径进行静态化（即伪静态设置，为每个网页自定短 URL）？",
+    "options": [
+      {
+        "text": "不支持，URL 都是带 query 参数（如 ?p=123、?cat=5）的动态长链接",
+        "score": 25
+      },
+      {
+        "text": "支持，全站支持根据网页关键词自定义斜杠伪静态 URL（如 /seo-audit-guide/）",
+        "score": 0
+      }
+    ],
+    "explanation": "伪静态 URL（静态化路径）是谷歌爬虫和 AI（Generative Overviews）最易识别和抓取的路径结构。带大量问号和参数的动态链接不仅极难让搜索引擎理解层级，更容易陷入无限循环死锁，折损网站整体权重。"
+  },
+  {
+    "id": 2,
+    "title": "2. 对方是否会在前台每个页面为您的产品及博客配置独立的 Title 标题、Meta Description 描述等 TDK 自填选项？",
+    "options": [
+      {
+        "text": "没有，TDK 标题和描述由系统自动抓取第一段话，后台无自由编辑配置输入框",
+        "score": 25
+      },
+      {
+        "text": "提供，后台的每个单页、分类聚合页、产品及博客都有单独的 SEO Title 与 Meta 自填框",
+        "score": 0
+      }
+    ],
+    "explanation": "每一个独立页面都必须配置个性化、含有高KD值关键词的 TDK 描述。如果只能由系统自动截取前文，会导致谷歌列表页描述重复率高（Duplicate Description），极大降低被谷歌收录的概率。"
+  },
+  {
+    "id": 3,
+    "title": "3. 对方的案例网站，在大图或主要产品图上是否全部进行了 ALT 属性标注？",
+    "options": [
+      {
+        "text": "全都没有 ALT，或者全站图片使用拼音、无意义英文字符（如 pic1.jpg）命名",
+        "score": 15
+      },
+      {
+        "text": "案例站的核心产品图都写有贴合关键词的 ALT 描述，且图片名称采用英文语义化分割",
+        "score": 0
+      }
+    ],
+    "explanation": "谷歌爬虫无法看懂图片像素，完全依赖 `<img alt='描述'>` 标签来理解图片代表什么。缺乏 ALT 标注的图片不仅无法参与谷歌图片搜索（Google Images）引流，更降低了页面整体的相关性分数。"
+  },
+  {
+    "id": 4,
+    "title": "4. 对方提供的网站，在核心内容排版中是否有合理的 Heading 标签（H1, H2, H3）层级递进分布？",
+    "options": [
+      {
+        "text": "没有，标题都只是改变字号和加粗的普通 span 或 div，或者一个页面包含多个 H1",
+        "score": 20
+      },
+      {
+        "text": "层级明确，全页面仅保留 1 个 H1（文章标题），主要子标题均使用 H2，其次级使用 H3",
+        "score": 0
+      }
+    ],
+    "explanation": "Heading（H 标签）是谷歌大模型快速提炼您网页内容大纲的主干线。一个网页包含多个 H1 或缺少 H2/H3 会直接导致蜘蛛无法建立语义索引大纲，导致文章对生成式 AI 引用极不友好。"
+  },
+  {
+    "id": 5,
+    "title": "5. 对方给您看过的建站案例，在手机端浏览器进行测速时（如 Lighthouse 手机端），性能分数能达到 60+ 分以上吗？",
+    "options": [
+      {
+        "text": "不理想，手机端测试分数惨不忍睹，只有 20-30 分左右，滑动卡顿",
+        "score": 20
+      },
+      {
+        "text": "性能良好，手机端 Lighthouse 测分达到 70-80 分以上，秒开无延迟",
+        "score": 0
+      }
+    ],
+    "explanation": "谷歌从 2021 年起已完全实行“移动端索引优先（Mobile-First Indexing）”，并把 Core Web Vitals（核心网页指标）计入排名权重。手机端测试不及格的网站，在谷歌中很难获得较好的自然排名。"
+  },
+  {
+    "id": 6,
+    "title": "6. 对方在网站代码的头部中，是否支持自动为多语言切换生成并输出多语言互链（Hreflang）指向标签？",
+    "options": [
+      {
+        "text": "不支持，多语言网站之间完全独立，页面之间没有多国语言语意头标签关联",
+        "score": 15
+      },
+      {
+        "text": "支持，若是多语言站点，每个页面头部均会自动输出规范的 Hreflang 对应语言声明代码",
+        "score": 0
+      }
+    ],
+    "explanation": "如果做了多国语言网站，但代码中没有 hreflang 声明，谷歌在收录时会把不同语言但内容结构类似的页面判定为“重复内容”，不仅严重分散主站权重，更会降低其他语种的自然收录速度。"
+  },
+  {
+    "id": 7,
+    "title": "7. 对方是否为您的网站前台模板配置了“Schema.org 富媒体结构化数据（如 Product / FAQ 富媒体标签）”？",
+    "options": [
+      {
+        "text": "不支持，或者方案中对此字字未提，没有结构化代码注入",
+        "score": 20
+      },
+      {
+        "text": "支持，全站产品及博客会按谷歌官方最新标准输出 Schema JSON-LD 结构化标签",
+        "score": 0
+      }
+    ],
+    "explanation": "结构化数据是目前谷歌搜索引用的‘绿色通道’。配置了 FAQ 或 Product Schema 的网页更容易被谷歌 AI 检索并作为摘要引用，同时在普通搜索结果中还会出现星级评价、价格区间等特殊展示，大幅提高点击率。"
+  },
+  {
+    "id": 8,
+    "title": "8. 对方制作的网站，是否会自动且实时地在前台生成格式规范的站点地图 (Sitemap.xml)？",
+    "options": [
+      {
+        "text": "没有自动生成，或者需要每次手动使用第三方工具爬取后上传 XML",
+        "score": 15
+      },
+      {
+        "text": "全自动，每发布一个新的产品或博客，全站 Sitemap.xml 均会自动秒级更新",
+        "score": 0
+      }
+    ],
+    "explanation": "Sitemap 是指引谷歌蜘蛛批量抓取您全站链接的“导航地图”。没有自动更新的 Sitemap 会使您的新网页收录周期从几小时延长至数周甚至数月，导致推广更新非常被动。"
+  },
+  {
+    "id": 9,
+    "title": "9. 对方的案例网站，其 CSS 和 JS 等静态样式资源文件是否进行了现代的 Brotli 级或 Gzip 压缩传输？",
+    "options": [
+      {
+        "text": "未经过任何合并和压缩，加载时需要发起几十个大容量明文 JS/CSS 链接请求",
+        "score": 10
+      },
+      {
+        "text": "代码高度合并精简，服务器端启用了 Brotli / Gzip 高压缩传输，传输体积大减",
+        "score": 0
+      }
+    ],
+    "explanation": "没有经过压缩的静态文件会导致浏览器渲染阻塞（Render-Blocking），耗尽用户的手机网络带宽。高压缩比的静态资源传输是确保网站能够首屏秒开的技术基石之一。"
+  },
+  {
+    "id": 10,
+    "title": "10. 建站交付时，对方是否能为您免费在后台配置安装谷歌官方 GA4 数据统计代码以及 Search Console 站长平台？",
+    "options": [
+      {
+        "text": "不包，或者需要额外加收高额的分析代码埋点费用，只给裸站",
+        "score": 15
+      },
+      {
+        "text": "免费包办 GA4 和 GSC 的配置绑定，并针对最核心的询盘表单提交配置了转化追踪",
+        "score": 0
+      }
+    ],
+    "explanation": "GA4 和 Search Console 是您了解客户来源、哪些词带来了曝光以及询盘漏斗情况的核心统计工具。如果交付时不进行表单埋点绑定，您在后续投放谷歌广告或做 SEO 时就等于闭眼摸索，根本无法掌握成效。"
+  }
+];
+  const seoSecondaryQuestions: QuizQuestion[] = [
+  {
+    "id": 11,
+    "title": "11. 网站在进行多语言翻译时，是使用机器生硬翻译，还是采用针对海外当地语法习惯的人工精修？",
+    "options": [
+      {
+        "text": "纯机翻，后台安装个实时翻译插件直接出结果，读起来极其拗口别扭",
+        "score": 15
+      },
+      {
+        "text": "人工精校，由懂行人员针对海外本土用语习惯、行业专业术语进行重构润色",
+        "score": 0
+      }
+    ],
+    "explanation": "谷歌官方曾明确指出，虽然不排斥 AI 和机器翻译，但“机器生硬翻译且未加人工润色、存在大量阅读硬伤的垃圾内容”会被谷歌 Helpful Content 算法识别并重罚，更会打击真实买家的询盘意愿。"
+  },
+  {
+    "id": 12,
+    "title": "12. 对方提供的网站后台系统，是否能够自由地将多媒体图片、文件接入 CDN（内容分发网络）进行加速传输？",
+    "options": [
+      {
+        "text": "不支持，必须保存在本服务器上，无法对接像 Cloudflare 这样的加速服务",
+        "score": 10
+      },
+      {
+        "text": "支持，全站图片、字体等静态资源支持轻松接入全球 CDN 缓存加速",
+        "score": 0
+      }
+    ],
+    "explanation": "出海推广针对的是全球不同国家的用户。不支持 CDN 加速意味着远在美国或欧洲的买家需要直接拉取您国内或某个单点服务器的大图，极易因为跨国路由延迟导致网站打不开。"
+  },
+  {
+    "id": 13,
+    "title": "13. 网站是否做好了 Canonical（权威链接）标签的声明输出？",
+    "options": [
+      {
+        "text": "没有 Canonical 标签声明，同个页面可能因为参数不同产生多个 URL 指向",
+        "score": 10
+      },
+      {
+        "text": "有，每个页面都会自动在头文件中声明唯一的 Canonical 权威原链接",
+        "score": 0
+      }
+    ],
+    "explanation": "Canonical 标签是告诉谷歌“如果这个页面由于参数有多个 URL 副本，请统一只将这一个主 URL 进行排名”的指令。缺少此声明会导致谷歌判断您网站有大量重复页面，严重稀释网站权重。"
+  },
+  {
+    "id": 14,
+    "title": "14. 网站的产品列表分类，是否支持按“分类标签 + 关联属性”进行利于 SEO 结构树的多重筛选？",
+    "options": [
+      {
+        "text": "不支持，或者只能进行简单的大类查看，不能组合参数筛选过滤",
+        "score": 10
+      },
+      {
+        "text": "支持，可以根据产品属性（如尺寸、材质、用途）进行利于蜘蛛追踪的面包屑筛选",
+        "score": 0
+      }
+    ],
+    "explanation": "高级的分类多重筛选可以帮蜘蛛顺着属性路由爬取到更底层的细分页面。扁平化且支持条件归类的产品树结构是目前谷歌大中型营销站提高海量长尾词排名的核心利器。"
+  },
+  {
+    "id": 15,
+    "title": "15. 对方交付的网站，是否在前端代码的 `<html>` 标签上正确声明了该页面对应的语种（如 lang='en'）？",
+    "options": [
+      {
+        "text": "未声明，或者所有翻译站点上的 html lang 统一都是默认的 zh-CN",
+        "score": 10
+      },
+      {
+        "text": "正确声明，英文站显示 lang='en'，西班牙语站显示 lang='es'，根据语种动态变动",
+        "score": 0
+      }
+    ],
+    "explanation": "页面的 HTML lang 属性是浏览器和搜索引擎在底层判定网页语种的第一关。如果英文站的 html 声明写着中文，谷歌可能会在搜索中向英语地区用户降低展示推荐频次，极大折损曝光。"
+  }
+];
+
+  const coreQuestions = activeTab === "vendor" ? vendorQuestions : seoQuestions;
+  const secondaryQuestions = activeTab === "vendor" ? vendorSecondaryQuestions : seoSecondaryQuestions;
+  
+  const allQuestions = [...coreQuestions, ...secondaryQuestions];
+
+  // Load Math challenge for exposure
+  const initMathChallenge = () => {
+    const n1 = Math.floor(Math.random() * 9) + 1;
+    const n2 = Math.floor(Math.random() * 9) + 1;
+    setMathChallenge({ n1, n2, ans: n1 + n2 });
+    setExpMathAns("");
+  };
+
+  useEffect(() => {
+    initMathChallenge();
+  }, []);
+
+  const handleStart = () => {
+    setCurrentStep(1);
+    setSelectedOptions({});
+    setShowChoicePanel(false);
+  };
+
+  const handleSelectOption = (question: QuizQuestion, score: number, text: string) => {
+    setSelectedOptions(prev => ({ ...prev, [question.id]: { score, text } }));
+  };
+
+  const handleNext = () => {
+    const totalCoreCount = coreQuestions.length;
+
+    if (currentStep < totalCoreCount) {
+      setCurrentStep(currentStep + 1);
+    } else if (currentStep === totalCoreCount) {
+      // Step 10 finished, show choice panel
+      setShowChoicePanel(true);
+    } else if (currentStep >= totalCoreCount + 1 && currentStep < allQuestions.length) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // Final step finished
+      setCurrentStep(999);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    } else {
+      setCurrentStep(0);
+    }
+  };
+
+  const handleStopQuiz = () => {
+    setCurrentStep(999);
+  };
+
+  const handleProceedToResultsDirectly = () => {
+    setShowChoicePanel(false);
+    setCurrentStep(999);
+  };
+
+  const handleStartSecondaryQuiz = () => {
+    setShowChoicePanel(false);
+    setCurrentStep(coreQuestions.length + 1);
+  };
+
+  const handleReset = () => {
+    setCurrentStep(0);
+    setSelectedOptions({});
+    setShowChoicePanel(false);
+  };
+
+  // Score Calculations
+  const answersList = Object.entries(selectedOptions);
+  const totalScore = answersList.reduce((acc, [_, val]) => acc + val.score, 0);
+
+  const getSafetyLevel = (score: number) => {
+    if (score >= 71) {
+      return {
+        level: "高风险 - 重度雷区",
+        color: "#ef4444",
+        summary: "极度危险！该建站服务商极有可能是流水线式的模板推销公司。对方的条款中存在极强的用户锁定陷阱（不给源码且强收昂贵年费），或者在 SEO 排名、价格构成上存在严重浮夸虚假包装。强烈建议您立刻暂停合作，或者添加微信：maogeotop 获取猫哥团队的二次免费人工诊断，避免建站烂尾造成惨重损失！"
+      };
+    }
+    if (score >= 31) {
+      return {
+        level: "中风险 - 警惕级别",
+        color: "#f59e0b",
+        summary: "请小心！该建站商存在明显的套路销售行为，或在关键的网站所有权（如服务器强绑定）、代码加载性能保障上拒绝做出承诺。建议必须向对方施加压力，要求将“PageSpeed Speed Index 手机端测分不低于 80 分”、“免费移交完整源码与数据库包”这两条强制性写入合同的最终验收红线！"
+      };
+    }
+    return {
+      level: "低风险 - 靠谱级别",
+      color: "#10b981",
+      summary: "恭喜！您选择或接触的建站服务商在关键的商务所有权、SEO 代码规范、以及交付透明度上得分非常安全。没有发现明显的忽悠套路，技术思路也很靠谱，建议继续推进，细节做好合同留底即可！"
+    };
+  };
+
+  const safetyInfo = getSafetyLevel(totalScore);
+
+  const handleExposureSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (parseInt(expMathAns) !== mathChallenge.ans) {
+      setExposureNotice({ type: "error", msg: "❌ 算术验证码计算错误，请重新输入！" });
+      initMathChallenge();
+      return;
+    }
+    setExposureNotice({
+      type: "success",
+      msg: `✓ 曝光提交成功！已成功登记针对公司「${expCompany}」的曝光信息。后续猫哥团队会主动联系您邮箱进行维权！`
+    });
+    setExpCompany("");
+    setExpPlatform("");
+    setExpEmail("");
+    setExpExperience("");
+    initMathChallenge();
+  };
+
+  const handleCopyWechat = () => {
+    const wechat = "maogeotop";
+    navigator.clipboard.writeText(wechat).then(() => {
+      alert("微信号 maogeotop 已成功复制到剪贴板，请打开微信添加好友咨询。");
+    }).catch(() => {
+      alert("复制失败，请手动添加微信客服：maogeotop");
+    });
+  };
+
+  // Static sidebar content
+  const hotPosts: PostItem[] = [
+    { title: "外贸建站合同里的三大夺命陷阱", slug: "contract-traps", views: 2420 },
+    { title: "如何让谷歌 AI 优先收录并检索你的网页", slug: "google-ai-indexing", views: 1890 },
+    { title: "为什么大公司做的网站往往又慢又贵", slug: "large-company-speed", views: 1650 },
+    { title: "WordPress 主题模板修改网站常见硬伤", slug: "wp-theme-flaws", views: 1420 },
+    { title: "2026 年最新谷歌 SEO 16 大站内标签优化指南", slug: "seo-tags-guide", views: 1250 }
+  ];
+
+  return (
+    <main className="mg-audit-wrapper" >
+      <div className="mg-audit-container">
+        
+        {/* 1. Breadcrumbs Header */}
+        <header className="mg-audit-header-card">
+          <div className="mg-audit-breadcrumbs">
+            <Link href="/">首页</Link> &gt; <span>自测避坑与曝光维权</span>
+          </div>
+          <h1 className="mg-audit-main-title">外贸独立站避雷自测与曝光维权中心</h1>
+          <p className="mg-audit-sub-desc">
+            多维度在线诊断建站合作硬伤与谷歌技术 SEO 雷点，汇总被投诉低质公司，协助外贸卖家发起法律合规维权。
+          </p>
+        </header>
+
+        
+
+        {/* 3. Middle Flow */}
+        <main className="mg-audit-main-flow">
+          
+          <nav className="mg-quiz-switcher-bar">
+            <button 
+              className={`mg-switcher-btn ${activeTab === "vendor" ? "active" : ""}`}
+              onClick={() => { setActiveTab("vendor"); handleReset(); }}
+            >
+              🏡 建站服务商防坑自测
+            </button>
+            <button 
+              className={`mg-switcher-btn ${activeTab === "seo" ? "active" : ""}`}
+              onClick={() => { setActiveTab("seo"); handleReset(); }}
+            >
+              🚀 GEO/SEO 优化技术自测
+            </button>
+            <button 
+              className={`mg-switcher-btn ${activeTab === "exposure" ? "active" : ""}`}
+              onClick={() => { setActiveTab("exposure"); }}
+            >
+              ⚖️ 曝光违权低质商户
+            </button>
+          </nav>
+
+          <div className="mg-audit-quiz-card">
+            
+            {activeTab !== "exposure" && currentStep === 0 && (
+              <div className="mg-panel-state mg-state-welcome active">
+                <span className="mg-welcome-icon">{activeTab === "vendor" ? "🛡️" : "🚀"}</span>
+                <h2>{activeTab === "vendor" ? "建站服务商靠谱自测" : "GEO/SEO 优化技术自测"}</h2>
+                <p>
+                  {activeTab === "vendor" 
+                    ? "本自测主要部分由 10 道核心提问组成，回答完成后可提交查看当前评估结果，也可选择继续深度测试。" 
+                    : "本技术级别自测能客观评分您的网页代码对于搜索引擎和 AI 大模型的友好度，防范低技术水准交付。"}
+                </p>
+                <button className="mg-welcome-btn" onClick={handleStart}>开始诊断测试 →</button>
+              </div>
+            )}
+
+            {activeTab !== "exposure" && currentStep > 0 && currentStep <= allQuestions.length && !showChoicePanel && (
+              <div className="mg-panel-state active">
+                
+                {/* Progress bar */}
+                <div className="mg-audit-progress-container">
+                  <div className="mg-progress-info">
+                    <span>{currentStep <= coreQuestions.length ? "核心测评阶段" : "深度细节自检"}</span>
+                    <span>第 {currentStep} / {allQuestions.length} 题</span>
+                  </div>
+                  <div className="mg-progress-bar-bg">
+                    <div 
+                      className="mg-progress-bar-fill" 
+                      style={{ width: `${(currentStep / allQuestions.length) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* Question */}
+                <h3 className="mg-question-title">
+                  {allQuestions[currentStep - 1].title}
+                </h3>
+
+                <div className="mg-options-list">
+                  {allQuestions[currentStep - 1].options.map((opt, idx) => {
+                    const questionId = allQuestions[currentStep - 1].id;
+                    const isSelected = selectedOptions[questionId]?.score === opt.score && selectedOptions[questionId]?.text === opt.text;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => handleSelectOption(allQuestions[currentStep - 1], opt.score, opt.text)}
+                        className={`mg-option-btn ${isSelected ? "selected" : ""}`}
+                      >
+                        <span className="mg-option-dot"></span>
+                        <span>{opt.text}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mg-quiz-footer-actions">
+                  <button onClick={handlePrev} className="mg-prev-btn">
+                    ← 返回上一题
+                  </button>
+                  
+                  {selectedOptions[allQuestions[currentStep - 1].id] !== undefined && (
+                    <button 
+                      onClick={handleNext}
+                      className="gradient-btn !rounded-full !py-2 !px-6 !border-none"
+                    >
+                      下一题 ➔
+                    </button>
+                  )}
+
+                  <button onClick={handleStopQuiz} className="mg-stop-btn">
+                    ⏹ 停止答题并生成报告
+                  </button>
+                </div>
+
+              </div>
+            )}
+
+            {/* Choice Panel */}
+            {activeTab !== "exposure" && showChoicePanel && (
+              <div className="mg-panel-state mg-state-choice active">
+                <span className="mg-welcome-icon">🏆</span>
+                <h2 className="mg-choice-title">10 道核心主要问题已答完！</h2>
+                <p className="mg-choice-desc">
+                  您已经完成了最核心的基础防坑测试。现在您可以直接提交并查看当前的雷区风险报告；如果您希望对包含图片、GA4 埋点等 5 道次要细节进行深度核算，请继续回答。
+                </p>
+                <div className="mg-choice-btn-group">
+                  <button className="mg-choice-btn-primary" onClick={handleProceedToResultsDirectly}>
+                    直接提交并查看结果 →
+                  </button>
+                  <button className="mg-choice-btn-secondary" onClick={handleStartSecondaryQuiz}>
+                    继续回答深度提问 (+5 题)
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Result Report Panel */}
+            {activeTab !== "exposure" && currentStep === 999 && (
+              <div className="mg-panel-state mg-state-result active">
+                
+                <div className="mg-gauge-box">
+                  <svg className="mg-gauge-svg">
+                    <circle className="mg-gauge-track" cx="75" cy="75" r="65"></circle>
+                    <circle 
+                      className="mg-gauge-fill" 
+                      cx="75" 
+                      cy="75" 
+                      r="65"
+                      stroke={safetyInfo.color}
+                      strokeDasharray="408.4"
+                      strokeDashoffset={408.4 - (408.4 * Math.min(totalScore, 100)) / 100}
+                    ></circle>
+                  </svg>
+                  <div className="mg-gauge-value">
+                    <div className="mg-score-num" style={{ color: safetyInfo.color }}>{totalScore}</div>
+                    <div className="mg-score-unit">雷区危险值</div>
+                  </div>
+                </div>
+
+                <div className="mg-result-badge" style={{ backgroundColor: safetyInfo.color }}>
+                  等级：{safetyInfo.level}
+                </div>
+                <p className="mg-result-summary">
+                  {safetyInfo.summary}
+                </p>
+
+                <div className="mg-audit-report-details">
+                  <h4 className="mg-details-title">🔍 测评踩中雷区与避坑建议清单：</h4>
+                  <div className="mg-report-list">
+                    {answersList.filter(([_, val]) => val.score > 0).map(([qId, val]) => {
+                      const questionObj = allQuestions.find(q => q.id === parseInt(qId));
+                      if (!questionObj) return null;
+                      return (
+                        <div className="mg-report-item" key={qId}>
+                          <h5>❌ {questionObj.title}</h5>
+                          <p>
+                            <strong>您的回答：</strong>{val.text} <br />
+                            <strong>避坑指引：</strong>{questionObj.explanation}
+                          </p>
+                        </div>
+                      );
+                    })}
+                    {answersList.filter(([_, val]) => val.score > 0).length === 0 && (
+                      <p style={{ fontSize: "13px", color: "#10b981", fontWeight: 600 }}>
+                        ✓ 完美！您当前的合作方式或建站配置极其安全，没有踩中任何技术与合同雷区！
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mg-result-cta">
+                  <p>如果自测有雷区扣分，建议与该公司签署附加约束性合同以保障资金与数据权益。</p>
+                  <button onClick={handleCopyWechat} className="mg-result-cta-btn">
+                    联系微信二次人工复核
+                  </button>
+                  <button className="mg-result-reset" onClick={handleReset}>
+                    重新测评
+                  </button>
+                </div>
+
+              </div>
+            )}
+
+            {/* Tab 3: Exposure Panel */}
+            {activeTab === "exposure" && (
+              <div className="mg-panel-state mg-state-exposure active">
+                <h2 style={{ fontSize: "18px", fontWeight: 600, color: "#222226", display: "flex", alignItems: "center", gap: "8px", justifyContent: "center", marginBottom: "10px" }}>
+                  曝光避雷低质建站公司 / 骗子商铺
+                </h2>
+                <p style={{ fontSize: "13px", color: "#555666", lineHeight: 1.6, maxWidth: "580px", margin: "0 auto 24px" }}>
+                  遭遇建站商拖延不交付、SaaS 锁死不给导源码、或者虚假优化排名欺骗？在此登记对方公司名字或店铺名称。如果同一商家被多位外贸客户曝光，猫哥团队会主动帮大家<b>建立微信群组联系律师进行合规维权起诉</b>。
+                </p>
+
+                {exposureNotice && (
+                  <div className={`mg-notice-bubble ${exposureNotice.type}`} style={{ marginBottom: "16px" }}>
+                    {exposureNotice.msg}
+                  </div>
+                )}
+
+                <form className="mg-exposure-form" onSubmit={handleExposureSubmit} style={{ maxWidth: "500px", margin: "0 auto", textAlign: "left" }}>
+                  <div className="mg-form-row">
+                    <label className="mg-form-label" htmlFor="expCompany">被诉公司或店铺全称：</label>
+                    <input 
+                      type="text" 
+                      id="expCompany" 
+                      className="mg-form-input" 
+                      placeholder="例如：广州XX网络科技有限公司" 
+                      value={expCompany}
+                      onChange={(e) => setExpCompany(e.target.value)}
+                      required 
+                    />
+                  </div>
+
+                  <div className="mg-form-row">
+                    <label className="mg-form-label" htmlFor="expPlatform">下单渠道平台：</label>
+                    <select 
+                      id="expPlatform" 
+                      className="mg-form-select" 
+                      value={expPlatform}
+                      onChange={(e) => setExpPlatform(e.target.value)}
+                      required
+                    >
+                      <option value="">-- 请选择下单平台 --</option>
+                      <option value="淘宝">淘宝网</option>
+                      <option value="闲鱼">闲鱼二手</option>
+                      <option value="官网">服务商独立官网</option>
+                      <option value="微信">微信个人/转账</option>
+                      <option value="其他">其他渠道</option>
+                    </select>
+                  </div>
+
+                  <div className="mg-form-row">
+                    <label className="mg-form-label" htmlFor="expEmail">您的联系邮箱：</label>
+                    <input 
+                      type="email" 
+                      id="expEmail" 
+                      className="mg-form-input" 
+                      placeholder="用于有新投诉时通知您拉群维权" 
+                      value={expEmail}
+                      onChange={(e) => setExpEmail(e.target.value)}
+                      required 
+                    />
+                  </div>
+
+                  <div className="mg-form-row">
+                    <label className="mg-form-label" htmlFor="expExperience">您的真实踩坑经历简述 (50字以内)：</label>
+                    <textarea 
+                      id="expExperience" 
+                      className="mg-form-input" 
+                      rows={2} 
+                      maxLength={50} 
+                      placeholder="请简要陈述您的受骗或建站缺陷经历，最多50字" 
+                      value={expExperience}
+                      onChange={(e) => setExpExperience(e.target.value)}
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="mg-form-row">
+                    <label className="mg-form-label" htmlFor="expMathAns">安全防刷计算验证码：</label>
+                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                      <span style={{ fontWeight: "bold", color: "var(--blue, #0A4ECB)", fontSize: "15px" }}>
+                        {mathChallenge.n1} + {mathChallenge.n2} =
+                      </span>
+                      <input 
+                        type="number" 
+                        id="expMathAns" 
+                        className="mg-form-input" 
+                        style={{ width: "100px", textAlign: "center" }} 
+                        placeholder="答案" 
+                        value={expMathAns}
+                        onChange={(e) => setExpMathAns(e.target.value)}
+                        required 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mg-form-warning-note">
+                    💡 本平台仅作为外贸行业公益维权报备渠道。由于涉及商户信用，请务必保证提交的曝光情况完全属实。
+                  </div>
+
+                  <label className="mg-form-checkbox-row">
+                    <input type="checkbox" required />
+                    <span>我承诺上述所提交的曝光商户内容及平台完全属实真实可靠。</span>
+                  </label>
+
+                  <button type="submit" className="mg-form-submit-btn">
+                    确认并提交曝光维权信息
+                  </button>
+                </form>
+              </div>
+            )}
+
+          </div>
+
+        </main>
+
+        {/* 4. Right Sidebar */}
+        <aside className="mg-archive-sidebar">
+          
+          <div className="mg-sidebar-widget mg-author-card">
+            <div className="mg-author-avatar">🐱</div>
+            <div className="mg-author-name">猫哥</div>
+            <div className="mg-author-title">独立站 GEO 核心开发</div>
+            <p className="mg-author-bio">
+              15年谷歌SEO及出海建站经验，专注于营销流程构建与 AI GEO 规则布局，为您踢开流水线套版建站陷阱。
+            </p>
+          </div>
+
+          <div className="mg-sidebar-widget">
+            <h4 className="mg-widget-title">热门文章</h4>
+            <div className="mg-sidebar-posts">
+              {hotPosts.map((post, idx) => (
+                <Link key={idx} href="/blog" className="mg-sidebar-post-item">
+                  <h5 className="mg-sidebar-post-title">{post.title}</h5>
+                  <span className="mg-sidebar-post-reads">阅读数 {post.views}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="mg-sidebar-widget">
+            <h4 className="mg-widget-title">栏目分类</h4>
+            <div className="mg-sidebar-tags">
+              <Link href="/whychooseytcaptain" className="mg-sidebar-tag-link">外贸建站</Link>
+              <Link href="/web-design-seo" className="mg-sidebar-tag-link">GEO优化</Link>
+              <Link href="/blog" className="mg-sidebar-tag-link">出海博客</Link>
+              <Link href="/host-recommendation" className="mg-sidebar-tag-link">服务器</Link>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </main>
+  );
+}

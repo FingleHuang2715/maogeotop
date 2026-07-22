@@ -1,0 +1,553 @@
+@import "tailwindcss";
+
+/* ===== Component Style Imports ===== */
+@import "../styles/Header.css";
+@import "../styles/Footer.css";
+@import "../styles/AuditTool.css";
+@import "../styles/BlogArchive.css";
+@import "../styles/BlogSingle.css";
+@import "../styles/HeroSection.css";
+@import "../styles/GeoTools.css";
+@import "../styles/Section2.css";
+@import "../styles/ReviewsCarousel.css";
+@import "../styles/MarketingVsTemplate.css";
+@import "../styles/ProviderCriteria.css";
+@import "../styles/WhyChooseMaoge.css";
+@import "../styles/PricingPlans.css";
+@import "../styles/ConversionFormula.css";
+@import "../styles/ContentSystem.css";
+@import "../styles/KeywordResearch.css";
+@import "../styles/MarketingBackend.css";
+@import "../styles/FaqAccordion.css";
+@import "../styles/CompareMatrix.css";
+@import "../styles/GscAchievements.css";
+@import "../styles/CasesShowcase.css";
+@import "../styles/PageSpeedShowcase.css";
+@import "../styles/ServerRecommendation.css";
+
+/* ============================================================
+   全局样式系统 —— 蓝紫科技配色（参考阿里云 Meoo 风格）
+   包含：字体、颜色、变量、工具类
+   ============================================================ */
+
+/* ===== 1. CSS 变量 —— 颜色系统（苹果风格高阶亮色） ===== */
+:root {
+  /* ----- 主色系（苹果科技蓝） ----- */
+  --blue: #0A4ECB;           /* 苹果主调蓝色 */
+  --blue-bright: #0A4ECB;    /* 苹果亮蓝色 */
+  --cyan: #0066cc;           /* 苹果深蓝色 */
+  --deep: #f5f5f7;           /* 苹果经典灰白背景，而非纯白 */
+  
+  /* ----- 文字色系（对比鲜明，深邃） ----- */
+  --text: #1d1d1f;           /* 苹果主文字黑 */
+  --text-dim: #434344;       /* 次要描述深灰 */
+  --text-muted: #86868b;     /* 辅助说明灰 */
+  
+  /* ----- 背景/表面色系 ----- */
+  --surface: rgba(255, 255, 255, 0.98);  /* 极致纯净白表面 */
+  
+  /* ----- 发光与阴影效果 ----- */
+  --glow: rgba(10, 78, 203, 0.08);       /* 柔和科技阴影 */
+  --glow-strong: rgba(10, 78, 203, 0.15); /* 强阴影 */
+  
+  /* ----- 边框 ----- */
+  --border-glass: rgba(0, 0, 0, 0.06);   /* 苹果风超细浅色边框 */
+  
+  /* ===== 2. 字体系统 ===== */
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB',
+               'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  --font-serif: 'Georgia', 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+  --font-mono: 'Courier New', 'Consolas', monospace;
+  
+  /* ===== 3. 字号系统 ===== */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-md: 1.125rem;    /* 18px */
+  --text-lg: 1.25rem;     /* 20px */
+  --text-xl: 1.5rem;      /* 24px */
+  --text-2xl: 2rem;       /* 32px */
+  --text-3xl: 2.5rem;     /* 40px */
+  --text-4xl: 3.2rem;     /* 51px */
+  
+  /* ===== 4. 行高系统 ===== */
+  --leading-tight: 1.15;
+  --leading-normal: 1.6;
+  --leading-loose: 1.85;
+}
+
+/* ===== 5. 全局基础样式 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* scroll-behavior managed by Lenis */
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text);
+  background: var(--deep);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== 6. 标题默认样式 ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans) !important;
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+/* ===== 7. 代码字体 ===== */
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   8. 工具类
+   ============================================================ */
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-bright) 50%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.85), rgba(0, 102, 204, 0.85));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  padding: 0.6rem 1.8rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(10, 78, 203, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  outline: none;
+}
+
+.gradient-btn:hover {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.95), rgba(0, 102, 204, 0.95));
+  box-shadow: 0 6px 20px rgba(10, 78, 203, 0.45);
+  transform: translateY(-2px);
+}
+
+.gradient-btn:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(10, 78, 203, 0.3);
+}
+
+p, .p {
+  font-size: 1.08rem !important;
+  color: #2b2b3a !important;
+  line-height: 1.75 !important;
+}
+
+/* 极简自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(10, 78, 203, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 78, 203, 0.3);
+}
+
+
+/* ============================================================
+   ⚡ 全局卡片与按钮强制直角法则 (Sharp Right-Angle Rule - 遵照 GEO 工具页面标准)
+   ============================================================ */
+*,
+button,
+a,
+input,
+select,
+textarea,
+.gradient-btn,
+.hero-btn-primary,
+.hero-btn-secondary,
+.hero-ext-service-card,
+.hero-ext-bento-item,
+.hero-ext-bento-badge,
+.hero-cosmic-tag,
+.reviews-card,
+.cases-card,
+.gsc-card,
+.geo-lightbox-content,
+.geo-capability-card,
+.geo-advantage-item,
+.geo-advantages-featured {
+  border-radius: 0 !important;
+}
+
+
+
+/* ============================================================================
+   统一全站页面与区块边距与最大宽度 (Unified Site-Wide Container Alignment)
+   全站统一 max-width: 1440px，左右留白 20px
+   ============================================================================ */
+.srv-sec1-container,
+.srv-matrix-container,
+.mg-header-container,
+.mg-footer-container,
+.mg-footer-bottom-container,
+.why-section1-container,
+.why-section2-container,
+.why-section3-container,
+.why-section4-container,
+.why-section5-container,
+.why-section6-container,
+.seo-section1-container,
+.seo-section1-wrapper,
+.seo-section2-container,
+.seo-section3-container,
+.seo-section4-container,
+.seo-section5-container,
+.seo-section6-container,
+.seo-section7-container,
+.seo-section8-container,
+.geo-container,
+.geo-container-wide,
+.pagespeed-container,
+.cases-container,
+.gsc-container,
+.compare-container,
+.faq-container,
+.backend-container,
+.keyword-container,
+.coms-container,
+.convert-container,
+.plans-container,
+.why-container,
+.judge-container,
+.hero-container,
+.audit-container,
+.blog-container,
+.tpm-portal-section__inner {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+
+
+/* Custom WeChat Modal Dialog Styles */
+.mg-wechat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: mgFadeIn 0.25s ease-out;
+}
+
+.mg-wechat-modal-dialog {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 28px;
+  border-radius: 0 !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  position: relative;
+  text-align: center;
+  border: 1.5px solid rgba(10, 78, 203, 0.25);
+}
+
+.mg-wechat-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #86868b;
+  cursor: pointer;
+}
+
+.mg-wechat-modal-icon {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+
+.mg-wechat-modal-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #1d1d1f;
+  margin: 0 0 16px 0;
+}
+
+.mg-wechat-modal-code-box {
+  background: #f4f7fb;
+  border: 1px dashed #0A4ECB;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.mg-wechat-modal-label {
+  font-size: 14px;
+  color: #515154;
+}
+
+.mg-wechat-modal-code {
+  font-size: 18px;
+  color: #0A4ECB;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.mg-wechat-modal-tip {
+  font-size: 13px;
+  color: #86868b;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.mg-wechat-modal-btn {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #0A4ECB;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(10, 78, 203, 0.25);
+  transition: background 0.2s;
+}
+
+.mg-wechat-modal-btn:hover {
+  background: #005bb5;
+}
+
+@keyframes mgFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================================
+   🌟 全局侧边悬浮联系栏 (Floating Contact Bar) CSS
+   ============================================================================ */
+.mg-floating-contact-bar {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .mg-floating-contact-bar {
+    right: 12px;
+    bottom: 80px;
+    gap: 10px;
+  }
+}
+
+.mg-fc-item {
+  position: relative;
+}
+
+.mg-fc-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.15);
+  color: #0A4ECB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(10, 78, 203, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.mg-fc-btn:hover {
+  background: #0A4ECB;
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(10, 78, 203, 0.3);
+  transform: translateY(-2px);
+}
+
+.mg-fc-top-btn {
+  background: #0B50CC;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(11, 80, 204, 0.3);
+}
+
+.mg-fc-top-btn:hover {
+  background: #083eb1;
+  box-shadow: 0 12px 28px rgba(11, 80, 204, 0.4);
+}
+
+/* 呼吸脉冲波 */
+.mg-fc-pulse-btn {
+  position: relative;
+}
+
+.mg-fc-pulse-btn::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid #0A4ECB;
+  animation: mgPulseGlow 2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes mgPulseGlow {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Tooltip & Popover */
+.mg-fc-popover {
+  position: absolute;
+  right: 62px;
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.15);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 12px 36px rgba(10, 78, 203, 0.15);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 1000;
+}
+
+.mg-fc-item:hover .mg-fc-popover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0);
+}
+
+.mg-fc-arrow {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-right: 1px solid rgba(10, 78, 203, 0.15);
+  border-top: 1px solid rgba(10, 78, 203, 0.15);
+}
+
+.mg-fc-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #86868b;
+  margin-bottom: 4px;
+}
+
+.mg-fc-detail {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0A4ECB;
+  margin-bottom: 10px;
+}
+
+.mg-fc-action-btn {
+  background: #0A4ECB;
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.mg-fc-action-btn:hover {
+  background: #083eb1;
+}
+
+/* QR Code 特殊气泡 */
+.mg-fc-qr-popover {
+  padding: 16px;
+  text-align: center;
+}
+
+.mg-fc-qr-box {
+  width: 130px;
+  height: 130px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(10, 78, 203, 0.1);
+  margin: 0 auto 10px auto;
+  background: #f8fafc;
+}
+
+.mg-fc-qr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mg-fc-qr-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mg-fc-qr-text strong {
+  font-size: 13px;
+  color: #1d1d1f;
+  font-weight: 700;
+}
+
+.mg-fc-qr-text span {
+  font-size: 11px;
+  color: #86868b;
+}

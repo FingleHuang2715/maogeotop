@@ -1,0 +1,1576 @@
+/* Section 1: Hero 区块 CSS */
+.seo-section1-container {
+  padding: 100px 24px;
+  background: var(--deep);
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+
+.seo-section1-wrapper {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .seo-section1-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-top: 20px;
+  }
+}
+
+.seo-section1-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.seo-section1-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--glow);
+  border: 1px solid var(--border-glass);
+  border-radius: 30px;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.seo-section1-title {
+  font-size: 46px;
+  line-height: 1.25;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+@media (max-width: 576px) {
+  .seo-section1-title {
+    font-size: 34px;
+  }
+}
+
+.seo-section1-subtitle {
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  border-left: 4px solid var(--cyan);
+  padding-left: 16px;
+}
+
+.seo-section1-desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 680px;
+}
+
+.seo-section1-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.seo-section1-btn {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px var(--glow);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.seo-section1-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--glow-strong);
+}
+
+.seo-section1-email {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* 右侧科技感数据看板 */
+.seo-section1-dashboard {
+  position: relative;
+}
+
+.seo-section1-glass-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.seo-section1-glass-card:hover {
+  border-color: var(--blue-bright);
+  box-shadow: 0 25px 50px var(--glow);
+}
+
+.seo-section1-card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.seo-section1-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.seo-section1-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seo-section1-stat-num {
+  font-size: 44px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.seo-section1-stat-label {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.seo-section1-stat-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-glass), transparent);
+}
+
+/* Section 2: SEO 与 GEO 优化的三大支柱 CSS */
+.seo-section2-container {
+  padding: 100px 24px;
+  background: #ffffff;
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section2-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.seo-section2-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cyan);
+  background: var(--glow);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.seo-section2-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.seo-section2-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.seo-section2-grid {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 992px) {
+  .seo-section2-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+.seo-section2-card {
+  background: var(--surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 45px 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.seo-section2-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px var(--glow);
+  border-color: var(--blue-bright);
+}
+
+.seo-section2-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px var(--glow-strong);
+}
+
+.seo-section2-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.seo-section2-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: var(--text);
+}
+
+.seo-section2-card-desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* Section 3: 技术 SEO 优化六大清单 CSS */
+.seo-section3-container {
+  padding: 100px 24px;
+  background: var(--deep);
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section3-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.seo-section3-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--glow);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.seo-section3-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.seo-section3-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.seo-section3-grid {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .seo-section3-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.seo-section3-card {
+  background: var(--surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+}
+
+.seo-section3-card:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 10px 25px var(--glow);
+  transform: translateY(-2px);
+}
+
+.seo-section3-card-inner {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 480px) {
+  .seo-section3-card-inner {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.seo-section3-badge {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--blue-bright);
+  box-shadow: 0 0 12px var(--glow-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.seo-section3-card:hover .seo-section3-badge {
+  background: var(--blue-bright);
+  color: #ffffff;
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 16px var(--blue-bright);
+}
+
+.seo-section3-number {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--blue-bright);
+  transition: color 0.3s ease;
+}
+
+.seo-section3-card:hover .seo-section3-number {
+  color: #ffffff;
+}
+
+.seo-section3-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.seo-section3-item-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.seo-section3-card:hover .seo-section3-item-title {
+  color: var(--blue);
+}
+
+.seo-section3-item-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* Section 4: 猫哥 GEO 优化系统超级页面指南 CSS */
+.seo-section4-container {
+  padding: 100px 24px;
+  background: #ffffff;
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section4-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.seo-section4-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cyan);
+  background: var(--glow);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.seo-section4-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.seo-section4-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.seo-section4-list {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.seo-section4-row {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
+  padding: 45px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.seo-section4-row:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px var(--glow);
+  border-color: var(--blue-bright);
+}
+
+.seo-section4-row-reverse {
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.seo-section4-row-reverse .seo-section4-content {
+  grid-column: 2;
+}
+
+.seo-section4-row-reverse .seo-section4-visual {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+@media (max-width: 900px) {
+  .seo-section4-row,
+  .seo-section4-row-reverse {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px;
+  }
+  
+  .seo-section4-row-reverse .seo-section4-content {
+    grid-column: 1;
+  }
+  
+  .seo-section4-row-reverse .seo-section4-visual {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+.seo-section4-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.seo-section4-step {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--cyan);
+  background: var(--glow);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.seo-section4-item-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px 0;
+}
+
+.seo-section4-item-desc {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  margin: 0 0 24px 0;
+}
+
+.seo-section4-link-wrap {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue-bright);
+}
+
+.seo-section4-visual {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seo-section4-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.seo-section4-box-g1 {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.05), rgba(0, 102, 204, 0.05));
+  border: 1px dashed rgba(10, 78, 203, 0.2);
+}
+
+.seo-section4-box-g2 {
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.05), rgba(10, 78, 203, 0.05));
+  border: 1px dashed rgba(0, 102, 204, 0.2);
+}
+
+.seo-section4-box-g3 {
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.08), rgba(41, 151, 255, 0.08));
+  border: 1px dashed rgba(41, 151, 255, 0.2);
+}
+
+/* 视觉骨架动画线 */
+.seo-section4-skeleton-line {
+  height: 10px;
+  background: var(--blue-bright);
+  opacity: 0.2;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  width: 80%;
+}
+
+.seo-section4-w70 {
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.seo-section4-skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.seo-section4-sk-item {
+  height: 40px;
+  background: var(--cyan);
+  opacity: 0.15;
+  border-radius: 8px;
+}
+
+/* 树状结构 */
+.seo-section4-tree-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.seo-section4-node-head {
+  width: 50px;
+  height: 24px;
+  background: var(--blue);
+  opacity: 0.4;
+  border-radius: 4px;
+}
+
+.seo-section4-node-branches {
+  display: flex;
+  gap: 40px;
+}
+
+.seo-section4-branch-child {
+  width: 40px;
+  height: 20px;
+  background: var(--cyan);
+  opacity: 0.3;
+  border-radius: 4px;
+  position: relative;
+}
+
+.seo-section4-branch-child::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 2px;
+  height: 15px;
+  background: var(--border-glass);
+}
+
+/* 渐变圆预览 */
+.seo-section4-preview-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.seo-section4-circle-lg {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--blue);
+  opacity: 0.25;
+  box-shadow: 0 0 15px var(--glow);
+}
+
+.seo-section4-circle-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cyan);
+  opacity: 0.2;
+}
+
+/* Section 5: 站内 SEO/GEO 优化 16 项黄金法则 CSS */
+.seo-section5-container {
+  padding: 100px 24px;
+  background: var(--deep);
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section5-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.seo-section5-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--glow);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.seo-section5-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.seo-section5-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.seo-section5-grid {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.seo-section5-category-title {
+  grid-column: 1 / -1;
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1b2e;
+  padding: 12px 16px;
+  background: rgba(10, 78, 203, 0.05);
+  border-left: 4px solid var(--blue, #0a4ecb);
+  border-radius: 4px;
+  margin: 30px 0 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.seo-section5-category-title:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 1200px) {
+  .seo-section5-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .seo-section5-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .seo-section5-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-section5-tile {
+  background: var(--surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+}
+
+.seo-section5-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  position: relative;
+}
+
+.seo-section5-checkbox::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  margin-top: -2px;
+}
+
+/* 纯 CSS 悬浮打勾变色效果 */
+.seo-section5-tile:hover {
+  border-color: var(--blue-bright);
+  box-shadow: 0 10px 25px var(--glow);
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+.seo-section5-tile:hover .seo-section5-checkbox {
+  background: var(--blue-bright);
+  border-color: var(--blue-bright);
+}
+
+.seo-section5-tile:hover .seo-section5-checkbox::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.seo-section5-tile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seo-section5-tile-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.seo-section5-tile:hover .seo-section5-tile-title {
+  color: var(--blue);
+}
+
+.seo-section5-tile-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.seo-section5-tile:hover .seo-section5-tile-desc {
+  color: var(--text-dim);
+}
+
+/* Section 6: 新站流量瓶颈与 7 大“零流量”主因 CSS */
+.seo-section6-container {
+  padding: 100px 24px;
+  background: #ffffff;
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section6-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.seo-section6-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ea580c;
+  background: rgba(234, 88, 12, 0.08);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.seo-section6-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.seo-section6-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.seo-section6-box {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 50px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .seo-section6-box {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* 左侧警示看板 */
+.seo-section6-warning-panel {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(234, 88, 12, 0.05));
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 24px;
+  padding: 40px;
+  position: sticky;
+  top: 40px;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.02);
+}
+
+.seo-section6-warning-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+.seo-section6-huge-num {
+  font-size: 80px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.seo-section6-warning-desc {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.seo-section6-warning-desc strong {
+  color: #ef4444;
+}
+
+.seo-section6-desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* 右侧折叠手风琴 */
+.seo-section6-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.seo-section6-details {
+  border: 1px solid var(--border-glass);
+  background: var(--surface);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.seo-section6-details[open] {
+  border-color: rgba(234, 88, 12, 0.3);
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.06);
+}
+
+.seo-section6-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 20px 24px;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  user-select: none;
+}
+
+.seo-section6-summary::-webkit-details-marker {
+  display: none;
+}
+
+.seo-section6-summary-num {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ea580c;
+  margin-right: 16px;
+}
+
+.seo-section6-summary-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  flex-grow: 1;
+  transition: color 0.3s ease;
+}
+
+.seo-section6-details[open] .seo-section6-summary-text {
+  color: #ea580c;
+}
+
+.seo-section6-arrow {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  margin-right: 4px;
+}
+
+.seo-section6-details[open] .seo-section6-arrow {
+  transform: rotate(-135deg);
+  border-color: #ea580c;
+}
+
+.seo-section6-details-content {
+  padding: 0 24px 20px 56px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.seo-section6-details-content p {
+  margin: 0;
+}
+
+/* Section 7: 新站流量突破的 4 大实战动作 CSS */
+.seo-section7-container {
+  padding: 100px 24px;
+  background: var(--deep);
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section7-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.seo-section7-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--glow);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.seo-section7-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.seo-section7-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* 路线图 */
+.seo-section7-roadmap {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* 路线图的垂直指示进度线 */
+.seo-section7-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--blue), var(--cyan));
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .seo-section7-line {
+    left: 20px;
+    transform: none;
+  }
+}
+
+.seo-section7-node {
+  display: flex;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.seo-section7-left {
+  justify-content: flex-start;
+}
+
+.seo-section7-right {
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .seo-section7-left,
+  .seo-section7-right {
+    justify-content: flex-start;
+    padding-left: 50px;
+    box-sizing: border-box;
+  }
+}
+
+/* 圆点标志 */
+.seo-section7-dot {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: translate(-50%, 0);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--glow-strong);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.seo-section7-node:hover .seo-section7-dot {
+  transform: translate(-50%, 0) scale(1.15);
+  box-shadow: 0 0 20px var(--cyan);
+}
+
+@media (max-width: 768px) {
+  .seo-section7-dot {
+    left: 20px;
+    transform: translate(-50%, 0);
+  }
+  .seo-section7-node:hover .seo-section7-dot {
+    transform: translate(-50%, 0) scale(1.15);
+  }
+}
+
+/* 卡片 */
+.seo-section7-card {
+  width: 45%;
+  background: var(--surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .seo-section7-card {
+    width: 100%;
+  }
+}
+
+.seo-section7-node:hover .seo-section7-card {
+  border-color: var(--blue-bright);
+  box-shadow: 0 15px 30px var(--glow);
+  transform: translateY(-4px);
+}
+
+.seo-section7-step-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cyan);
+  background: var(--glow);
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.seo-section7-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 12px 0;
+}
+
+.seo-section7-card-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  margin: 0 0 16px 0;
+}
+
+.seo-section7-card-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Section 8: 猫哥 GEO 陪跑服务与 CTA 联系区 CSS */
+.seo-section8-container {
+  padding: 100px 24px;
+  background: #ffffff;
+  font-family: var(--font-sans);
+  color: var(--text);
+  position: relative;
+}
+
+.seo-section8-box {
+  max-width: 1340px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .seo-section8-box {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.seo-section8-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.seo-section8-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--glow);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.seo-section8-title {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.seo-section8-desc {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  margin-bottom: 30px;
+}
+
+.seo-section8-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .seo-section8-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-section8-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14.5px;
+  color: var(--text-dim);
+}
+
+.seo-section8-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* 联系卡片 */
+.seo-section8-contact {
+  position: relative;
+}
+
+.seo-section8-glass-card {
+  background: var(--surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 15px 35px var(--glow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.seo-section8-glass-card:hover {
+  border-color: var(--blue-bright);
+  box-shadow: 0 20px 45px var(--glow-strong);
+}
+
+.seo-section8-contact-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 10px 0;
+}
+
+.seo-section8-contact-subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin: 0 0 30px 0;
+  line-height: 1.5;
+}
+
+.seo-section8-contact-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-glass);
+  box-sizing: border-box;
+}
+
+.seo-section8-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.seo-section8-info-label {
+  color: var(--text-muted);
+}
+
+.seo-section8-info-val {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.seo-section8-btn {
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--glow);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.seo-section8-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--glow-strong);
+}
+
+.seo-section8-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+/* ============================================================================
+   Custom CSS for Topology Charts and Scrollable Tables
+   ============================================================================ */
+
+/* 拓扑关系容器 */
+.seo-topology-container {
+  max-width: 1340px;
+  margin: 0 auto 50px auto;
+  padding: 30px;
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border-glass, rgba(0, 0, 0, 0.06));
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.seo-topology-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* 顶部总标题 */
+.seo-topology-head {
+  background: linear-gradient(135deg, var(--blue, #0a4ecb), #0066cc);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(10, 78, 203, 0.2);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* 垂直连接主线 */
+.seo-topology-line-vertical {
+  width: 2px;
+  height: 24px;
+  background: var(--blue, #0a4ecb);
+  opacity: 0.7;
+}
+
+/* 水平跨越线 */
+.seo-topology-line-horizontal-wrap {
+  width: 75%;
+  position: relative;
+  height: 24px;
+}
+
+.seo-topology-line-horizontal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--blue, #0a4ecb);
+  opacity: 0.7;
+}
+
+.seo-topology-line-vertical-sub-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.seo-topology-line-vertical-sub {
+  width: 2px;
+  height: 24px;
+  background: var(--blue, #0a4ecb);
+  opacity: 0.7;
+}
+
+/* 子节点卡片列表 */
+.seo-topology-nodes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.seo-topology-node {
+  background: #ffffff;
+  border: 1px solid rgba(10, 78, 203, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e1b2e;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.seo-topology-node:hover {
+  border-color: var(--blue-bright, #005ec3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(10, 78, 203, 0.08);
+}
+
+.seo-topology-nodes-six {
+  grid-template-columns: repeat(6, 1fr) !important;
+}
+
+@media (max-width: 992px) {
+  .seo-topology-line-horizontal-wrap,
+  .seo-topology-line-vertical,
+  .seo-topology-line-vertical-sub {
+    display: none !important;
+  }
+  .seo-topology-nodes {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .seo-topology-nodes {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 响应式表格设计 */
+.seo-table-scroll-wrapper {
+  max-width: 1340px;
+  margin: 0 auto;
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(10, 78, 203, 0.12);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+  background: #ffffff;
+}
+
+.seo-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  min-width: 800px;
+}
+
+.seo-custom-table th {
+  background: linear-gradient(135deg, var(--blue, #0a4ecb), #0066cc);
+  color: #ffffff;
+  padding: 16px 20px;
+  font-weight: 700;
+  font-size: 14.5px;
+  border: none;
+}
+
+.seo-custom-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  color: var(--text-dim, #4a4a6a);
+  vertical-align: middle;
+}
+
+.seo-custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.seo-custom-table tr:hover {
+  background: rgba(10, 78, 203, 0.015);
+}
+
+.seo-table-highlight {
+  font-weight: 700;
+  color: #1e1b2e !important;
+}
+
+/* 针对八大清单表格优化 */
+.seo-table-checklist th:nth-child(1) { width: 8%; text-align: center; }
+.seo-table-checklist th:nth-child(2) { width: 22%; }
+.seo-table-checklist th:nth-child(3) { width: 35%; }
+.seo-table-checklist th:nth-child(4) { width: 35%; }
+
+.seo-table-checklist td:nth-child(1) {
+  text-align: center;
+  font-weight: 800;
+  color: var(--blue, #0a4ecb);
+}
+
