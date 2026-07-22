@@ -1,3 +1,3 @@
 "use client";
-import Page from "../host-recommendation/page";
+import Page from "@/app/host-recommendation/page";
 export default Page;
