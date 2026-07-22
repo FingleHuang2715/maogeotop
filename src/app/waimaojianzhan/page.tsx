@@ -2,7 +2,7 @@
 
 import { copyWeChatAndShowModal } from "@/components/WeChatModal";
 import React from "react";
-import "@/styles/WhyChooseYtCaptain.css";
+import "@/styles/WhyChooseMaoge.css";
 
 export default function WhyChooseYtCaptainPage() {
   return (
