@@ -1,3 +1,7 @@
 "use client";
-import Page from "@/app/host-recommendation/page";
-export default Page;
+import React from "react";
+import ServerRecommendation from "@/components/ServerRecommendation";
+
+export default function Page() {
+  return <ServerRecommendation />;
+}

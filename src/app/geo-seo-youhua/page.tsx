@@ -1,3 +1,7 @@
 "use client";
-import Page from "@/app/web-design-seo/page";
-export default Page;
+import React from "react";
+import GeoSeoOptimizationPage from "@/components/GeoSeoOptimization";
+
+export default function Page() {
+  return <GeoSeoOptimizationPage />;
+}
