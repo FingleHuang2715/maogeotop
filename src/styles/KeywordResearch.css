@@ -1,0 +1,708 @@
+/* ============================================================
+   Section 9 — 外贸网站设计前必须要做的准备工作
+   CSS类名前缀：keyword-
+   全局变量来自 :root（外部主题已定义）
+   ============================================================ */
+
+/* ===== 主容器 ===== */
+.keyword-cosmic {
+  position: relative;
+  background: var(--deep, #f9fafb); /* 浅灰白底 */
+  padding: 100px 0 110px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+/* ===== 背景光晕装饰（右侧蓝紫） ===== */
+.keyword-bg-aura {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 右侧主光晕 */
+.keyword-aura {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.keyword-aura--right {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(41, 151, 255, 0.1) 0%, rgba(0, 102, 204, 0.05) 45%, transparent 70%);
+  top: -100px;
+  right: -180px;
+  animation: keywordAuraFloat 10s ease-in-out infinite;
+}
+
+.keyword-aura--bottom {
+  width: 400px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(6, 182, 212, 0.07) 0%, transparent 70%);
+  bottom: 0;
+  right: 10%;
+  animation: keywordAuraFloat 12s ease-in-out infinite 3s;
+}
+
+/* 光晕浮动动画 */
+@keyframes keywordAuraFloat {
+  0%, 100% { transform: scale(1) translate(0, 0); opacity: 1; }
+  33% { transform: scale(1.06) translate(-10px, 8px); opacity: 0.8; }
+  66% { transform: scale(0.96) translate(5px, -5px); opacity: 0.9; }
+}
+
+/* 装饰性浮动圆点 */
+.keyword-dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: keywordDotFloat 6s ease-in-out infinite;
+}
+
+.keyword-dot--1 {
+  width: 5px;
+  height: 5px;
+  background: #0A4ECB;
+  box-shadow: 0 0 10px rgba(41, 151, 255, 0.6);
+  top: 25%;
+  right: 8%;
+  animation-delay: 0s;
+}
+
+.keyword-dot--2 {
+  width: 3px;
+  height: 3px;
+  background: #0066cc;
+  box-shadow: 0 0 8px rgba(0, 102, 204, 0.7);
+  top: 55%;
+  right: 20%;
+  animation-delay: 1.5s;
+}
+
+.keyword-dot--3 {
+  width: 4px;
+  height: 4px;
+  background: #06b6d4;
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+  bottom: 20%;
+  right: 35%;
+  animation-delay: 3s;
+}
+
+@keyframes keywordDotFloat {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-12px); opacity: 1; }
+}
+
+/* ===== 主内容容器 ===== */
+.keyword-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* ===================== 顶部居中标题区 ===================== */
+.keyword-hero {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 60px;
+}
+
+/* --- 步骤小标签 --- */
+.keyword-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid rgba(41, 151, 255, 0.2);
+  border-radius: 100px;
+  background: rgba(41, 151, 255, 0.06);
+  margin-bottom: 24px;
+}
+
+.keyword-badge__dot {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(41, 151, 255, 0.5);
+  animation: kwDotPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes kwDotPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(41, 151, 255, 0.5); transform: scale(1); }
+  50% { box-shadow: 0 0 14px rgba(41, 151, 255, 0.85); transform: scale(1.15); }
+}
+
+.keyword-badge__num {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A4ECB;
+  letter-spacing: 0.05em;
+}
+
+.keyword-badge__sep {
+  color: rgba(41, 151, 255, 0.3);
+  font-size: 12px;
+}
+
+.keyword-badge__text {
+  font-size: 12px;
+  color: var(--text-muted, #7a7a9a);
+  letter-spacing: 0.08em;
+}
+
+/* --- 主标题 --- */
+.keyword-title {
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text, #1e1b2e);
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
+}
+
+/* --- 引导描述 --- */
+.keyword-lead {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--text-dim, #4a4a6a);
+  margin: 0;
+}
+
+/* ===================== 中间两张大功能卡片 ===================== */
+.keyword-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 56px;
+}
+
+/* --- 卡片基础样式 --- */
+.keyword-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(41, 151, 255, 0.12);
+  border-radius: 24px;
+  padding: 36px 36px 32px;
+  overflow: hidden;
+  box-shadow:
+    0 8px 32px rgba(10, 78, 203, 0.07),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* 卡片悬停效果 */
+.keyword-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 24px 60px rgba(10, 78, 203, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: rgba(41, 151, 255, 0.28);
+}
+
+/* 卡片进入动画 */
+.keyword-card--research {
+  animation: kwCardIn 0.6s ease 0.15s both;
+}
+
+.keyword-card--layout {
+  animation: kwCardIn 0.6s ease 0.3s both;
+}
+
+@keyframes kwCardIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 卡片顶部（图标+标签行） */
+.keyword-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* 卡片图标容器 */
+.keyword-card__icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(41, 151, 255, 0.1), rgba(0, 102, 204, 0.08));
+  border: 1px solid rgba(41, 151, 255, 0.2);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(41, 151, 255, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.keyword-card__icon--layout {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(41, 151, 255, 0.08));
+  border-color: rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+.keyword-card:hover .keyword-card__icon {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px rgba(41, 151, 255, 0.2);
+}
+
+.keyword-card--layout:hover .keyword-card__icon {
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
+}
+
+/* Phase 标签 */
+.keyword-card__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 13px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: rgba(41, 151, 255, 0.08);
+  border: 1px solid rgba(41, 151, 255, 0.2);
+  color: #0A4ECB;
+}
+
+.keyword-card__tag--cyan {
+  background: rgba(6, 182, 212, 0.08);
+  border-color: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+}
+
+/* 卡片标题 */
+.keyword-card__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text, #1e1b2e);
+  margin: 0 0 12px 0;
+  letter-spacing: -0.01em;
+}
+
+/* 卡片描述 */
+.keyword-card__desc {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-dim, #4a4a6a);
+  margin: 0 0 24px 0;
+}
+
+/* 要点列表 */
+.keyword-card__points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 单条要点 */
+.keyword-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-dim, #4a4a6a);
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(30, 27, 46, 0.025);
+  border: 1px solid transparent;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.keyword-point:hover {
+  background: rgba(41, 151, 255, 0.06);
+  border-color: rgba(41, 151, 255, 0.15);
+  color: var(--text, #1e1b2e);
+}
+
+.keyword-point--cyan:hover {
+  background: rgba(6, 182, 212, 0.06);
+  border-color: rgba(6, 182, 212, 0.15);
+}
+
+.keyword-point__icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+}
+
+/* 卡片底部发光装饰 */
+.keyword-card__glow {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(41, 151, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  opacity: 0.6;
+}
+
+.keyword-card__glow--cyan {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+}
+
+.keyword-card:hover .keyword-card__glow {
+  opacity: 1;
+}
+
+/* ===================== 底部4步时间轴 ===================== */
+.keyword-timeline-section {
+  text-align: center;
+}
+
+/* 时间轴标题 */
+.keyword-timeline-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(41, 151, 255, 0.6);
+  margin: 0 0 32px 0;
+}
+
+/* 时间轴容器（横向4步） */
+.keyword-timeline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+}
+
+/* 单个步骤 */
+.keyword-step {
+  flex: 1;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* 步骤节点区（圆+线） */
+.keyword-step__node {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* 步骤圆形节点 */
+.keyword-step__circle {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0A4ECB, #0066cc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 6px rgba(41, 151, 255, 0.1),
+    0 8px 20px rgba(41, 151, 255, 0.25);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* 圆心定在步骤的左1/2 */
+  margin: 0 auto;
+}
+
+.keyword-step__circle:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 8px rgba(41, 151, 255, 0.15),
+    0 12px 28px rgba(41, 151, 255, 0.35);
+}
+
+/* 不同步骤渐进颜色 */
+.keyword-step__circle--2 {
+  background: linear-gradient(135deg, #0066cc, #0A4ECB);
+  box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.1), 0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+.keyword-step__circle--3 {
+  background: linear-gradient(135deg, #0A4ECB, #06b6d4);
+  box-shadow: 0 0 0 6px rgba(10, 78, 203, 0.1), 0 8px 20px rgba(10, 78, 203, 0.25);
+}
+
+.keyword-step__circle--4 {
+  background: linear-gradient(135deg, #06b6d4, #0A4ECB);
+  box-shadow: 0 0 0 6px rgba(6, 182, 212, 0.1), 0 8px 20px rgba(6, 182, 212, 0.25);
+}
+
+/* 步骤编号 */
+.keyword-step__num {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* 步骤间连接线容器（绝对定位，从当前步骤圆心延伸到下一步圆心） */
+.keyword-step__line {
+  position: absolute;
+  /* 从当前圆右侧（50%+25px）到下一步圆左侧，需要 JS 辅助，
+     这里用纯CSS估算：从本步 50% 位置到下一步 0 */
+  left: calc(50% + 25px); /* 从圆圆心右侧出发 */
+  right: calc(-50% + 25px); /* 延伸到下一步圆心左侧 */
+  top: 25px; /* 垂直居中（圆高50px / 2 = 25px） */
+  height: 2px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.keyword-step__line-inner {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(41, 151, 255, 0.4), rgba(6, 182, 212, 0.4));
+  border-radius: 1px;
+  position: relative;
+}
+
+/* 连接线流光动画 */
+.keyword-step__line-inner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(41, 151, 255, 0.8), transparent);
+  border-radius: 1px;
+  animation: kwLineFlow 2.5s ease-in-out infinite;
+}
+
+.keyword-step:nth-child(2) .keyword-step__line-inner::after { animation-delay: 0.5s; }
+.keyword-step:nth-child(3) .keyword-step__line-inner::after { animation-delay: 1s; }
+
+@keyframes kwLineFlow {
+  0% { left: -60%; }
+  100% { left: 140%; }
+}
+
+/* 箭头符号 */
+.keyword-step__arrow {
+  font-size: 20px;
+  color: rgba(41, 151, 255, 0.4);
+  line-height: 1;
+  flex-shrink: 0;
+  margin-left: -2px;
+}
+
+/* 步骤内容 */
+.keyword-step__content {
+  padding: 0 8px;
+}
+
+.keyword-step__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text, #1e1b2e);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.keyword-step__desc {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--text-muted, #7a7a9a);
+  margin: 0;
+}
+
+/* ===================== 响应式布局 ===================== */
+
+/* --- 平板横屏（≤1024px） --- */
+@media (max-width: 1024px) {
+  .keyword-cosmic {
+    padding: 80px 0 90px;
+  }
+
+  .keyword-inner {
+    padding: 0 36px;
+  }
+
+  .keyword-card {
+    padding: 28px 28px 26px;
+  }
+
+  .keyword-step__desc {
+    font-size: 12px;
+  }
+
+  .keyword-step__line {
+    left: calc(50% + 25px);
+    right: calc(-50% + 22px);
+  }
+}
+
+/* --- 平板竖屏（≤768px） --- */
+@media (max-width: 768px) {
+  .keyword-cosmic {
+    padding: 70px 0 80px;
+  }
+
+  .keyword-inner {
+    padding: 0 24px;
+  }
+
+  /* 两栏卡片改为竖排 */
+  .keyword-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .keyword-title {
+    font-size: 30px;
+  }
+
+  /* 时间轴：竖排 */
+  .keyword-timeline {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .keyword-step {
+    max-width: 100%;
+    width: 100%;
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 30px;
+    position: relative;
+  }
+
+  .keyword-step--last {
+    padding-bottom: 0;
+  }
+
+  .keyword-step__node {
+    flex-direction: column;
+    width: auto;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  /* 竖排时连接线改为垂直 */
+  .keyword-step__line {
+    position: static;
+    display: block;
+    width: 2px;
+    height: 36px;
+    background: none;
+    margin-top: 6px;
+  }
+
+  .keyword-step__line-inner {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(41, 151, 255, 0.4), rgba(6, 182, 212, 0.4));
+  }
+
+  .keyword-step__line-inner::after {
+    width: 100%;
+    height: 60%;
+    animation: kwLineFlowV 2.5s ease-in-out infinite;
+  }
+
+  @keyframes kwLineFlowV {
+    0% { top: -60%; }
+    100% { top: 140%; }
+  }
+
+  /* 竖排箭头改为向下 */
+  .keyword-step__arrow {
+    display: none; /* 竖排时隐藏横向箭头 */
+  }
+
+  .keyword-step__content {
+    padding: 10px 0 0;
+  }
+}
+
+/* --- 手机（≤480px） --- */
+@media (max-width: 480px) {
+  .keyword-cosmic {
+    padding: 56px 0 70px;
+  }
+
+  .keyword-inner {
+    padding: 0 18px;
+  }
+
+  .keyword-title {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  .keyword-hero {
+    margin-bottom: 44px;
+  }
+
+  .keyword-card {
+    padding: 24px 20px 22px;
+    border-radius: 18px;
+  }
+
+  .keyword-card__title {
+    font-size: 19px;
+  }
+
+  .keyword-card__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+
+  .keyword-point {
+    font-size: 13.5px;
+    padding: 9px 12px;
+  }
+
+  /* 时间轴步骤在最小屏幕下紧凑显示 */
+  .keyword-step__circle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .keyword-step__num {
+    font-size: 16px;
+  }
+
+  .keyword-step__title {
+    font-size: 14.5px;
+  }
+
+  .keyword-step__desc {
+    font-size: 12px;
+  }
+
+  .keyword-step__line {
+    height: 28px;
+  }
+}
