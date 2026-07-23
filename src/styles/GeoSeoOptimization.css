@@ -1492,7 +1492,24 @@
 }
 
 .seo-topology-nodes-six {
-  grid-template-columns: repeat(6, 1fr) !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+}
+
+/* Six-column topology: connector endpoints align with every node center. */
+.seo-topology-line-horizontal-wrap-six {
+  width: 100%;
+}
+
+.seo-topology-line-horizontal-wrap-six .seo-topology-line-vertical-sub-wrap {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.seo-topology-line-horizontal-wrap-six .seo-topology-line-horizontal {
+  left: calc((100% - 100px) / 12);
+  width: calc(100% - (100% - 100px) / 6);
 }
 
 @media (max-width: 992px) {
