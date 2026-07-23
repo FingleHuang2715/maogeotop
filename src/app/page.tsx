@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId, useRef } from "react";
 import HeroSection from "@/components/HeroSection";
 import AboutMarketingSection from "@/components/AboutMarketingSection";
 import { DualEngineServices, IndustryMatrix } from "@/components/BusinessMatrix";
@@ -11,13 +11,16 @@ import PageSpeedShowcase from "@/components/PageSpeedShowcase";
 export default function Home() {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const [isLightboxActive, setIsLightboxActive] = useState(false);
+  const lightboxTitleId = useId();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     // 挂载全局方法，支持任何组件触发灯箱
     window.openGscLightbox = (src: string) => {
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
       setLightboxSrc(src);
       setIsLightboxActive(true);
-      document.body.style.overflow = "hidden"; // 锁死底层滚动
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -29,12 +32,22 @@ export default function Home() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      window.openGscLightbox = () => {};
     };
   }, []);
 
+  useEffect(() => {
+    if (!isLightboxActive) return;
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => closeButtonRef.current?.focus());
+    return () => {
+      document.body.style.overflow = "";
+      previousFocusRef.current?.focus();
+    };
+  }, [isLightboxActive]);
+
   const closeLightbox = () => {
     setIsLightboxActive(false);
-    document.body.style.overflow = ""; // 恢复滚动
   };
 
   return (
@@ -64,21 +77,26 @@ export default function Home() {
       <ReviewsCarousel />
 
       {/* 全局 React 灯箱大图预览系统 */}
-      <div 
-        id="geo-gsc-lightbox" 
+      <div
+        id="geo-gsc-lightbox"
         className={"geo-lightbox-overlay " + (isLightboxActive ? "active" : "")}
-        onClick={closeLightbox}
+        onMouseDown={closeLightbox}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={lightboxTitleId}
+        aria-hidden={!isLightboxActive}
       >
-        <div className="geo-lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <div className="geo-lightbox-content" onMouseDown={(event) => event.stopPropagation()}>
+          <h2 id={lightboxTitleId} className="geo-lightbox-sr-title">案例大图预览</h2>
           {lightboxSrc && (
-            <img 
-              id="geo-gsc-lightbox-img-el" 
-              className="geo-lightbox-img" 
-              src={lightboxSrc} 
-              alt="大图预览" 
+            <img
+              id="geo-gsc-lightbox-img-el"
+              className="geo-lightbox-img"
+              src={lightboxSrc}
+              alt="案例大图预览"
             />
           )}
-          <div className="geo-lightbox-close" onClick={closeLightbox}>&times;</div>
+          <button ref={closeButtonRef} type="button" className="geo-lightbox-close" onClick={closeLightbox} aria-label="关闭大图预览">&times;</button>
         </div>
       </div>
     </main>
