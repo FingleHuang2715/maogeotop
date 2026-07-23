@@ -89,7 +89,7 @@ export default function GscAchievements() {
             </div>
             
             <div className="geo-gsc-cta-box">
-              <a href="http://geo.maogeo.top" target="_blank" rel="noopener" className="gradient-btn geo-gsc-btn">立即分析我的网站流量 ➔</a>
+              <a href="https://geo.maogeo.top" target="_blank" rel="noopener" className="gradient-btn geo-gsc-btn">立即分析我的网站流量 ➔</a>
             </div>
           </div>
 
