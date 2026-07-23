@@ -1,0 +1,163 @@
+/* ============================================================================
+   Custom Footer Styles (Footer.css)
+   ============================================================================ */
+
+.mg-site-footer {
+  background-color: #f5f5f7; /* 苹果经典浅灰色背景 */
+  color: #515154; /* 苹果深灰正文色 */
+  padding: 70px 0 0 0;
+  font-family: var(--font-sans);
+  border-top: 1px solid #e8e8ed;
+  font-size: 14px;
+}
+
+.mg-footer-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px 50px 20px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr 1.1fr 0.9fr; /* 三列等宽排布 */
+  gap: 40px;
+}
+
+.mg-footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 品牌 */
+.mg-footer-brand {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  color: #1d1d1f;
+  font-family: inherit;
+}
+
+.mg-footer-brand-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #86868b; /* 苹果灰度描述色 */
+  margin: 0 0 20px 0;
+  text-align: justify;
+}
+
+.mg-eeat-badge {
+  display: inline-block;
+  font-size: 11px;
+  background: rgba(10, 78, 203, 0.06);
+  border: 1px solid rgba(10, 78, 203, 0.15);
+  color: var(--blue, #0A4ECB);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-weight: 600;
+}
+
+/* 列标题 */
+.mg-footer-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin: 0 0 20px 0;
+  position: relative;
+  padding-bottom: 8px;
+  font-family: inherit;
+}
+
+.mg-footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--blue, #0A4ECB);
+}
+
+/* 导航链接 */
+.mg-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mg-footer-links a {
+  color: #515154;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mg-footer-links a:hover {
+  color: #0A4ECB;
+  padding-left: 4px;
+}
+
+/* 联系方式 */
+.mg-footer-contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mg-footer-contact li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #515154;
+}
+
+.mg-footer-contact strong {
+  color: #1d1d1f;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ========== 底部版权栏 ========== */
+.mg-footer-bottom {
+  border-top: 1px solid #e8e8ed;
+  padding: 24px 0;
+  margin-top: 20px;
+}
+
+.mg-footer-bottom-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #86868b;
+}
+
+.mg-footer-extra-links a {
+  color: #86868b;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mg-footer-extra-links a:hover {
+  color: #0A4ECB;
+}
+
+/* ========== 响应式自适应 ========== */
+@media (max-width: 768px) {
+  .mg-footer-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .mg-footer-bottom-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}
