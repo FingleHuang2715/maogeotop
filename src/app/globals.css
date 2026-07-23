@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* ===== Component Style Imports ===== */
 @import "../styles/Header.css";
 @import "../styles/Footer.css";
 @import "../styles/AuditTool.css";
@@ -27,137 +26,192 @@
 @import "../styles/ServerRecommendation.css";
 @import "../styles/FloatingContactBar.css";
 
-
-/* ============================================================
-   全局样式系统 —— 蓝紫科技配色（参考阿里云 Meoo 风格）
-   包含：字体、颜色、变量、工具类
-   ============================================================ */
-
-/* ===== 1. CSS 变量 —— 颜色系统（苹果风格高阶亮色） ===== */
 :root {
-  /* ----- 主色系（苹果科技蓝） ----- */
-  --blue: #0A4ECB;           /* 苹果主调蓝色 */
-  --blue-bright: #0A4ECB;    /* 苹果亮蓝色 */
-  --cyan: #0066cc;           /* 苹果深蓝色 */
-  --deep: #f5f5f7;           /* 苹果经典灰白背景，而非纯白 */
-  
-  /* ----- 文字色系（对比鲜明，深邃） ----- */
-  --text: #1d1d1f;           /* 苹果主文字黑 */
-  --text-dim: #434344;       /* 次要描述深灰 */
-  --text-muted: #86868b;     /* 辅助说明灰 */
-  
-  /* ----- 背景/表面色系 ----- */
-  --surface: rgba(255, 255, 255, 0.98);  /* 极致纯净白表面 */
-  
-  /* ----- 发光与阴影效果 ----- */
-  --glow: rgba(10, 78, 203, 0.08);       /* 柔和科技阴影 */
-  --glow-strong: rgba(10, 78, 203, 0.15); /* 强阴影 */
-  
-  /* ----- 边框 ----- */
-  --border-glass: rgba(0, 0, 0, 0.06);   /* 苹果风超细浅色边框 */
-  
-  /* ===== 2. 字体系统 ===== */
-  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB',
-               'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-  --font-serif: 'Georgia', 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
-  --font-mono: 'Courier New', 'Consolas', monospace;
+  color-scheme: light;
+  --blue: #0a4ecb;
+  --blue-bright: #145ee8;
+  --cyan: #067a9c;
+  --violet: #6a3fd0;
+  --teal: #008b78;
+  --deep: #f4f7fb;
+  --surface: #ffffff;
+  --surface-muted: #edf3fa;
+  --surface-dark: #09182c;
+  --text: #101a2c;
+  --text-dim: #3d4b61;
+  --text-muted: #68758a;
+  --glow: rgba(10, 78, 203, 0.1);
+  --glow-strong: rgba(106, 63, 208, 0.2);
+  --border-glass: rgba(16, 38, 71, 0.1);
+  --radius-card: 0px;
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
-/* ===== 3. 全局 Base 重置 ===== */
 html {
-  scroll-behavior: smooth;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
+*, *::before, *::after { box-sizing: inherit; }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--deep);
+  min-width: 0;
+  background: var(--deep);
   color: var(--text);
   font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  line-height: 1.6;
 }
 
-/* 链接默认 Reset */
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.25s ease, opacity 0.25s ease;
+main, section, article, aside, header, footer, nav, div { min-width: 0; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: var(--blue-bright); }
+button, input, textarea, select { font: inherit; }
+img, svg, video, canvas { max-width: 100%; }
+img { height: auto; display: block; }
+
+:focus-visible {
+  outline: 3px solid rgba(20, 94, 232, 0.48);
+  outline-offset: 3px;
 }
 
-a:hover {
-  color: var(--blue-bright);
-}
+::selection { color: #fff; background: var(--violet); }
 
-/* 图片防溢出 */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* ===== 4. 全局 Utility 工具类 ===== */
-
-/* 渐变文字 */
 .gradient-text {
-  background: linear-gradient(135deg, var(--blue-bright) 0%, var(--cyan) 100%);
+  display: inline-block;
+  color: transparent !important;
+  background: linear-gradient(105deg, var(--blue) 0%, var(--violet) 58%, var(--teal) 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  display: inline-block;
 }
 
-/* 玻璃质感容器 */
 .glass-panel {
   background: var(--surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
-  box-shadow: 0 8px 32px var(--glow);
-  border-radius: 16px;
+  border-radius: 0;
+  box-shadow: 0 16px 40px rgba(15, 41, 76, 0.08);
 }
 
-/* 主按钮 (高亮炫光) */
 .gradient-btn {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
-  color: #ffffff !important;
-  font-weight: 700;
-  padding: 12px 28px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px var(--glow);
-  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  border: none;
+  padding: 12px 28px;
+  color: #fff !important;
+  background: linear-gradient(110deg, var(--blue), var(--violet));
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: 0 9px 22px rgba(10, 78, 203, 0.2);
+  font-weight: 750;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gradient-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(10, 78, 203, 0.28); }
+
+.geo-container { width: min(100%, 1340px); margin-inline: auto; padding-inline: clamp(16px, 2vw, 28px); }
+
+/* User-selected visual rule: every card and panel is square. Roundness remains only for dots and circular controls. */
+:is(
+  [class*="card"], [class*="panel"], [class*="tile"], [class*="box"], [class*="popover"],
+  [class*="modal-dialog"], [class*="img-frame"], [class*="browser"], [class*="viewport"],
+  details, table, .glass-panel, .process-card, .founder-motto
+) { border-radius: 0 !important; }
+
+/* Stable, styled independent WeChat dialog */
+.mg-wechat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(6, 18, 36, 0.68);
+  backdrop-filter: blur(7px);
+  animation: mgModalFade 0.2s ease both;
+}
+.mg-wechat-modal-dialog {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 38px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid rgba(20, 94, 232, 0.28);
+  box-shadow: 18px 18px 0 rgba(10, 78, 203, 0.16), 0 30px 80px rgba(3, 16, 35, 0.28);
+  animation: mgModalEnter 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.mg-wechat-modal-dialog::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: linear-gradient(180deg, var(--blue), var(--violet), var(--teal));
+}
+.mg-wechat-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  background: var(--surface-muted);
+  border: 0;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+.mg-wechat-modal-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  color: var(--blue);
+  background: linear-gradient(135deg, rgba(10, 78, 203, 0.12), rgba(106, 63, 208, 0.12));
+  border: 1px solid rgba(10, 78, 203, 0.18);
+}
+.mg-wechat-modal-kicker { margin: 0 0 6px; color: var(--violet); font: 700 11px/1 var(--font-mono); letter-spacing: 0.16em; }
+.mg-wechat-modal-title { margin: 0 0 20px; color: var(--text); font-size: clamp(22px, 5vw, 30px); line-height: 1.25; }
+.mg-wechat-modal-code-box { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 16px; background: var(--surface-muted); border-left: 3px solid var(--teal); }
+.mg-wechat-modal-label { color: var(--text-muted); font-size: 13px; }
+.mg-wechat-modal-code { color: var(--blue); font: 800 20px/1 var(--font-mono); letter-spacing: 0.06em; overflow-wrap: anywhere; }
+.mg-wechat-modal-tip { margin: 18px 0 24px; color: var(--text-dim); font-size: 14px; line-height: 1.7; }
+.mg-wechat-modal-btn { width: 100%; min-height: 46px; color: #fff; background: linear-gradient(110deg, var(--blue), var(--violet)); border: 0; font-weight: 750; cursor: pointer; }
+@keyframes mgModalFade { from { opacity: 0; } }
+@keyframes mgModalEnter { from { opacity: 0; transform: translateY(18px) scale(0.98); } }
+
+/* Performance-friendly reveal language. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes mgSectionReveal { from { opacity: 0.001; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  main > section { animation: mgSectionReveal 0.65s ease-out both; animation-timeline: view(); animation-range: entry 5% cover 20%; }
 }
 
-.gradient-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--glow-strong);
-  filter: brightness(1.1);
+@media (max-width: 640px) {
+  .mg-wechat-modal-dialog { padding: 34px 22px 26px; box-shadow: 10px 10px 0 rgba(10, 78, 203, 0.16); }
+  .mg-wechat-modal-code-box { align-items: flex-start; flex-direction: column; text-align: left; }
 }
 
-/* 容器水平居中与宽度约束 */
-.geo-container {
-  max-width: 1340px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ===== 5. 打印与无障碍补充 ===== */
-@media print {
-  body {
-    background: #fff;
-    color: #000;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+  .mg-floating-contact-bar, .mg-site-header { display: none !important; }
 }
