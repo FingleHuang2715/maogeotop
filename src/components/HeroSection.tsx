@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { copyWeChatAndShowModal } from "@/components/WeChatModal";
@@ -19,7 +20,7 @@ const slides: SlideData[] = [
     subTitle: "官网建设与品牌出海营销解决方案",
     desc: "从智能官网定制到生成式引擎(GEO)优化，确保品牌词与核心产品在 AGI 检索环境中被大模型高权重引用。",
     btnText: "免费 GEO 试用 ➔",
-    btnLink: "http://geo.maogeo.top/"
+    btnLink: "https://geo.maogeo.top/"
   },
   {
     title: "AI 时代优先收录",
@@ -42,7 +43,8 @@ export default function HeroSection() {
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    startAutoplay();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) startAutoplay();
     return () => stopAutoplay();
   }, []);
 
@@ -70,8 +72,11 @@ export default function HeroSection() {
 
   // 3D 魔方逻辑 (与 GEO 工具页面完全一致)
   useEffect(() => {
-    const wrapper = document.querySelector('.hero-cube-wrapper');
-    const cube = document.querySelector('.hero-cube');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
+    const wrapper = document.querySelector('.home-hero .hero-cube-wrapper');
+    const cube = document.querySelector('.home-hero .hero-cube');
 
     if (wrapper && cube) {
       const parentContainer = wrapper.parentElement;
@@ -147,7 +152,7 @@ export default function HeroSection() {
 
   return (
     <section 
-      className="geo-functions-section hero-cosmic" 
+      className="geo-functions-section hero-cosmic home-hero"
       aria-label="猫哥GEO独立站首屏" 
       style={{ 
         backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721010110868.webp')", 
@@ -177,7 +182,7 @@ export default function HeroSection() {
                     {slide.subTitle}
                   </span>
                 </h1>
-                <p className="geo-section-subtitle" style={{ fontSize: '0.95rem', margin: '0 0 1.2rem 0', lineHeight: 1.6, color: '#000000', whiteSpace: idx === 0 ? 'nowrap' : 'normal' }}>
+                <p className="geo-section-subtitle home-hero-subtitle" style={{ fontSize: '0.95rem', margin: '0 0 1.2rem 0', lineHeight: 1.6, color: '#17243a' }}>
                   {slide.desc}
                 </p>
                 
@@ -187,12 +192,13 @@ export default function HeroSection() {
                   <li className="srv-hero-meta-item" style={{ color: '#0A4ECB', background: 'rgba(10, 78, 203, 0.05)', borderColor: 'rgba(10, 78, 203, 0.12)' }}>✓ 100% 源码交付与生成式AI收录</li>
                 </ul>
 
-                <div className="geo-slider-btn-wrap">
-                  <a href={slide.btnLink} target="_blank" rel="noopener noreferrer" className="geo-slider-btn">
+                <div className="geo-slider-btn-wrap home-hero-actions">
+                  <a href={slide.btnLink} target={slide.btnLink.startsWith("http") ? "_blank" : undefined} rel={slide.btnLink.startsWith("http") ? "noopener noreferrer" : undefined} className="geo-slider-btn">
                     <span className="geo-slider-btn-text">{slide.btnText}</span>
                   </a>
                   <button 
                     onClick={copyWeChatAndShowModal}
+                    type="button"
                     className="geo-slider-btn geo-slider-btn-secondary"
                   >
                     <span className="geo-slider-btn-text">微信咨询：maogeotop</span>
@@ -209,22 +215,22 @@ export default function HeroSection() {
           <div className="hero-cube-wrapper">
             <div className="hero-cube">
               <div className="cube-face face-front">
-                <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" alt="AI数据中心查询报表" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" alt="AI数据中心查询报表" width={1200} height={800} sizes="220px" priority />
               </div>
               <div className="cube-face face-back">
-                <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235509827.webp" alt="文章生成与发布" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235509827.webp" alt="文章生成与发布" width={1200} height={800} sizes="220px" />
               </div>
               <div className="cube-face face-left">
-                <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235532486.webp" alt="个人自媒体账号授权矩阵发布" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235532486.webp" alt="个人自媒体账号授权矩阵发布" width={1200} height={800} sizes="220px" />
               </div>
               <div className="cube-face face-right">
-                <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235522326.webp" alt="批量爆款文章复刻" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235522326.webp" alt="批量爆款文章复刻" width={1200} height={800} sizes="220px" />
               </div>
               <div className="cube-face face-top">
-                <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235413409.webp" alt="知名网站媒体投稿" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235413409.webp" alt="知名网站媒体投稿" width={1200} height={800} sizes="220px" />
               </div>
               <div className="cube-face face-bottom">
-                <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235559895.webp" alt="B2B行业网站矩阵发布" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235559895.webp" alt="B2B行业网站矩阵发布" width={1200} height={800} sizes="220px" />
               </div>
             </div>
           </div>
@@ -235,18 +241,22 @@ export default function HeroSection() {
       <div className="geo-slider-nav-wrap">
         <div className="geo-slider-nav-tabs" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
           {slides.map((slide, idx) => (
-            <div 
-              key={idx} 
+            <button
+              type="button"
+              key={idx}
               className={"geo-slider-nav-tab " + (activeSlide === idx ? "active" : "")}
+              onClick={() => setActiveSlide(idx)}
               onMouseEnter={() => handleTabMouseEnter(idx)}
               onMouseLeave={handleTabMouseLeave}
+              aria-label={`显示：${slide.title}`}
+              aria-pressed={activeSlide === idx}
             >
-              <div className="geo-nav-tab-title" style={{ color: activeSlide === idx ? '#0A4ECB' : '#000000', fontSize: '15px', fontWeight: '800' }}>{slide.title}</div>
-              <div className="geo-nav-tab-desc" style={{ color: '#000000', fontSize: '13px', fontWeight: '600' }}>{slide.subTitle}</div>
-              <div className="geo-nav-tab-progress">
-                <div className="geo-nav-tab-progress-inner" style={{ background: '#0A4ECB' }}></div>
-              </div>
-            </div>
+              <span className="geo-nav-tab-title" style={{ color: activeSlide === idx ? '#0A4ECB' : '#000000', fontSize: '15px', fontWeight: '800' }}>{slide.title}</span>
+              <span className="geo-nav-tab-desc" style={{ color: '#000000', fontSize: '13px', fontWeight: '600' }}>{slide.subTitle}</span>
+              <span className="geo-nav-tab-progress" aria-hidden="true">
+                <span className="geo-nav-tab-progress-inner" style={{ background: '#0A4ECB' }}></span>
+              </span>
+            </button>
           ))}
         </div>
       </div>
