@@ -1,135 +1,145 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { copyWeChatAndShowModal } from "@/components/WeChatModal";
 
+const navigationItems = [
+  { href: "/", label: "首页", match: (path: string) => path === "/" },
+  { href: "/geo-tools", label: "GEO工具", match: (path: string) => path === "/geo-tools" },
+  { href: "/waimaojianzhan", label: "外贸建站", match: (path: string) => path === "/waimaojianzhan" },
+  { href: "/geo-seo-youhua", label: "GEO/SEO优化", match: (path: string) => path === "/geo-seo-youhua" || path === "/web-design-seo" },
+  { href: "/server-recommendation", label: "服务器推荐", match: (path: string) => path === "/server-recommendation" || path === "/host-recommendation" },
+  { href: "/blog", label: "技术专区", match: (path: string) => path.startsWith("/blog") },
+  { href: "/audit-tool", label: "建站避坑工具", match: (path: string) => path === "/audit-tool" },
+];
+
 export default function Header() {
   const pathname = usePathname();
+  const menuId = useId();
+  const navRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [showToast, setShowToast] = useState(false);
-
-  const triggerToast = (msg: string) => {
-    setToastMessage(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
-
-  const handleWechatCopy = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
-    copyWeChatAndShowModal(e);
-  };
-
-  const fallbackCopy = (text: string) => {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.position = "fixed";
-    textArea.style.opacity = "0";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand("copy");
-      triggerToast("已复制微信，请打开微信app添加。");
-    } catch (err) {
-      triggerToast("复制失败，请手动添加微信：" + text);
-    }
-    document.body.removeChild(textArea);
-  };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.pageYOffset > 50);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 50;
+        setIsScrolled((current) => (current === next ? current : next));
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.classList.toggle("mg-menu-open", isMenuOpen);
+    if (isMenuOpen) {
+      requestAnimationFrame(() => navRef.current?.querySelector<HTMLElement>("a, button")?.focus());
+    }
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isMenuOpen) {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key === "Tab" && isMenuOpen) {
+        const controls = navRef.current?.querySelectorAll<HTMLElement>(
+          "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
+        );
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.classList.remove("mg-menu-open");
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
       <header className={`mg-site-header ${isScrolled ? "scrolled" : ""}`} id="mgSiteHeader">
         <div className="mg-header-container">
-          
-          {/* 品牌 Logo 预留区 */}
-          <div className="mg-header-logo-container">
-            <Link href="/" className="mg-header-logo" style={{ display: 'flex', alignItems: 'center' }}>
-              <img 
-                src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002042147.webp" 
-                alt="猫哥建站 Logo" 
-                style={{ height: '42px', width: 'auto', display: 'block' }}
-              />
-            </Link>
-          </div>
+          <Link href="/" className="mg-header-logo" aria-label="猫哥建站首页">
+            <Image
+              src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002042147.webp"
+              alt="猫哥建站 Logo"
+              width={711}
+              height={150}
+              priority
+              sizes="(max-width: 900px) 114px, 122px"
+              className="mg-header-logo-image"
+            />
+          </Link>
 
-          {/* 纯 CSS 汉堡菜单复选框 (隐藏) */}
-          <input type="checkbox" id="mgMenuToggle" className="mg-menu-toggle" />
-
-          {/* 动态菜单结构还原 */}
-                    {/* 动态菜单结构还原 */}
-                    {/* 动态菜单结构还原 */}
-                    {/* 动态菜单结构 (百度与谷歌 SEO 最优 URL) */}
-          <nav className="mg-header-nav">
+          <nav ref={navRef} id={menuId} className={`mg-header-nav ${isMenuOpen ? "is-open" : ""}`} aria-label="主导航">
             <ul className="mg-menu-list">
-              <li className={pathname === "/" ? "current-menu-item" : ""}>
-                <Link href="/">首页</Link>
-              </li>
-              <li className={pathname === "/geo-tools" || pathname.includes("geo%e5%b7%a5%e5%85%b7") ? "current-menu-item" : ""}>
-                <Link href="/geo-tools">GEO工具</Link>
-              </li>
-              <li className={pathname === "/waimaojianzhan" || pathname.includes("%e5%a4%96%e8%b4%b8%e5%bb%ba%e7%ab%99") ? "current-menu-item" : ""}>
-                <Link href="/waimaojianzhan">外贸建站</Link>
-              </li>
-              <li className={pathname === "/geo-seo-youhua" || pathname === "/web-design-seo" || pathname.includes("geo-seo%e4%bc%98%e5%8c%96") ? "current-menu-item" : ""}>
-                <Link href="/geo-seo-youhua">GEO/SEO优化</Link>
-              </li>
-              <li className={pathname === "/server-recommendation" || pathname === "/host-recommendation" || pathname.includes("%e6%9c%8d%e5%8a%a1%e5%99%a8%e6%8e%a8%e8%8d%90") ? "current-menu-item" : ""}>
-                <Link href="/server-recommendation">服务器推荐</Link>
-              </li>
-              <li className={pathname.startsWith("/blog") ? "current-menu-item" : ""}>
-                <Link href="/blog">技术专区</Link>
-              </li>
-              <li className={pathname === "/audit-tool" || pathname.includes("%e5%bb%ba%e7%ab%99%e9%81%bf%e5%9d%91%e5%b7%a5%e5%85%b7") ? "current-menu-item" : ""}>
-                <Link href="/audit-tool">建站避坑工具</Link>
+              {navigationItems.map((item) => (
+                <li key={item.href} className={item.match(pathname) ? "current-menu-item" : ""}>
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              ))}
+              <li className="mg-mobile-consult-item">
+                <button type="button" onClick={copyWeChatAndShowModal} className="mg-header-btn mg-mobile-consult-btn">
+                  免费建站咨询
+                </button>
               </li>
             </ul>
           </nav>
 
-          {/* 右侧动作按钮 */}
-                    {/* 右侧动作按钮与页眉搜索栏 */}
-          <div className="mg-header-right-group" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            
-            {/* 页眉搜索栏 */}
-            <form action="/blog" method="GET" className="mg-header-search-form">
-              <input 
-                type="text" 
-                name="q" 
-                placeholder="搜索文章教程..." 
-                className="mg-header-search-input"
-              />
-              <button type="submit" className="mg-header-search-btn" aria-label="搜索">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <div className="mg-header-right-group">
+            <form action="/blog" method="GET" className="mg-header-search-form" role="search">
+              <input type="search" name="q" placeholder="搜索文章教程..." className="mg-header-search-input" aria-label="搜索文章教程" />
+              <button type="submit" className="mg-header-search-btn" aria-label="提交搜索">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
               </button>
             </form>
-
-            <button onClick={handleWechatCopy} className="mg-header-btn">
+            <button type="button" onClick={copyWeChatAndShowModal} className="mg-header-btn">
               免费建站咨询
             </button>
           </div>
 
-          {/* 手机汉堡按钮图标 */}
-          <label htmlFor="mgMenuToggle" className="mg-burger-icon">
-            <span className="mg-burger-line"></span>
-            <span className="mg-burger-line"></span>
-            <span className="mg-burger-line"></span>
-          </label>
-
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className={`mg-burger-icon ${isMenuOpen ? "is-open" : ""}`}
+            aria-label={isMenuOpen ? "关闭导航菜单" : "打开导航菜单"}
+            aria-expanded={isMenuOpen}
+            aria-controls={menuId}
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            <span className="mg-burger-line" />
+            <span className="mg-burger-line" />
+            <span className="mg-burger-line" />
+          </button>
         </div>
       </header>
-
-      {/* 弹窗 Toast */}
-      <div className={`hero-toast-el ${showToast ? "show" : ""}`}>
-        {toastMessage}
-      </div>
+      {isMenuOpen && <button type="button" className="mg-menu-backdrop" aria-label="关闭导航菜单" onClick={() => setIsMenuOpen(false)} />}
     </>
   );
 }
