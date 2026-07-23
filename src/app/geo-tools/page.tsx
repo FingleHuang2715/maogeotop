@@ -1,6 +1,7 @@
 "use client";
 import { copyWeChatAndShowModal } from "@/components/WeChatModal";
 import React, { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "@/styles/GeoTools.css";
@@ -19,49 +20,69 @@ const slides: SlideData[] = [
     subTitle: "一键分析品牌在大模型中的声量",
     desc: "精准诊断品牌在 DeepSeek、豆包、通义千问、腾讯元宝、文心一言等国内主流大模型中的检索可见度与收录份额，用数据化报表精准呈现品牌数字踪迹。",
     btnText: "立即开启诊断",
-    btnLink: "http://geo.maogeo.top/"
+    btnLink: "https://geo.maogeo.top/"
   },
   {
     title: "AI 智能模板中心",
     subTitle: "前沿 AI 灵感引擎，创作触手可及",
     desc: "内置覆盖外贸独立站、出海推广、营销创意文案、行业分析等多场景的生成模板，一键切换多种文风，让表达更精准有力。",
     btnText: "探索模板中心",
-    btnLink: "http://geo.maogeo.top/"
+    btnLink: "https://geo.maogeo.top/"
   },
   {
     title: "AI 内容智创系统",
     subTitle: "大模型深度优化，精准引流获客",
     desc: "基于核心关键词与企业专属知识库，由 AI 自动扩展 LSI 词与长尾词，生成符合大模型引用标准的高自然度推广优化内容。",
     btnText: "体验智能智创",
-    btnLink: "http://geo.maogeo.top/"
+    btnLink: "https://geo.maogeo.top/"
   },
   {
     title: "官媒矩阵一键投稿",
     subTitle: "全渠道直通发文，构筑内容壁垒",
     desc: "一键批量投稿分发至主流新闻媒体源、B2B 交易平台以及权威行业自媒体，打破单一性，极大缩短沙盒期并加速收录。",
     btnText: "立即选购套餐",
-    btnLink: "http://geo.maogeo.top/"
+    btnLink: "https://geo.maogeo.top/"
   }
 ];
+
+const models = [
+  { name: "DeepSeek", shortName: "DeepSeek", desc: "深度求索 · 极佳性价比与长文本推理模型", href: "https://chat.deepseek.com/", icon: "https://geo.maogeo.top/assets/img/deepseek.png" },
+  { name: "豆包", shortName: "豆包", desc: "字节跳动 · 抖音同源，支持高情商对话与知识检索", href: "https://www.doubao.com/", icon: "https://geo.maogeo.top/assets/img/doubao.png" },
+  { name: "腾讯元宝", shortName: "元宝", desc: "腾讯AI · 微信生态、文章与全网知识搜索", href: "https://yuanbao.tencent.com/", icon: "https://geo.maogeo.top/assets/img/yuanbao.png" },
+  { name: "通义千问", shortName: "通义千问", desc: "阿里云 · 强逻辑推理能力，千行百业的基座支撑", href: "https://www.tongyi.com/", icon: "https://geo.maogeo.top/assets/img/qianwen.png" },
+  { name: "文心一言", shortName: "文心一言", desc: "百度 · 强大的中文语义理解与百度搜索引用整合", href: "https://yiyan.baidu.com/", icon: "https://geo.maogeo.top/assets/img/wenxin.png" },
+  { name: "Kimi", shortName: "Kimi", desc: "月之暗面 · 百万字长文本极速分析与专业搜索引用", href: "https://www.kimi.com/", icon: "https://geo.maogeo.top/assets/img/kimi.png" },
+  { name: "智谱清言", shortName: "智谱清言", desc: "智谱AI · 卓越的学术研究与长文本推理大模型", href: "https://chatglm.cn/", icon: "https://geo.maogeo.top/assets/img/zhipu.png" },
+  { name: "纳米AI", shortName: "纳米AI", desc: "360 · 纳米搜索引擎，智能多维检索与安全合规", href: "https://www.n.cn/", icon: "https://geo.maogeo.top/assets/img/nami.png" },
+] as const;
 
 export default function GeoToolsPage() {
   // GSAP SVG Mask Zoom & Pin refs (SKILL.md)
   const maskPinRef = useRef<HTMLDivElement>(null);
   const svgMaskRef = useRef<HTMLDivElement>(null);
   const cockpitContentRef = useRef<HTMLDivElement>(null);
+  const compassNodesRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  // 🌟 新增：自主式半圆跑马灯始终旋转 (首尾循环，右边落下时左边同时升起)
-  const [marqueeOffset, setMarqueeOffset] = React.useState(0);
+  const [activeModel, setActiveModel] = useState<{ name: string; desc: string }>({
+    name: models[0].name,
+    desc: models[0].desc,
+  });
 
-  React.useEffect(() => {
-    let animId: number;
-    const tick = () => {
-      // 每天平滑递增旋转偏角 (模 180 度，实现完美的 180deg 视角循环)
-      setMarqueeOffset(prev => (prev + 0.08) % 180);
-      animId = requestAnimationFrame(tick);
+  // Use one compositor-only rotation instead of forcing a React render on every frame.
+  useEffect(() => {
+    const nodeTrack = compassNodesRef.current;
+    if (!nodeTrack || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const tween = gsap.to(nodeTrack, {
+      "--marquee-rotation": "180deg",
+      duration: 90,
+      repeat: -1,
+      ease: "none",
+    });
+
+    return () => {
+      tween.kill();
     };
-    animId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animId);
   }, []);
   
   // 🌟 SKILL.md SVG Cutout Mask Zoom Animation ("猫哥GEO" 镂空放大展开)
@@ -116,29 +137,11 @@ export default function GeoToolsPage() {
   };
 
   
-  // 计算每个 AI 节点在 180deg 到 360deg (半圆) 范围内的环绕无缝循环定位样式
+  // Place each model once on the upper semicircle; the parent track rotates on the compositor.
   const getNodeStyle = (index: number) => {
-    const totalSpan = 180; // 半圆范围 180 度 (从水平左侧 180deg 到水平右侧 360deg)
-    const itemSpacing = totalSpan / 9; // 9个项目等分 180 度，每个间隔 20 度
-    const relativePos = (index * itemSpacing + marqueeOffset) % totalSpan;
-    const angle = 180 + relativePos; // 算出当前的绝对旋转角度
+    const angle = 180 + index * (180 / models.length);
     return {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      width: '80px',
-      height: '100px',
-      marginTop: '-50px',
-      marginLeft: '-40px',
-      transform: `rotate(${angle}deg) translate(610px) rotate(-${angle}deg)`,
-      pointerEvents: 'auto',
-      cursor: 'pointer',
-      textDecoration: 'none',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      transition: 'none' // 🌟 必须设为 none 避免浏览器差值动画导致图标在越界重置时从右侧横穿飞回左侧，实现完美的“右落左起”太阳升起视觉效果
+      "--node-angle": `${angle}deg`,
     } as React.CSSProperties;
   };
 
@@ -277,22 +280,22 @@ export default function GeoToolsPage() {
             <div className="hero-cube-wrapper">
               <div className="hero-cube">
                 <div className="cube-face face-front">
-                  <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" alt="AI数据中心查询报表" />
+                  <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" alt="AI数据中心查询报表" width={1200} height={800} sizes="220px" priority />
                 </div>
                 <div className="cube-face face-back">
-                  <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235509827.webp" alt="文章生成与发布" />
+                  <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235509827.webp" alt="文章生成与发布" width={1200} height={800} sizes="220px" />
                 </div>
                 <div className="cube-face face-left">
-                  <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235532486.webp" alt="个人自媒体账号授权矩阵发布" />
+                  <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235532486.webp" alt="个人自媒体账号授权矩阵发布" width={1200} height={800} sizes="220px" />
                 </div>
                 <div className="cube-face face-right">
-                  <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235522326.webp" alt="批量爆款文章复刻" />
+                  <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235522326.webp" alt="批量爆款文章复刻" width={1200} height={800} sizes="220px" />
                 </div>
                 <div className="cube-face face-top">
-                  <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235413409.webp" alt="知名网站媒体投稿" />
+                  <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235413409.webp" alt="知名网站媒体投稿" width={1200} height={800} sizes="220px" />
                 </div>
                 <div className="cube-face face-bottom">
-                  <img src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235559895.webp" alt="B2B行业网站矩阵发布" />
+                  <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235559895.webp" alt="B2B行业网站矩阵发布" width={1200} height={800} sizes="220px" />
                 </div>
               </div>
             </div>
@@ -304,19 +307,22 @@ export default function GeoToolsPage() {
         <div className="geo-slider-nav-wrap">
           <div className="geo-slider-nav-tabs">
             {slides.map((slide, idx) => (
-              <div 
-                key={idx} 
+              <button
+                type="button"
+                key={idx}
                 className={"geo-slider-nav-tab " + (activeSlide === idx ? "active" : "")}
+                onClick={() => setActiveSlide(idx)}
                 onMouseEnter={() => handleTabMouseEnter(idx)}
                 onMouseLeave={handleTabMouseLeave}
+                aria-label={`显示：${slide.title}`}
+                aria-pressed={activeSlide === idx}
               >
-                <div className="geo-nav-tab-title">{slide.title}</div>
-                <div className="geo-nav-tab-desc">{slide.subTitle.split("，")[0]}</div>
-                {/* Progress bar line */}
-                <div className="geo-nav-tab-progress">
-                  <div className="geo-nav-tab-progress-inner"></div>
-                </div>
-              </div>
+                <span className="geo-nav-tab-title">{slide.title}</span>
+                <span className="geo-nav-tab-desc">{slide.subTitle.split("，")[0]}</span>
+                <span className="geo-nav-tab-progress" aria-hidden="true">
+                  <span className="geo-nav-tab-progress-inner"></span>
+                </span>
+              </button>
             ))}
           </div>
         </div>
@@ -343,15 +349,18 @@ export default function GeoToolsPage() {
                 
                 {/* 留出主图片位置给用户 */}
                 <div className="geo-featured-media">
-                  <img 
-                    src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" 
-                    alt="系统核心优势主图（可替换）" 
-                    className="geo-featured-img" 
+                  <Image
+                    src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp"
+                    alt="系统核心优势数据报表"
+                    className="geo-featured-img"
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 1024px) 100vw, 38vw"
                   />
                 </div>
                 
                 <div className="geo-featured-actions">
-                  <a className="geo-featured-btn" href="http://geo.maogeo.top/" target="_blank" rel="noopener noreferrer">
+                  <a className="geo-featured-btn" href="https://geo.maogeo.top/" target="_blank" rel="noopener noreferrer">
                     <span className="geo-featured-btn-text">立即体验</span>
                   </a>
                 </div>
@@ -524,167 +533,37 @@ export default function GeoToolsPage() {
               </div>
 
               {/* 2. 静态自研跑马灯节点容器 */}
-              <div className="geo-compass-nodes">
-                
-                {/* 1. DeepSeek */}
-                <a 
-                  href="https://chat.deepseek.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node active"
-                  style={getNodeStyle(0)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = 'DeepSeek';
-                    document.getElementById('mg-active-model-desc')!.innerText = '深度求索 · 极佳性价比与长文本推理模型';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/deepseek.png" alt="Deepseek" />
-                  </div>
-                  <span className="geo-node-label">DeepSeek</span>
-                </a>
+              <div className="geo-compass-nodes" ref={compassNodesRef}>
+                {models.map((model, index) => (
+                  <a
+                    key={model.name}
+                    href={model.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`geo-compass-node ${activeModel.name === model.name ? "active" : ""}`}
+                    style={getNodeStyle(index)}
+                    onMouseEnter={() => setActiveModel({ name: model.name, desc: model.desc })}
+                    onFocus={() => setActiveModel({ name: model.name, desc: model.desc })}
+                    aria-label={`打开 ${model.name}`}
+                  >
+                    <span className="geo-node-icon-wrap">
+                      <img src={model.icon} alt="" width="34" height="34" loading="lazy" />
+                    </span>
+                    <span className="geo-node-label">{model.shortName}</span>
+                  </a>
+                ))}
 
-                {/* 2. 豆包 */}
-                <a 
-                  href="https://www.doubao.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(1)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '豆包';
-                    document.getElementById('mg-active-model-desc')!.innerText = '字节跳动 · 抖音同源，支持高情商对话与知识检索';
-                  }}
+                <button
+                  type="button"
+                  className={`geo-compass-node geo-compass-more ${activeModel.name === "更多模型" ? "active" : ""}`}
+                  style={getNodeStyle(models.length)}
+                  onMouseEnter={() => setActiveModel({ name: "更多模型", desc: "资深算法团队持续进行深度模型适配与更新" })}
+                  onFocus={() => setActiveModel({ name: "更多模型", desc: "资深算法团队持续进行深度模型适配与更新" })}
+                  aria-label="查看更多适配模型"
                 >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/doubao.png" alt="豆包" />
-                  </div>
-                  <span className="geo-node-label">豆包</span>
-                </a>
-
-                {/* 3. 元宝 */}
-                <a 
-                  href="https://yuanbao.tencent.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(2)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '腾讯元宝';
-                    document.getElementById('mg-active-model-desc')!.innerText = '腾讯AI · 微信生态、文章与全网知识搜索';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/yuanbao.png" alt="元宝" />
-                  </div>
-                  <span className="geo-node-label">元宝</span>
-                </a>
-
-                {/* 4. 通义千问 */}
-                <a 
-                  href="https://www.tongyi.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(3)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '通义千问';
-                    document.getElementById('mg-active-model-desc')!.innerText = '阿里云 · 强逻辑推理能力，千行百业的基座支撑';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/qianwen.png" alt="通义千问" />
-                  </div>
-                  <span className="geo-node-label">通义千问</span>
-                </a>
-
-                {/* 5. 文心一言 */}
-                <a 
-                  href="https://yiyan.baidu.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(4)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '文心一言';
-                    document.getElementById('mg-active-model-desc')!.innerText = '百度 · 强大的中文语义理解与百度搜索引用整合';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/wenxin.png" alt="文心一言" />
-                  </div>
-                  <span className="geo-node-label">文心一言</span>
-                </a>
-
-                {/* 6. Kimi */}
-                <a 
-                  href="https://www.kimi.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(5)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = 'Kimi';
-                    document.getElementById('mg-active-model-desc')!.innerText = '月之暗面 · 百万字长文本极速分析与专业搜索引用';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/kimi.png" alt="Kimi" />
-                  </div>
-                  <span className="geo-node-label">Kimi</span>
-                </a>
-
-                {/* 7. 智谱清言 */}
-                <a 
-                  href="https://chatglm.cn/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(6)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '智谱清言';
-                    document.getElementById('mg-active-model-desc')!.innerText = '智谱AI · 卓越的学术研究与长文本推理大模型';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/zhipu.png" alt="智谱清言" />
-                  </div>
-                  <span className="geo-node-label">智谱清言</span>
-                </a>
-
-                {/* 8. 纳米AI */}
-                <a 
-                  href="https://www.n.cn/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="geo-compass-node"
-                  style={getNodeStyle(7)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '纳米AI';
-                    document.getElementById('mg-active-model-desc')!.innerText = '360 · 纳米搜索引擎，智能多维检索与安全合规';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap">
-                    <img src="http://geo.maogeo.top/assets/img/nami.png" alt="纳米AI" />
-                  </div>
-                  <span className="geo-node-label">纳米AI</span>
-                </a>
-
-                {/* 9. 更多 */}
-                <div 
-                  className="geo-compass-node"
-                  style={getNodeStyle(8)}
-                  onMouseEnter={() => {
-                    document.getElementById('mg-active-model-name')!.innerText = '更多模型';
-                    document.getElementById('mg-active-model-desc')!.innerText = '资深算法团队持续进行深度模型适配与更新...';
-                  }}
-                >
-                  <div className="geo-node-icon-wrap bg-gradient">
-                    <span style={{ fontSize: '18px', color: '#ffffff' }}>➕</span>
-                  </div>
+                  <span className="geo-node-icon-wrap bg-gradient" aria-hidden="true">+</span>
                   <span className="geo-node-label">更多AI</span>
-                </div>
-
+                </button>
               </div>
 
             </div>
@@ -700,12 +579,12 @@ export default function GeoToolsPage() {
                 
                 <div className="geo-hud-divider"></div>
                 
-                <div className="geo-hub-model-name" id="mg-active-model-name">DeepSeek</div>
-                <div className="geo-hub-model-desc" id="mg-active-model-desc">深度求索 · 国产大模型之光</div>
+                <div className="geo-hub-model-name" id="mg-active-model-name" aria-live="polite">{activeModel.name}</div>
+                <div className="geo-hub-model-desc" id="mg-active-model-desc">{activeModel.desc}</div>
                 <a 
                   className="geo-hub-action-btn" 
                   id="mg-active-model-link"
-                  href="http://geo.maogeo.top/" 
+                  href="https://geo.maogeo.top/"
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
@@ -821,7 +700,7 @@ export default function GeoToolsPage() {
                     <div className="tpm-portal-market__panel-footer" style={{ marginTop: '2rem' }}>
                       <a 
                         className="tpm-portal-market__panel-btn" 
-                        href="http://geo.maogeo.top/" 
+                        href="https://geo.maogeo.top/"
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
@@ -835,7 +714,7 @@ export default function GeoToolsPage() {
                     
                     {/* 卡片 1 - WordPress 系统 */}
                     <div className="tpm-portal-market__card-item">
-                      <a href="http://geo.maogeo.top/" className="tpm-portal-market__card" target="_blank" rel="noopener noreferrer">
+                      <a href="https://geo.maogeo.top/" className="tpm-portal-market__card" target="_blank" rel="noopener noreferrer">
                         <div className="tpm-portal-market__card-inner">
                           <div className="tpm-portal-market__card-media">
                             {/* 预留图容器 1 */}
@@ -870,7 +749,7 @@ export default function GeoToolsPage() {
 
                     {/* 卡片 2 - PbootCMS 系统 */}
                     <div className="tpm-portal-market__card-item">
-                      <a href="http://geo.maogeo.top/" className="tpm-portal-market__card" target="_blank" rel="noopener noreferrer">
+                      <a href="https://geo.maogeo.top/" className="tpm-portal-market__card" target="_blank" rel="noopener noreferrer">
                         <div className="tpm-portal-market__card-inner">
                           <div className="tpm-portal-market__card-media">
                             {/* 预留图容器 2 */}
@@ -905,7 +784,7 @@ export default function GeoToolsPage() {
 
                     {/* 卡片 3 - EyouCms 系统 */}
                     <div className="tpm-portal-market__card-item">
-                      <a href="http://geo.maogeo.top/" className="tpm-portal-market__card" target="_blank" rel="noopener noreferrer">
+                      <a href="https://geo.maogeo.top/" className="tpm-portal-market__card" target="_blank" rel="noopener noreferrer">
                         <div className="tpm-portal-market__card-inner">
                           <div className="tpm-portal-market__card-media">
                             {/* 预留图容器 3 */}
