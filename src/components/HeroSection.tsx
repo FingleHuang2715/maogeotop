@@ -215,22 +215,22 @@ export default function HeroSection() {
           <div className="hero-cube-wrapper">
             <div className="hero-cube">
               <div className="cube-face face-front">
-                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" alt="AI数据中心查询报表" width={1200} height={800} sizes="220px" priority />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235653789.webp" alt="AI数据中心查询报表" width={600} height={400} sizes="(max-width: 768px) 220px, 400px" priority fetchPriority="high" />
               </div>
               <div className="cube-face face-back">
-                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235509827.webp" alt="文章生成与发布" width={1200} height={800} sizes="220px" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235509827.webp" alt="文章生成与发布" width={600} height={400} sizes="(max-width: 768px) 220px, 400px" loading="lazy" decoding="async" />
               </div>
               <div className="cube-face face-left">
-                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235532486.webp" alt="个人自媒体账号授权矩阵发布" width={1200} height={800} sizes="220px" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235532486.webp" alt="个人自媒体账号授权矩阵发布" width={600} height={400} sizes="(max-width: 768px) 220px, 400px" loading="lazy" decoding="async" />
               </div>
               <div className="cube-face face-right">
-                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235522326.webp" alt="批量爆款文章复刻" width={1200} height={800} sizes="220px" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235522326.webp" alt="批量爆款文章复刻" width={600} height={400} sizes="(max-width: 768px) 220px, 400px" loading="lazy" decoding="async" />
               </div>
               <div className="cube-face face-top">
-                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235413409.webp" alt="知名网站媒体投稿" width={1200} height={800} sizes="220px" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235413409.webp" alt="知名网站媒体投稿" width={600} height={400} sizes="(max-width: 768px) 220px, 400px" loading="lazy" decoding="async" />
               </div>
               <div className="cube-face face-bottom">
-                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235559895.webp" alt="B2B行业网站矩阵发布" width={1200} height={800} sizes="220px" />
+                <Image src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260715235559895.webp" alt="B2B行业网站矩阵发布" width={600} height={400} sizes="(max-width: 768px) 220px, 400px" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -276,15 +276,15 @@ export default function HeroSection() {
             <Link href="/server-recommendation" className="hero-marquee-item">服务器推荐</Link>
           </div>
           <div className="hero-marquee-list" aria-hidden="true">
-            <Link href="/waimaojianzhan" className="hero-marquee-item">品牌型网站</Link>
-            <Link href="/waimaojianzhan" className="hero-marquee-item">出海独立站</Link>
-            <Link href="/waimaojianzhan" className="hero-marquee-item">外贸SOHO建站</Link>
-            <Link href="/geo-seo-youhua" className="hero-marquee-item">GEO/SEO优化总纲</Link>
-            <Link href="/geo-tools" className="hero-marquee-item">GEO优化工具</Link>
-            <Link href="/geo-tools" className="hero-marquee-item">生成式搜索引擎优化</Link>
-            <Link href="/blog" className="hero-marquee-item">技术教程</Link>
-            <Link href="/audit-tool" className="hero-marquee-item">建站防坑检测</Link>
-            <Link href="/server-recommendation" className="hero-marquee-item">服务器推荐</Link>
+            <span className="hero-marquee-item">品牌型网站</span>
+            <span className="hero-marquee-item">出海独立站</span>
+            <span className="hero-marquee-item">外贸SOHO建站</span>
+            <span className="hero-marquee-item">GEO/SEO优化总纲</span>
+            <span className="hero-marquee-item">GEO优化工具</span>
+            <span className="hero-marquee-item">生成式搜索引擎优化</span>
+            <span className="hero-marquee-item">技术教程</span>
+            <span className="hero-marquee-item">建站防坑检测</span>
+            <span className="hero-marquee-item">服务器推荐</span>
           </div>
         </div>
       </div>
