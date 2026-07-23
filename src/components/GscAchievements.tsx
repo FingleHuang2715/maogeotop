@@ -105,6 +105,10 @@ export default function GscAchievements() {
                     <img 
                       src={slide.src} 
                       alt={slide.tag} 
+                      width={600}
+                      height={400}
+                      loading="lazy"
+                      decoding="async"
                       onClick={() => handleImageClick(slide.src)}
                       style={{ cursor: "zoom-in" }}
                     />
