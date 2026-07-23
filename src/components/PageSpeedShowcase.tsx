@@ -89,28 +89,28 @@ export default function PageSpeedShowcase() {
                   style={{ transform: `rotateY(${rotationY}deg)` }}
                 >
                   <div className="pagespeed-cube-face pagespeed-face-front" onClick={() => handleImageClick(pageSpeedImages[frontIdx].url)}>
-                    <img src={pageSpeedImages[frontIdx].url} alt={pageSpeedImages[frontIdx].title} draggable="false" />
+                    <img src={pageSpeedImages[frontIdx].url} alt={pageSpeedImages[frontIdx].title} width={600} height={400} loading="lazy" decoding="async" draggable="false" />
                     <div className="pagespeed-face-overlay">
                       <span>点击查看 90-100分 官方凭证原图 🔍</span>
                     </div>
                   </div>
 
                   <div className="pagespeed-cube-face pagespeed-face-right" onClick={() => handleImageClick(pageSpeedImages[rightIdx].url)}>
-                    <img src={pageSpeedImages[rightIdx].url} alt={pageSpeedImages[rightIdx].title} draggable="false" />
+                    <img src={pageSpeedImages[rightIdx].url} alt={pageSpeedImages[rightIdx].title} width={600} height={400} loading="lazy" decoding="async" draggable="false" />
                     <div className="pagespeed-face-overlay">
                       <span>点击查看 90-100分 官方凭证原图 🔍</span>
                     </div>
                   </div>
 
                   <div className="pagespeed-cube-face pagespeed-face-back" onClick={() => handleImageClick(pageSpeedImages[backIdx].url)}>
-                    <img src={pageSpeedImages[backIdx].url} alt={pageSpeedImages[backIdx].title} draggable="false" />
+                    <img src={pageSpeedImages[backIdx].url} alt={pageSpeedImages[backIdx].title} width={600} height={400} loading="lazy" decoding="async" draggable="false" />
                     <div className="pagespeed-face-overlay">
                       <span>点击查看 90-100分 官方凭证原图 🔍</span>
                     </div>
                   </div>
 
                   <div className="pagespeed-cube-face pagespeed-face-left" onClick={() => handleImageClick(pageSpeedImages[leftIdx].url)}>
-                    <img src={pageSpeedImages[leftIdx].url} alt={pageSpeedImages[leftIdx].title} draggable="false" />
+                    <img src={pageSpeedImages[leftIdx].url} alt={pageSpeedImages[leftIdx].title} width={600} height={400} loading="lazy" decoding="async" draggable="false" />
                     <div className="pagespeed-face-overlay">
                       <span>点击查看 90-100分 官方凭证原图 🔍</span>
                     </div>
