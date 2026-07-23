@@ -270,6 +270,7 @@
 }
 
 .geo-nav-tab-progress-inner {
+  display: block;
   width: 0%;
   height: 100%;
   background: var(--geo-neon-indigo);
@@ -313,7 +314,7 @@
   position: absolute;
   width: 220px;
   height: 220px;
-  border-radius: 24px;
+  border-radius: 0 !important;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -357,9 +358,9 @@
 
 .geo-advantages-inner {
   display: grid;
-  grid-template-columns: 0.38fr 0.62fr; /* 38% vs 62% 对齐 */
+  grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
   gap: 3rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* 左侧 featured 风格卡片 */
@@ -370,6 +371,7 @@
   padding: 2.2rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
   height: 100%;
+  min-height: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -454,8 +456,27 @@
 /* 右侧优势列表 3x2 网格 */
 .geo-advantages-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
+  height: 100%;
+}
+
+.geo-featured-inner,
+.geo-advantage-item-content,
+.geo-advantage-info {
+  min-width: 0;
+}
+
+.geo-featured-inner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.geo-advantage-item {
+  min-height: 0;
+  height: 100%;
 }
 
 .geo-advantage-item {
@@ -497,34 +518,31 @@
 .geo-advantage-info {
   display: flex;
   flex-direction: column;
-}
-
-.geo-advantage-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 0.5rem;
+  min-width: 0;
+  width: 100%;
 }
 
 .geo-advantage-name {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 19px !important;
+  font-weight: 750;
   color: var(--geo-text-white);
 }
 
 .geo-advantage-tag {
-  font-size: 9.5px;
+  font-size: 12px !important;
   color: var(--geo-neon-indigo);
   background: rgba(10, 78, 203, 0.06);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 0;
+  font-weight: 700;
 }
 
 .geo-advantage-desc {
-  font-size: 12.5px;
+  margin: 0;
+  font-size: 17px !important;
   color: var(--geo-text-dim);
-  line-height: 1.5;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
 }
 
 
@@ -924,6 +942,11 @@
   position: absolute;
   width: 80px;
   height: 100px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -936,8 +959,9 @@
   left: 50%;
   margin-top: -50px;
   margin-left: -40px;
-  /* 挂载到 610px 轨道半径上，完美平铺贴边 */
-  transform: rotate(var(--angle)) translate(610px) rotate(calc(-1 * var(--angle)));
+  /* Static placement; the parent track owns the continuous compositor animation. */
+  transform: rotate(calc(var(--node-angle) + var(--marquee-rotation, 0deg))) translate(610px) rotate(calc(-1 * (var(--node-angle) + var(--marquee-rotation, 0deg))));
+  will-change: transform;
 }
 
 .geo-node-icon-wrap {
@@ -1441,6 +1465,10 @@
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
   }
+  .geo-advantages-list {
+    grid-template-rows: none;
+    height: auto;
+  }
   .geo-advantages-featured {
     min-height: auto !important;
   }
@@ -1470,6 +1498,60 @@
   .geo-functions-right {
     display: none !important; /* 移动端完全隐藏魔方 */
   }
+  .geo-compass-section {
+    padding-top: 3.5rem;
+  }
+  .geo-svg-mask-overlay,
+  .geo-cockpit-pillar,
+  .geo-cockpit-steering-wheel {
+    display: none !important;
+  }
+  .geo-compass-wrapper {
+    height: auto;
+    min-height: 0;
+    margin-top: 0;
+    padding: 0 16px 32px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .geo-compass-dial-container {
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    display: block;
+  }
+  .geo-compass-nodes {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    transform: none !important;
+  }
+  .geo-compass-node {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 92px;
+    margin: 0 !important;
+    transform: none !important;
+  }
+  .geo-compass-center-hub {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+  .geo-hub-hologram {
+    min-height: 228px;
+    padding: 22px 18px;
+    backdrop-filter: none;
+  }
   .geo-slider-nav-tabs {
     grid-template-columns: 1fr;
     gap: 0;
@@ -1495,8 +1577,8 @@
   }
   
   .geo-advantage-item {
-    border-radius: 0 !important;
-    padding: 1.2rem 1rem !important;
+    min-height: 185px !important;
+    padding: 1.4rem 1.25rem !important;
   }
 
   .geo-advantage-item-content {
@@ -1521,18 +1603,18 @@
   .geo-advantage-header {
     display: flex !important;
     align-items: center !important;
+    flex-wrap: wrap;
     gap: 8px !important;
-    margin-bottom: 0.4rem !important;
+    margin-bottom: 0.55rem !important;
   }
 
   .geo-advantage-name {
-    font-size: 14px !important;
-    font-weight: 700 !important;
+    font-size: 16px !important;
   }
 
   .geo-advantage-desc {
-    font-size: 11px !important;
-    line-height: 1.5 !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
     margin: 0 !important;
   }
 
