@@ -22,14 +22,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Standalone Project on GitHub Cloud (Zero Server Load)
+      - name: Build Standalone Project on GitHub Cloud
         run: |
           npm run build
           cp -r public .next/standalone/
           cp -r .next/static .next/standalone/.next/
           cp ecosystem.config.js .next/standalone/ 2>/dev/null || true
 
-      - name: Deploy Lightweight Bundle to Baota
+      - name: Directly Overwrite Files on Baota Server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -40,7 +40,7 @@ jobs:
           target: "/www/wwwroot/maogeo-app"
           strip_components: 2
 
-      - name: Fast PM2 Reload on Baota
+      - name: Reload PM2 on Baota
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
