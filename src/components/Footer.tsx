@@ -107,6 +107,8 @@ export default function Footer() {
             <Link href="/privacy-policy">隐私政策</Link>
             <span>|</span>
             <Link href="/terms-of-service">服务条款</Link>
+            <span>|</span>
+            <Link href="/sitemap">站点地图</Link>
           </div>
         </div>
       </div>
