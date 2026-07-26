@@ -421,3 +421,62 @@
     height: 280px;
   }
 }
+
+/* Homepage Hero owns its CTA rhythm instead of inheriting GEO Tools' later overrides. */
+.home-hero .geo-slider-nav-wrap {
+  margin-top: 0;
+}
+
+.home-hero .geo-slider-nav-tab-progress-inner {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #0a4ecb;
+  transition: width 6s linear;
+}
+
+.home-hero .geo-slider-nav-tab.active .geo-slider-nav-tab-progress-inner {
+  width: 100%;
+}
+
+.home-hero .geo-slides-container {
+  min-height: 340px;
+}
+
+.home-hero .geo-slide-item {
+  padding-bottom: 2rem;
+}
+
+.home-hero .home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px !important;
+  margin: 1.4rem 0 2rem !important;
+}
+
+.home-hero .home-hero-actions .geo-slider-btn {
+  min-height: 46px;
+}
+
+@media (max-width: 768px) {
+  .home-hero .geo-slides-container {
+    min-height: 430px;
+  }
+
+  .home-hero .home-hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .home-hero .home-hero-actions .geo-slider-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-hero .geo-slides-container {
+    min-height: 460px;
+  }
+}

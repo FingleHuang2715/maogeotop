@@ -131,7 +131,14 @@ export default function CasesShowcase() {
                       className="geo-cases-viewport" 
                       onClick={() => handleOpenLightbox(item.imgSrc, item.title)}
                     >
-                      <img src={item.imgSrc} alt={`${item.title}长截图`} />
+                      <img 
+                        src={item.imgSrc} 
+                        alt={`${item.title}长截图`}
+                        width={600}
+                        height={900}
+                        loading="lazy"
+                        decoding="async"
+                      />
                       <div className="geo-cases-hover-tip">Hover 滚动 / 点击查看原图</div>
                     </div>
                   </div>

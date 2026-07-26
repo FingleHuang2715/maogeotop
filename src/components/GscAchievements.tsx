@@ -89,7 +89,7 @@ export default function GscAchievements() {
             </div>
             
             <div className="geo-gsc-cta-box">
-              <a href="http://geo.maogeo.top" target="_blank" rel="noopener" className="gradient-btn geo-gsc-btn">立即分析我的网站流量 ➔</a>
+              <a href="https://geo.maogeo.top" target="_blank" rel="noopener" className="gradient-btn geo-gsc-btn">立即分析我的网站流量 ➔</a>
             </div>
           </div>
 
@@ -105,6 +105,10 @@ export default function GscAchievements() {
                     <img 
                       src={slide.src} 
                       alt={slide.tag} 
+                      width={600}
+                      height={400}
+                      loading="lazy"
+                      decoding="async"
                       onClick={() => handleImageClick(slide.src)}
                       style={{ cursor: "zoom-in" }}
                     />

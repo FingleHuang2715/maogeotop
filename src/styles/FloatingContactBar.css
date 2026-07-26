@@ -46,12 +46,25 @@
 }
 
 .mg-fc-pulse-btn {
-  animation: mgFcPulse 2.5s infinite ease-in-out;
+  position: relative;
+  isolation: isolate;
+}
+
+.mg-fc-pulse-btn::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  z-index: -1;
+  border: 1px solid rgba(10, 78, 203, 0.35);
+  border-radius: 50%;
+  animation: mgFcPulse 2.5s infinite ease-out;
+  pointer-events: none;
 }
 
 @keyframes mgFcPulse {
-  0%, 100% { box-shadow: 0 4px 16px rgba(10, 78, 203, 0.12); }
-  50% { box-shadow: 0 4px 24px rgba(10, 78, 203, 0.35); }
+  0%, 100% { opacity: 0; transform: scale(0.82); }
+  35% { opacity: 0.65; }
+  75% { opacity: 0; transform: scale(1.2); }
 }
 
 /* Hover Popover 悬浮弹窗 */

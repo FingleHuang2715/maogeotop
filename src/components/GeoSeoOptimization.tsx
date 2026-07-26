@@ -133,9 +133,9 @@ export default function GeoSeoOptimizationPage() {
     <div className="seo-topology-box">
       <div className="seo-topology-head">技术 SEO & GEO 底层通行证</div>
       <div className="seo-topology-line-vertical"></div>
-      <div className="seo-topology-line-horizontal-wrap">
-        <div className="seo-topology-line-horizontal" style={{ width: '88%' }}></div>
-        <div className="seo-topology-line-vertical-sub-wrap" style={{ width: '88%' }}>
+      <div className="seo-topology-line-horizontal-wrap seo-topology-line-horizontal-wrap-six">
+        <div className="seo-topology-line-horizontal"></div>
+        <div className="seo-topology-line-vertical-sub-wrap">
           <div className="seo-topology-line-vertical-sub"></div>
           <div className="seo-topology-line-vertical-sub"></div>
           <div className="seo-topology-line-vertical-sub"></div>
