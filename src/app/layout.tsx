@@ -42,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" data-scroll-behavior="smooth">
       <head>
+        <meta name="baidu-site-verification" content="codeva-N6DxmzPlZO" />
         <link rel="preconnect" href="https://cdn.maogeo.top" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.maogeo.top" />
         <link rel="preconnect" href="https://post.maogeo.top" crossOrigin="anonymous" />
