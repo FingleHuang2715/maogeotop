@@ -1,6 +1,6 @@
 "use client";
 import { copyWeChatAndShowModal } from "@/components/WeChatModal";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -74,8 +74,8 @@ export default function GeoToolsPage() {
     if (!nodeTrack || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const tween = gsap.to(nodeTrack, {
-      "--marquee-rotation": "180deg",
-      duration: 90,
+      "--marquee-rotation": "360deg",
+      duration: 120,
       repeat: -1,
       ease: "none",
     });
@@ -112,24 +112,27 @@ export default function GeoToolsPage() {
 
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto-play slider logic
-  useEffect(() => {
-    startAutoplay();
-    return () => stopAutoplay();
-  }, []);
-
-  const startAutoplay = () => {
-    stopAutoplay();
+  const startAutoplay = useCallback(() => {
+    if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
     autoplayTimerRef.current = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
-  };
+  }, []);
 
-  const stopAutoplay = () => {
+  const stopAutoplay = useCallback(() => {
     if (autoplayTimerRef.current) {
       clearInterval(autoplayTimerRef.current);
+      autoplayTimerRef.current = null;
     }
-  };
+  }, []);
+
+  // Auto-play slider logic
+  useEffect(() => {
+    startAutoplay();
+    return () => {
+      if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
+    };
+  }, [startAutoplay]);
 
   const handleTabMouseEnter = (index: number) => {
     stopAutoplay();
@@ -137,9 +140,10 @@ export default function GeoToolsPage() {
   };
 
   
-  // Place each model once on the upper semicircle; the parent track rotates on the compositor.
+  // Place models evenly across full 360deg circle for seamless infinite rotation
+  const displayModels = [...models, ...models];
   const getNodeStyle = (index: number) => {
-    const angle = 180 + index * (180 / models.length);
+    const angle = index * (360 / displayModels.length);
     return {
       "--node-angle": `${angle}deg`,
     } as React.CSSProperties;
@@ -534,9 +538,9 @@ export default function GeoToolsPage() {
 
               {/* 2. 静态自研跑马灯节点容器 */}
               <div className="geo-compass-nodes" ref={compassNodesRef}>
-                {models.map((model, index) => (
+                {displayModels.map((model, index) => (
                   <a
-                    key={model.name}
+                    key={`${model.name}-${index}`}
                     href={model.href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -552,18 +556,6 @@ export default function GeoToolsPage() {
                     <span className="geo-node-label">{model.shortName}</span>
                   </a>
                 ))}
-
-                <button
-                  type="button"
-                  className={`geo-compass-node geo-compass-more ${activeModel.name === "更多模型" ? "active" : ""}`}
-                  style={getNodeStyle(models.length)}
-                  onMouseEnter={() => setActiveModel({ name: "更多模型", desc: "资深算法团队持续进行深度模型适配与更新" })}
-                  onFocus={() => setActiveModel({ name: "更多模型", desc: "资深算法团队持续进行深度模型适配与更新" })}
-                  aria-label="查看更多适配模型"
-                >
-                  <span className="geo-node-icon-wrap bg-gradient" aria-hidden="true">+</span>
-                  <span className="geo-node-label">更多AI</span>
-                </button>
               </div>
 
             </div>

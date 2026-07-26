@@ -4,27 +4,33 @@ const nextConfig: NextConfig = {
   output: "standalone",
 
   images: {
+    unoptimized: process.env.NODE_ENV === "development",
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "imagedelivery.net",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "post.maogeo.top",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "maogewordpress.oss-cn-shenzhen.aliyuncs.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "cdn.maogeo.top",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "geo.maogeo.top",
+        pathname: "/**",
       },
     ],
   },

@@ -129,11 +129,11 @@
 
 /* ================= 主标题 — 70/30 紧凑高质排版 ================= */
 .hero-cosmic-headline {
-  font-family: var(--font-sans) !important;
+  font-family: 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
   font-size: clamp(2.4rem, 3.8vw, 3.6rem); /* 调整字号，配合70%宽度极具张力 */
   font-weight: 900;
-  line-height: 1.18;
-  color: var(--text);
+  line-height: 1.2;
+  color: #1d1d1f;
   margin: 0 0 0.8rem 0; /* 压缩 margin，给走马灯留出空间 */
   letter-spacing: -0.02em;
 }
@@ -160,6 +160,7 @@
   position: relative;
   display: block;
   z-index: 1;
+  white-space: nowrap;
 }
 
 /* 1. 底层：独立的阴影节点，渲染白色 3D 轮廓及阴影 */
@@ -176,6 +177,7 @@
   pointer-events: none;
   font-weight: 900 !important;
   font-family: var(--font-sans) !important;
+  white-space: nowrap;
   
   /* 融入“了解详细服务”按钮的专属蓝紫渐变填充 (从左到右渐变) */
   background: #0A4ECB !important;
@@ -212,11 +214,12 @@
 
 /* ===== 描述段落：字号加大，文字加粗，颜色更深 ===== */
 .hero-cosmic-desc {
-  font-size: 1.08rem; /* 微降字号，以防推挤走马灯 */
+  font-size: 1.02rem; /* 稍微微调防溢出 */
   font-weight: 500;  
   color: #000000;    
   line-height: 1.7;
   margin: 0 0 1.2rem 0; /* 缩减 margin，防遮挡 */
+  white-space: nowrap; /* 保持一行 */
 }
 
 .hero-cosmic-hl {
@@ -412,6 +415,11 @@
   }
   .hero-cosmic-headline {
     font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+  .hero-gradient-container,
+  .hero-gradient-fill,
+  .hero-cosmic-desc {
+    white-space: normal !important;
   }
   .hero-cosmic-desc {
     font-size: 1rem;

@@ -114,33 +114,33 @@ export default function ServerRecommendationPage() {
             <aside className="srv-hero-summary-card">
               <h2 className="srv-summary-title">💡 猫哥选购结论</h2>
               <ul className="srv-summary-list">
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '3px' }}>
+                <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}>
                     <circle cx="12" cy="12" r="10"></circle>
                     <line x1="2" y1="12" x2="22" y2="12"></line>
                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"></path>
                   </svg>
-                  <div><strong>外贸独立站 / 跨境建站 (主推)</strong>：优先选择 <strong>Hostinger 全托管方案</strong>（低至 $2.39/月，含域名/备份/一键CDN/极简操作）或 <strong>SiteGround</strong>（低至 $3.99/月，续费原价较高）。</div>
+                  <div><strong>外贸建站 (首推)</strong>：优先选择 <strong>Hostinger 全托管</strong>（低至 $2.39/月，含域名/CDN/极简运维）或 <strong>SiteGround</strong>。</div>
                 </li>
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '3px' }}>
+                <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}>
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                   </svg>
-                  <div><strong>按小时计费与开发者按需部署</strong>：首选 <strong>Vultr 云服务器</strong>（拥有 32+ 全球机房，随开随销毁，单价相比全托管略偏贵）。</div>
+                  <div><strong>按需部署/开发者</strong>：首选 <strong>Vultr 云服务器</strong>（32+ 全球机房，随开随销毁，性能极佳）。</div>
                 </li>
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '3px' }}>
+                <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}>
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                   </svg>
-                  <div><strong>国内正规备案与企业中文官网 (并列首选)</strong>：推荐 <strong>阿里云</strong> 与 <strong>腾讯云</strong>（低至 99元/年），客服方便且支持远程协助。</div>
+                  <div><strong>国内正规备案与官网 (并列)</strong>：首选 <strong>阿里云</strong> / <strong>腾讯云</strong>（99元/年起，售后响应极快）。</div>
                 </li>
-                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '3px' }}>
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A4ECB" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}>
+                    <rect x="2" y="3" width="20" height="14" rx="1"></rect>
                     <line x1="8" y1="21" x2="16" y2="21"></line>
                     <line x1="12" y1="17" x2="12" y2="21"></line>
                   </svg>
-                  <div><strong>国内企业级备选</strong>：包含 <strong>华为云、京东云（特价低至30-60元/年）、百度云、西部数据</strong>，支持本地化客服。</div>
+                  <div><strong>企业级多云备选</strong>：包含 <strong>华为云、京东云、百度云</strong>，满足企业特定云资源需求。</div>
                 </li>
               </ul>
             </aside>

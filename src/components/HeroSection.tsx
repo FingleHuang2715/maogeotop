@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { copyWeChatAndShowModal } from "@/components/WeChatModal";
 
@@ -18,13 +18,13 @@ const slides: SlideData[] = [
   {
     title: "提供专业一站式",
     subTitle: "官网建设与品牌出海营销解决方案",
-    desc: "从智能官网定制到生成式引擎(GEO)优化，确保品牌词与核心产品在 AGI 检索环境中被大模型高权重引用。",
+    desc: "从智能官网定制到生成式引擎(GEO)优化，确保品牌词与核心产品在AGI中被大模型高权重引用。",
     btnText: "免费 GEO 试用 ➔",
     btnLink: "https://geo.maogeo.top/"
   },
   {
     title: "AI 时代优先收录",
-    subTitle: "针对 ChatGPT / DeepSeek / Gemini 优化",
+    subTitle: "针对主流AI大模型搜索优化",
     desc: "打破传统 SEO 瓶颈，通过结构化数据与语义锚点重构，打造 24 小时出海金牌推销员。",
     btnText: "了解 GEO 建站 ➔",
     btnLink: "/geo-tools"
@@ -42,24 +42,26 @@ export default function HeroSection() {
   const [activeSlide, setActiveSlide] = useState(0);
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reducedMotion) startAutoplay();
-    return () => stopAutoplay();
-  }, []);
-
-  const startAutoplay = () => {
-    stopAutoplay();
+  const startAutoplay = useCallback(() => {
+    if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
     autoplayTimerRef.current = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
-  };
+  }, []);
 
-  const stopAutoplay = () => {
+  const stopAutoplay = useCallback(() => {
     if (autoplayTimerRef.current) {
       clearInterval(autoplayTimerRef.current);
+      autoplayTimerRef.current = null;
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    startAutoplay();
+    return () => {
+      if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
+    };
+  }, [startAutoplay]);
 
   const handleTabMouseEnter = (index: number) => {
     stopAutoplay();

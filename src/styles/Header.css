@@ -1,17 +1,20 @@
-/* Site header */
 .mg-site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
-  height: 70px;
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid var(--border-glass);
+  height: 72px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: none !important;
   z-index: 1000;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .mg-site-header.scrolled {
+  height: 56px;
+  background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 10px 30px rgba(15, 41, 76, 0.08);
-  border-color: rgba(10, 78, 203, 0.14);
 }
 
 .mg-header-container {
@@ -23,6 +26,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  transition: padding 0.3s ease;
 }
 
 .mg-header-logo {
@@ -36,6 +40,11 @@
   height: auto;
   aspect-ratio: 711 / 150;
   object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.mg-site-header.scrolled .mg-header-logo-image {
+  transform: scale(0.9);
 }
 
 .mg-header-nav,
