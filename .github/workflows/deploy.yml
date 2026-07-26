@@ -40,7 +40,7 @@ jobs:
           target: "/www/wwwroot/maogeo-app"
           strip_components: 2
 
-      - name: Reload PM2 on Baota
+      - name: Clean Reload PM2 on Baota (Prevent Multi-Process Conflict)
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -49,4 +49,7 @@ jobs:
           port: ${{ secrets.SSH_PORT || 6808 }}
           script: |
             cd /www/wwwroot/maogeo-app
-            pm2 reload ecosystem.config.js --env production || pm2 start server.js --name "maogeo-app"
+            # 彻底杀掉残留旧进程，防止多进程争抢端口导致页面新旧错乱
+            pm2 delete "maogeo-app" 2>/dev/null || true
+            pm2 start server.js --name "maogeo-app"
+            pm2 save
