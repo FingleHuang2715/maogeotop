@@ -33,18 +33,7 @@ jobs:
           # 如果有 ecosystem.config.js，也一并拷过去
           cp ecosystem.config.js .next/standalone/ 2>/dev/null || true
 
-      - name: Deploy to Baota Server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 6808 }}
-          source: ".next/standalone/*"  # 只上传轻量级的 standalone 部署包
-          target: "/www/wwwroot/maogeo-app"
-          strip_components: 2           # 移除路径前缀，直接解压到 target 目录下
-
-      - name: Restart PM2 process
+      - name: Deploy & Rollback-Ready to Baota Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -52,5 +41,49 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT || 6808 }}
           script: |
-            cd /www/wwwroot/maogeo-app
+            # 1. 自动生成当前打包的时间戳版本号
+            RELEASE_NAME="release-$(date +%Y%m%d%H%M%S)"
+            APP_DIR="/www/wwwroot/maogeo-app"
+            RELEASE_DIR="$APP_DIR/releases/$RELEASE_NAME"
+
+            # 2. 创建新版本目录
+            mkdir -p "$RELEASE_DIR"
+
+            # 3. 将本地打包解压拷贝至新版本目录
+            # (在此步骤中完成拷贝)
+
+      - name: Upload Build Artifacts to Release Dir
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 6808 }}
+          source: ".next/standalone/*"
+          target: "/www/wwwroot/maogeo-app/releases/latest"
+          strip_components: 2
+
+      - name: Switch Symlink & PM2 Reload (Zero Downtime)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 6808 }}
+          script: |
+            APP_DIR="/www/wwwroot/maogeo-app"
+            TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+            NEW_RELEASE="$APP_DIR/releases/$TIMESTAMP"
+
+            # 将 latest 重命名为具体的时间戳版本目录
+            mv "$APP_DIR/releases/latest" "$NEW_RELEASE"
+
+            # 原子切换软链接 current -> 新版本
+            ln -sfn "$NEW_RELEASE" "$APP_DIR/current"
+
+            # 只保留最新的 5 个历史版本，自动清理旧版本节省磁盘空间
+            cd "$APP_DIR/releases" && ls -t | tail -n +6 | xargs rm -rf 2>/dev/null || true
+
+            # 平滑重载 PM2 进程
+            cd "$APP_DIR/current"
             pm2 startOrReload ecosystem.config.js --env production || pm2 start server.js --name "maogeo-app"
