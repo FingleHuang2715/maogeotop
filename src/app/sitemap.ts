@@ -1,10 +1,24 @@
 import { MetadataRoute } from "next";
+import { headers } from "next/headers";
 import { getPaginatedPosts } from "@/lib/wordpress";
 
-const baseUrl = "https://maogeo.top";
 const contentUpdatedAt = new Date("2026-07-23T00:00:00+08:00");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  let baseUrl = "https://maogeo.top";
+
+  try {
+    const headersList = await headers();
+    const host = headersList.get("host");
+    const protocol = headersList.get("x-forwarded-proto") || "https";
+
+    if (host) {
+      baseUrl = `${protocol}://${host}`;
+    }
+  } catch {
+    // Fallback default baseUrl if headers fail
+  }
+
   let postRoutes: MetadataRoute.Sitemap = [];
 
   try {
