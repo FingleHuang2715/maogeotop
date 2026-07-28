@@ -192,15 +192,44 @@
 @media (max-width: 900px) {
   body.mg-menu-open { overflow: hidden; }
   .mg-site-header { height: 60px; position: sticky; top: 0; }
-  .mg-header-container { padding: 0 16px; }
-  .mg-header-logo-image { width: 110px; }
-  .mg-header-right-group { display: none; }
+  .mg-header-container { padding: 0 14px; gap: 8px; }
+  .mg-header-logo-image { width: 104px; }
+  
+  /* 移动端页眉右侧：显示搜索框，隐藏免费咨询与多余选框 */
+  .mg-header-right-group {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+  .mg-header-right-group .mg-language-selector-wrap,
+  .mg-header-right-group .mg-header-btn {
+    display: none !important;
+  }
+  .mg-header-search-form {
+    display: flex !important;
+    position: relative;
+    width: 135px;
+  }
+  .mg-header-search-input {
+    width: 100%;
+    height: 36px;
+    padding: 0 32px 0 10px;
+    font-size: 13px;
+  }
+  .mg-header-search-input:focus {
+    width: 160px;
+  }
+  .mg-header-search-btn {
+    width: 28px;
+    height: 28px;
+  }
 
   .mg-burger-icon {
     position: relative;
     z-index: 1003;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -211,10 +240,11 @@
     border: 1px solid rgba(10, 78, 203, 0.14);
     border-radius: 0;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .mg-burger-line {
-    width: 20px;
+    width: 18px;
     height: 2px;
     background: var(--text);
     transition: transform 0.25s ease, opacity 0.2s ease;
@@ -223,22 +253,22 @@
   .mg-burger-icon.is-open .mg-burger-line:nth-child(2) { opacity: 0; }
   .mg-burger-icon.is-open .mg-burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* 🌟 移动端抽屉菜单 (解决下滑点击菜单留在顶部的 bug，使用固定 60px 相对 top) */
+  /* 🌟 移动端抽屉菜单 (无遮罩浮层) */
   .mg-header-nav {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     z-index: 1002;
-    width: min(86vw, 320px);
+    width: min(86vw, 300px);
     height: 100vh;
     height: 100dvh;
     display: flex;
     flex-direction: column;
-    padding: 72px 20px 30px;
+    padding: 68px 20px 30px;
     background: #ffffff;
     border-left: 1px solid rgba(10, 78, 203, 0.12);
-    box-shadow: -20px 0 60px rgba(15, 41, 76, 0.18);
+    box-shadow: -15px 0 45px rgba(15, 41, 76, 0.15);
     overflow-y: auto;
     transform: translateX(100%);
     visibility: hidden;
@@ -249,41 +279,6 @@
   .mg-header-nav.is-open {
     transform: translateX(0);
     visibility: visible;
-  }
-
-  /* 移动端搜寻框 */
-  .mg-mobile-search-wrap {
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  }
-  .mg-mobile-search-form {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .mg-mobile-search-input {
-    width: 100%;
-    height: 42px;
-    padding: 0 40px 0 14px;
-    font-size: 14px;
-    color: #1d1d1f;
-    background: #f5f5f7;
-    border: 1px solid rgba(10, 78, 203, 0.15);
-    border-radius: 0;
-    outline: none;
-  }
-  .mg-mobile-search-btn {
-    position: absolute;
-    right: 4px;
-    width: 36px;
-    height: 36px;
-    display: grid;
-    place-items: center;
-    color: var(--blue);
-    background: transparent;
-    border: 0;
   }
 
   .mg-header-nav ul { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: 100%; }
@@ -313,28 +308,8 @@
   .mg-mobile-consult-item { display: block; border-bottom: 0 !important; padding-top: 18px; margin-top: auto; }
   .mg-mobile-consult-btn { width: 100%; min-height: 46px; }
 
-  /* 🌟 彻底清除默认 button 纯白框 artifact 并实现遮罩暗化 */
+  /* 🌟 完全禁用遮罩弹窗 */
   .mg-menu-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 1001;
-    display: block;
-    padding: 0;
-    margin: 0;
-    background: rgba(10, 12, 20, 0.55);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    box-shadow: none;
-    cursor: pointer;
-    animation: mgBackdropFadeIn 0.25s ease;
+    display: none !important;
   }
-}
-
-@keyframes mgBackdropFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }

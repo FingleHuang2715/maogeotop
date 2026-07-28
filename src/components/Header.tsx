@@ -98,16 +98,6 @@ export default function Header() {
           </Link>
 
           <nav ref={navRef} id={menuId} className={`mg-header-nav ${isMenuOpen ? "is-open" : ""}`} aria-label="主导航">
-            {/* 移动端专属搜索栏 */}
-            <div className="mg-mobile-search-wrap">
-              <form action="/blog" method="GET" className="mg-mobile-search-form" role="search" onSubmit={() => setIsMenuOpen(false)}>
-                <input type="search" name="q" placeholder="搜索文章教程..." className="mg-mobile-search-input" aria-label="搜索文章教程" />
-                <button type="submit" className="mg-mobile-search-btn" aria-label="提交搜索">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-                </button>
-              </form>
-            </div>
-
             <ul className="mg-menu-list">
               {navigationItems.map((item) => (
                 <li key={item.href} className={item.match(pathname) ? "current-menu-item" : ""}>
@@ -146,8 +136,8 @@ export default function Header() {
             </ul>
           </nav>
 
+          {/* 🌟 移动端与桌面端通用右侧组：搜索框在汉堡包左侧 */}
           <div className="mg-header-right-group">
-            {/* 🌟 桌面端简洁语言选择框 */}
             <div className="mg-language-selector-wrap">
               <select 
                 className="mg-language-select" 
@@ -171,7 +161,7 @@ export default function Header() {
             </div>
 
             <form action="/blog" method="GET" className="mg-header-search-form" role="search">
-              <input type="search" name="q" placeholder="搜索文章教程..." className="mg-header-search-input" aria-label="搜索文章教程" />
+              <input type="search" name="q" placeholder="搜索教程..." className="mg-header-search-input" aria-label="搜索文章教程" />
               <button type="submit" className="mg-header-search-btn" aria-label="提交搜索">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
               </button>
@@ -196,7 +186,6 @@ export default function Header() {
           </button>
         </div>
       </header>
-      {isMenuOpen && <button type="button" className="mg-menu-backdrop" aria-label="关闭导航菜单" onClick={() => setIsMenuOpen(false)} />}
     </>
   );
 }
