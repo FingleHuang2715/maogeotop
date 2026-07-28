@@ -563,9 +563,9 @@ export default function GeoToolsPage() {
                         alt={model.name} 
                         width="34" 
                         height="34"
-                        crossOrigin="anonymous" 
+                        loading="lazy"
                         onError={(e) => {
-                          // 如果图片受跨域或网络影响，显示高清品牌 Logo 徽章
+                          // 如果图片受网络影响，显示品牌首字文字徽章
                           const img = e.currentTarget;
                           img.style.display = "none";
                           const parent = img.parentElement;
