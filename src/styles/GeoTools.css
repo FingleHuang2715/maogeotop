@@ -1500,101 +1500,93 @@
     display: none !important; /* 移动端完全隐藏魔方 */
   }
   .geo-compass-section {
-    padding: 2.5rem 16px;
+    padding: 3rem 16px 2rem 16px;
     background: #090b10 !important;
+    overflow: hidden;
   }
   .geo-svg-mask-overlay,
-  .geo-cockpit-pillar,
-  .geo-cockpit-steering-wheel {
+  .geo-cockpit-pillar {
     display: none !important;
   }
+  .geo-cockpit-steering-wheel {
+    display: block !important;
+  }
   .geo-compass-wrapper {
-    height: auto;
-    min-height: 0;
+    height: 480px !important;
+    min-height: 480px;
     margin-top: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 20px;
-  }
-  .geo-compass-dial-container {
-    width: 100% !important;
-    height: auto !important;
-    transform: none !important;
-    display: block;
+    position: relative;
+    overflow: hidden;
   }
   
-  /* 🌟 移动端 2 列高科技科技感 AI 模型网格 */
+  /* 🌟 手机端等比例缩放 360° 旋转罗盘大天盘 */
+  .geo-compass-dial-container {
+    width: 680px !important;
+    height: 680px !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: -320px !important;
+    transform: translateX(-50%) scale(0.62) !important;
+    transform-origin: center bottom !important;
+    display: block !important;
+  }
   .geo-compass-nodes {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
+    position: absolute !important;
+    inset: 0 !important;
     width: 100% !important;
-    height: auto !important;
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-    transform: none !important;
+    height: 100% !important;
+    display: block !important;
   }
   .geo-compass-node {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    inset: auto !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 64px;
-    margin: 0 !important;
-    padding: 10px 12px !important;
-    transform: none !important;
-    background: rgba(18, 22, 38, 0.95) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 0 !important;
+    position: absolute !important;
+    width: 70px !important;
+    height: 85px !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -42px !important;
+    margin-left: -35px !important;
+    transform: rotate(calc(var(--node-angle) + var(--marquee-rotation, 0deg))) translate(290px) rotate(calc(-1 * (var(--node-angle) + var(--marquee-rotation, 0deg)))) !important;
     display: flex !important;
-    flex-direction: row !important;
+    flex-direction: column !important;
     align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 10px !important;
-    box-sizing: border-box !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
   }
   .geo-node-icon-wrap {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
     border-radius: 50% !important;
     background: #ffffff !important;
-    flex-shrink: 0 !important;
   }
   .geo-node-icon-wrap img {
-    width: 24px !important;
-    height: 24px !important;
+    width: 28px !important;
+    height: 28px !important;
     object-fit: contain !important;
   }
   .geo-node-label {
-    font-size: 13px !important;
+    font-size: 11px !important;
     font-weight: 700 !important;
     color: #ffffff !important;
-    margin-top: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
+    margin-top: 4px !important;
+    background: rgba(10, 12, 22, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    padding: 1px 6px !important;
   }
   .geo-compass-center-hub {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    height: auto !important;
-    transform: none !important;
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) scale(0.9) !important;
+    width: 320px !important;
+    height: 210px !important;
   }
   .geo-hub-hologram {
-    min-height: 200px;
-    padding: 20px 16px;
-    backdrop-filter: none;
+    min-height: 100%;
+    padding: 16px 14px;
+    backdrop-filter: blur(10px);
     border-radius: 0 !important;
   }
   .geo-slider-nav-tabs {

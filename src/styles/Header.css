@@ -189,19 +189,14 @@
   .mg-header-nav a { font-size: 13px; }
 }
 
+/* ==================== 响应式自适应 (手机端 <= 900px) ==================== */
 @media (max-width: 900px) {
   body.mg-menu-open { overflow: hidden; }
   .mg-site-header { height: 60px; position: sticky; top: 0; }
   .mg-header-container { padding: 0 14px; gap: 8px; }
   .mg-header-logo-image { width: 104px; }
   
-  /* 移动端页眉右侧：显示搜索框，隐藏免费咨询与多余选框 */
-  .mg-header-right-group {
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-    margin-left: auto;
-  }
+  /* 仅在手机端隐藏桌面右侧组里的选择框和常规按钮，提取搜索框置于汉堡包左侧 */
   .mg-header-right-group .mg-language-selector-wrap,
   .mg-header-right-group .mg-header-btn {
     display: none !important;
@@ -209,27 +204,27 @@
   .mg-header-search-form {
     display: flex !important;
     position: relative;
-    width: 135px;
+    width: 125px;
   }
   .mg-header-search-input {
     width: 100%;
-    height: 36px;
-    padding: 0 32px 0 10px;
-    font-size: 13px;
+    height: 34px;
+    padding: 0 30px 0 10px;
+    font-size: 12px;
   }
   .mg-header-search-input:focus {
-    width: 160px;
+    width: 145px;
   }
   .mg-header-search-btn {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 
   .mg-burger-icon {
     position: relative;
     z-index: 1003;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     display: flex;
     flex-direction: column;
     align-items: center;
