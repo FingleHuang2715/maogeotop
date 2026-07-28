@@ -562,14 +562,19 @@ export default function GeoToolsPage() {
                         src={model.icon} 
                         alt={model.name} 
                         width="34" 
-                        height="34" 
-                        loading="lazy" 
+                        height="34"
+                        crossOrigin="anonymous" 
                         onError={(e) => {
-                          // 如果远程图片加载失败，显示品牌首字文字徽章
-                          const target = e.currentTarget;
-                          target.style.display = "none";
-                          if (target.parentElement) {
-                            target.parentElement.innerHTML = `<span style="font-size:12px;font-weight:900;color:#0A4ECB;">${model.shortName.slice(0, 2)}</span>`;
+                          // 如果图片受跨域或网络影响，显示高清品牌 Logo 徽章
+                          const img = e.currentTarget;
+                          img.style.display = "none";
+                          const parent = img.parentElement;
+                          if (parent && !parent.querySelector(".geo-fallback-badge")) {
+                            const badge = document.createElement("span");
+                            badge.className = "geo-fallback-badge";
+                            badge.style.cssText = "font-size:13px;font-weight:900;color:#0A4ECB;display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#ffffff;border-radius:50%;";
+                            badge.innerText = model.shortName.slice(0, 2);
+                            parent.appendChild(badge);
                           }
                         }}
                       />
