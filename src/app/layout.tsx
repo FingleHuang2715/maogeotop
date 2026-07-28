@@ -7,6 +7,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 
 import Script from "next/script";
 import FloatingContactBar from "@/components/FloatingContactBar";
+import AutoTraditionalHK from "@/components/AutoTraditionalHK";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://maogeo.top"),
@@ -56,6 +57,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp" />
       </head>
       <body className="antialiased">
+        <AutoTraditionalHK />
         <SmoothScroll>
           <Header />
           {children}
