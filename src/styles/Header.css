@@ -113,6 +113,10 @@
   border-color: rgba(10, 78, 203, 0.3);
 }
 
+.mg-mobile-lang-item {
+  display: none !important;
+}
+
 .mg-header-right-group {
   display: flex;
   align-items: center;
@@ -303,6 +307,7 @@
   .mg-header-nav a::after { display: none; }
 
   .mg-mobile-lang-item {
+    display: block !important;
     padding: 14px 4px;
   }
   .mg-mobile-lang-box {

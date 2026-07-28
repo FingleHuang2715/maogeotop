@@ -1500,7 +1500,7 @@
     display: none !important; /* 移动端完全隐藏魔方 */
   }
   .geo-compass-section {
-    padding: 3rem 16px 2rem 16px;
+    padding: 3.5rem 16px 2rem 16px;
     background: #090b10 !important;
     overflow: hidden;
   }
@@ -1512,24 +1512,25 @@
     display: block !important;
   }
   .geo-compass-wrapper {
-    height: 480px !important;
-    min-height: 480px;
+    height: 520px !important;
+    min-height: 520px;
     margin-top: 0;
     padding: 0;
     position: relative;
     overflow: hidden;
   }
   
-  /* 🌟 手机端等比例缩放 360° 旋转罗盘大天盘 */
+  /* 🌟 手机端更大半径 360° 无缝旋转大天盘 */
   .geo-compass-dial-container {
-    width: 680px !important;
-    height: 680px !important;
+    width: 860px !important;
+    height: 860px !important;
     position: absolute !important;
     left: 50% !important;
-    bottom: -320px !important;
-    transform: translateX(-50%) scale(0.62) !important;
+    bottom: -380px !important;
+    transform: translateX(-50%) scale(0.82) !important;
     transform-origin: center bottom !important;
     display: block !important;
+    z-index: 20 !important;
   }
   .geo-compass-nodes {
     position: absolute !important;
@@ -1537,56 +1538,63 @@
     width: 100% !important;
     height: 100% !important;
     display: block !important;
+    z-index: 25 !important;
   }
   .geo-compass-node {
     position: absolute !important;
-    width: 70px !important;
-    height: 85px !important;
+    width: 80px !important;
+    height: 95px !important;
     top: 50% !important;
     left: 50% !important;
-    margin-top: -42px !important;
-    margin-left: -35px !important;
-    transform: rotate(calc(var(--node-angle) + var(--marquee-rotation, 0deg))) translate(290px) rotate(calc(-1 * (var(--node-angle) + var(--marquee-rotation, 0deg)))) !important;
+    margin-top: -47px !important;
+    margin-left: -40px !important;
+    transform: rotate(calc(var(--node-angle) + var(--marquee-rotation, 0deg))) translate(360px) rotate(calc(-1 * (var(--node-angle) + var(--marquee-rotation, 0deg)))) !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     background: transparent !important;
     border: none !important;
+    z-index: 30 !important;
   }
   .geo-node-icon-wrap {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
     border-radius: 50% !important;
     background: #ffffff !important;
+    box-shadow: 0 0 20px rgba(10, 78, 203, 0.4) !important;
   }
   .geo-node-icon-wrap img {
-    width: 28px !important;
-    height: 28px !important;
+    width: 34px !important;
+    height: 34px !important;
     object-fit: contain !important;
   }
   .geo-node-label {
-    font-size: 11px !important;
-    font-weight: 700 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
     color: #ffffff !important;
-    margin-top: 4px !important;
-    background: rgba(10, 12, 22, 0.9) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    padding: 1px 6px !important;
+    margin-top: 5px !important;
+    background: rgba(10, 12, 22, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 2px 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
   }
+  
+  /* 🌟 全息 HUD 卡片沉降至底层 z-index: 5，绝不被旋转的模型图标遮挡 */
   .geo-compass-center-hub {
     position: absolute !important;
     bottom: 20px !important;
     left: 50% !important;
-    transform: translateX(-50%) scale(0.9) !important;
+    transform: translateX(-50%) scale(0.92) !important;
     width: 320px !important;
-    height: 210px !important;
+    height: 200px !important;
+    z-index: 5 !important;
   }
   .geo-hub-hologram {
     min-height: 100%;
     padding: 16px 14px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     border-radius: 0 !important;
   }
   .geo-slider-nav-tabs {
