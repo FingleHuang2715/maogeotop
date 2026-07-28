@@ -1,0 +1,32 @@
+export async function GET() {
+  const markdownContent = `# 猫哥建站 (MAOGE SEO) - 官方 AI 智能体索引指南
+
+> 猫哥建站专注于高端外贸独立站建设、生成式 AI (GEO) 搜索引擎优化与谷歌技术 SEO 实战服务。
+
+## 核心业务与服务 (Core Services)
+
+- [外贸官网定制](https://maogeo.top/waimaojianzhan): 基于 Next.js 前后端分离架构的高性能外贸建站服务，100% 开源源码交付。
+- [GEO 工具与 AI 收录优化](https://maogeo.top/geo-tools): 针对 DeepSeek, ChatGPT, Gemini, Perplexity 等 AI 大模型的 RAG 向量提炼与高权重引用优化。
+- [谷歌 SEO 优化](https://maogeo.top/geo-seo-youhua): E-E-A-T 专家级内容重构与谷歌搜索前排排名提升。
+- [服务器推荐与选购指南](https://maogeo.top/server-recommendation): 外贸建站服务器与 CDN 选购对比。
+
+## 知识库与技术博客 (Knowledge Base & Blog)
+
+- [技术博客首页](https://maogeo.top/blog): 提供最新的外贸建站教程、GEO 优化指南与 SEO 实战技巧。
+- [隐私政策](https://maogeo.top/privacy-policy): 官方隐私安全承诺。
+- [服务条款](https://maogeo.top/terms-of-service): 服务规范与条款说明。
+
+## 官方联系方式 (Contact)
+
+- 官方网址: https://maogeo.top
+- 微信咨询: maogeotop
+- 官方邮箱: 2678586420@qq.com
+`;
+
+  return new Response(markdownContent, {
+    headers: {
+      "Content-Type": "text/markdown; charset=utf-8",
+      "Cache-Control": "public, max-age=86400, s-maxage=86400",
+    },
+  });
+}
