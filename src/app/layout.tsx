@@ -43,6 +43,11 @@ export default function RootLayout({
     <html lang="zh-CN" data-scroll-behavior="smooth">
       <head>
         <meta name="baidu-site-verification" content="codeva-N6DxmzPlZO" />
+        {/* 🌟 谷歌官方规范：多域名简繁体关联标记 (hreflang) */}
+        <link rel="alternate" hrefLang="zh-CN" href="https://maogeo.top" />
+        <link rel="alternate" hrefLang="zh-HK" href="https://hk.maogeo.top" />
+        <link rel="alternate" hrefLang="x-default" href="https://maogeo.top" />
+
         <link rel="preconnect" href="https://cdn.maogeo.top" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.maogeo.top" />
         <link rel="preconnect" href="https://post.maogeo.top" crossOrigin="anonymous" />

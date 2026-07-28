@@ -113,6 +113,29 @@ export default function Header() {
           </nav>
 
           <div className="mg-header-right-group">
+            {/* 🌟 简洁无图标简繁语言切换下拉框 */}
+            <div className="mg-language-selector-wrap">
+              <select 
+                className="mg-language-select" 
+                aria-label="选择语言"
+                value={typeof window !== "undefined" && window.location.hostname.includes("hk.maogeo.top") ? "zh-HK" : "zh-CN"}
+                onChange={(e) => {
+                  const targetLang = e.target.value;
+                  if (typeof window !== "undefined") {
+                    const currentPath = window.location.pathname + window.location.search;
+                    if (targetLang === "zh-HK") {
+                      window.location.href = `https://hk.maogeo.top${currentPath}`;
+                    } else {
+                      window.location.href = `https://maogeo.top${currentPath}`;
+                    }
+                  }
+                }}
+              >
+                <option value="zh-CN">简体中文</option>
+                <option value="zh-HK">繁體中文 (香港)</option>
+              </select>
+            </div>
+
             <form action="/blog" method="GET" className="mg-header-search-form" role="search">
               <input type="search" name="q" placeholder="搜索文章教程..." className="mg-header-search-input" aria-label="搜索文章教程" />
               <button type="submit" className="mg-header-search-btn" aria-label="提交搜索">

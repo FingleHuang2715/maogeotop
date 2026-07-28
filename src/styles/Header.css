@@ -89,6 +89,30 @@
 .mg-header-nav a:hover::after,
 .mg-header-nav .current-menu-item a::after { right: 0; }
 
+.mg-language-selector-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.mg-language-select {
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  background: rgba(10, 78, 203, 0.05);
+  border: 1px solid rgba(10, 78, 203, 0.16);
+  border-radius: 0;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.mg-language-select:hover {
+  background: rgba(10, 78, 203, 0.1);
+  border-color: rgba(10, 78, 203, 0.3);
+}
+
 .mg-header-right-group {
   display: flex;
   align-items: center;
