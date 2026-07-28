@@ -558,26 +558,7 @@ export default function GeoToolsPage() {
                     aria-label={`打开 ${model.name}`}
                   >
                     <span className="geo-node-icon-wrap">
-                      <img 
-                        src={model.icon} 
-                        alt={model.name} 
-                        width="34" 
-                        height="34"
-                        loading="lazy"
-                        onError={(e) => {
-                          // 如果图片受网络影响，显示品牌首字文字徽章
-                          const img = e.currentTarget;
-                          img.style.display = "none";
-                          const parent = img.parentElement;
-                          if (parent && !parent.querySelector(".geo-fallback-badge")) {
-                            const badge = document.createElement("span");
-                            badge.className = "geo-fallback-badge";
-                            badge.style.cssText = "font-size:13px;font-weight:900;color:#0A4ECB;display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#ffffff;border-radius:50%;";
-                            badge.innerText = model.shortName.slice(0, 2);
-                            parent.appendChild(badge);
-                          }
-                        }}
-                      />
+                      <img src={model.icon} alt={model.name} width="34" height="34" />
                     </span>
                     <span className="geo-node-label">{model.shortName}</span>
                   </a>
