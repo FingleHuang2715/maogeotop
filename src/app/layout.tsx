@@ -49,10 +49,8 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="zh-HK" href="https://hk.maogeo.top" />
         <link rel="alternate" hrefLang="x-default" href="https://maogeo.top" />
 
-        <link rel="preconnect" href="https://cdn.maogeo.top" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.maogeo.top" />
         <link rel="dns-prefetch" href="https://cdn.maogeo.top" />
-        <link rel="preconnect" href="https://post.maogeo.top" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://post.maogeo.top" />
         <link rel="icon" href="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp" type="image/webp" />
         <link rel="apple-touch-icon" href="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp" />
       </head>

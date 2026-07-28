@@ -83,7 +83,7 @@ export default function Footer() {
             <a href="https://maogeo.top" target="_blank" rel="noopener noreferrer">猫哥建站官网</a>
             <span className="mg-friendlinks-sep">|</span>
             <a target="_blank" title="51la网站统计" href="https://v6.51.la/land/KqyLKxdjr8HVgyyQ" rel="noopener noreferrer" className="mg-51la-link">
-              <img src="https://sdk.51.la/icon/2-1.png" alt="51la网站统计" style={{ height: '16px', width: 'auto', verticalAlign: 'middle' }} />
+              <img src="https://sdk.51.la/icon/2-1.png" alt="51la网站统计" width={36} height={16} style={{ height: '16px', width: 'auto', verticalAlign: 'middle' }} />
             </a>
           </div>
         </div>

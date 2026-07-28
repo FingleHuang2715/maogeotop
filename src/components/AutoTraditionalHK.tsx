@@ -42,21 +42,25 @@ export default function AutoTraditionalHK() {
     // 首次页面挂载转换
     translateNode(document.body);
 
-    // 监听 DOM 变动（如 React 状态切换、轮播图翻页等）自动无缝转换新渲染文本
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((addedNode) => {
-          translateNode(addedNode);
-        });
-      });
+    // 🌟 防抖延迟批量处理 DOM 变动，完全解压主线程 Style & Layout
+    let timer: NodeJS.Timeout | null = null;
+    const observer = new MutationObserver(() => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        translateNode(document.body);
+      }, 150);
     });
 
     observer.observe(document.body, {
       childList: true,
       subtree: true,
+      characterData: true,
     });
 
-    return () => observer.disconnect();
+    return () => {
+      if (timer) clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
   return null;
