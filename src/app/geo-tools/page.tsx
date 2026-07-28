@@ -90,6 +90,13 @@ export default function GeoToolsPage() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      if (typeof window !== "undefined" && window.innerWidth <= 768) {
+        if (cockpitContentRef.current) {
+          cockpitContentRef.current.style.opacity = "1";
+        }
+        return;
+      }
+
       if (maskPinRef.current && svgMaskRef.current) {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -551,7 +558,21 @@ export default function GeoToolsPage() {
                     aria-label={`打开 ${model.name}`}
                   >
                     <span className="geo-node-icon-wrap">
-                      <img src={model.icon} alt="" width="34" height="34" loading="lazy" />
+                      <img 
+                        src={model.icon} 
+                        alt={model.name} 
+                        width="34" 
+                        height="34" 
+                        loading="lazy" 
+                        onError={(e) => {
+                          // 如果远程图片加载失败，显示品牌首字文字徽章
+                          const target = e.currentTarget;
+                          target.style.display = "none";
+                          if (target.parentElement) {
+                            target.parentElement.innerHTML = `<span style="font-size:12px;font-weight:900;color:#0A4ECB;">${model.shortName.slice(0, 2)}</span>`;
+                          }
+                        }}
+                      />
                     </span>
                     <span className="geo-node-label">{model.shortName}</span>
                   </a>

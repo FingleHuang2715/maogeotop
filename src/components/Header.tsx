@@ -98,12 +98,46 @@ export default function Header() {
           </Link>
 
           <nav ref={navRef} id={menuId} className={`mg-header-nav ${isMenuOpen ? "is-open" : ""}`} aria-label="主导航">
+            {/* 移动端专属搜索栏 */}
+            <div className="mg-mobile-search-wrap">
+              <form action="/blog" method="GET" className="mg-mobile-search-form" role="search" onSubmit={() => setIsMenuOpen(false)}>
+                <input type="search" name="q" placeholder="搜索文章教程..." className="mg-mobile-search-input" aria-label="搜索文章教程" />
+                <button type="submit" className="mg-mobile-search-btn" aria-label="提交搜索">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                </button>
+              </form>
+            </div>
+
             <ul className="mg-menu-list">
               {navigationItems.map((item) => (
                 <li key={item.href} className={item.match(pathname) ? "current-menu-item" : ""}>
                   <Link href={item.href}>{item.label}</Link>
                 </li>
               ))}
+              <li className="mg-mobile-lang-item">
+                <div className="mg-mobile-lang-box">
+                  <span className="mg-mobile-lang-label">语言 / Language</span>
+                  <select 
+                    className="mg-language-select mg-mobile-lang-select" 
+                    aria-label="选择语言"
+                    value={typeof window !== "undefined" && window.location.hostname.includes("hk.maogeo.top") ? "zh-HK" : "zh-CN"}
+                    onChange={(e) => {
+                      const targetLang = e.target.value;
+                      if (typeof window !== "undefined") {
+                        const currentPath = window.location.pathname + window.location.search;
+                        if (targetLang === "zh-HK") {
+                          window.location.href = `https://hk.maogeo.top${currentPath}`;
+                        } else {
+                          window.location.href = `https://maogeo.top${currentPath}`;
+                        }
+                      }
+                    }}
+                  >
+                    <option value="zh-CN">简体中文</option>
+                    <option value="zh-HK">繁體中文 (香港)</option>
+                  </select>
+                </div>
+              </li>
               <li className="mg-mobile-consult-item">
                 <button type="button" onClick={copyWeChatAndShowModal} className="mg-header-btn mg-mobile-consult-btn">
                   免费建站咨询
@@ -113,7 +147,7 @@ export default function Header() {
           </nav>
 
           <div className="mg-header-right-group">
-            {/* 🌟 简洁无图标简繁语言切换下拉框 */}
+            {/* 🌟 桌面端简洁语言选择框 */}
             <div className="mg-language-selector-wrap">
               <select 
                 className="mg-language-select" 
