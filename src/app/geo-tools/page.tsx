@@ -46,14 +46,14 @@ const slides: SlideData[] = [
 ];
 
 const models = [
-  { name: "DeepSeek", shortName: "DeepSeek", desc: "深度求索 · 极佳性价比与长文本推理模型", href: "https://chat.deepseek.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194658286.webp" },
-  { name: "豆包", shortName: "豆包", desc: "字节跳动 · 抖音同源，支持高情商对话与知识检索", href: "https://www.doubao.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194635678.webp" },
-  { name: "腾讯元宝", shortName: "元宝", desc: "腾讯AI · 微信生态、文章与全网知识搜索", href: "https://yuanbao.tencent.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194647891.webp" },
-  { name: "通义千问", shortName: "通义千问", desc: "阿里云 · 强逻辑推理能力，千行百业的基座支撑", href: "https://www.tongyi.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194622123.webp" },
-  { name: "文心一言", shortName: "文心一言", desc: "百度 · 强大的中文语义理解与百度搜索引用整合", href: "https://yiyan.baidu.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194611456.webp" },
-  { name: "Kimi", shortName: "Kimi", desc: "月之暗面 · 百万字长文本极速分析与专业搜索引用", href: "https://www.kimi.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194559789.webp" },
-  { name: "智谱清言", shortName: "智谱清言", desc: "智谱AI · 卓越的学术研究与长文本推理大模型", href: "https://chatglm.cn/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194548012.webp" },
-  { name: "纳米AI", shortName: "纳米AI", desc: "360 · 纳米搜索引擎，智能多维检索与安全合规", href: "https://www.n.cn/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194536345.webp" },
+  { name: "DeepSeek", shortName: "DeepSeek", desc: "深度求索 · 极佳性价比与长文本推理模型", href: "https://chat.deepseek.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194647707.webp" },
+  { name: "豆包", shortName: "豆包", desc: "字节跳动 · 抖音同源，支持高情商对话与知识检索", href: "https://www.doubao.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194650592.webp" },
+  { name: "腾讯元宝", shortName: "元宝", desc: "腾讯AI · 微信生态、文章与全网知识搜索", href: "https://yuanbao.tencent.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194645489.webp" },
+  { name: "通义千问", shortName: "通义千问", desc: "阿里云 · 强逻辑推理能力，千行百业的基座支撑", href: "https://www.tongyi.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194655116.webp" },
+  { name: "文心一言", shortName: "文心一言", desc: "百度 · 强大的中文语义理解与百度搜索引用整合", href: "https://yiyan.baidu.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194649263.webp" },
+  { name: "Kimi", shortName: "Kimi", desc: "月之暗面 · 百万字长文本极速分析与专业搜索引用", href: "https://www.kimi.com/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194652455.webp" },
+  { name: "智谱清言", shortName: "智谱清言", desc: "智谱AI · 卓越的学术研究与长文本推理大模型", href: "https://chatglm.cn/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194658286.webp" },
+  { name: "纳米AI", shortName: "纳米AI", desc: "360 · 纳米搜索引擎，智能多维检索与安全合规", href: "https://www.n.cn/", icon: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260723194653302.webp" },
 ] as const;
 
 export default function GeoToolsPage() {
