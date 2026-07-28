@@ -187,16 +187,27 @@
   .mg-header-search-form { display: none; }
   .mg-header-nav ul { gap: 14px; }
   .mg-header-nav a { font-size: 13px; }
+  .mg-header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 }
 
 /* ==================== 响应式自适应 (手机端 <= 900px) ==================== */
 @media (max-width: 900px) {
   body.mg-menu-open { overflow: hidden; }
   .mg-site-header { height: 60px; position: sticky; top: 0; }
-  .mg-header-container { padding: 0 14px; gap: 8px; }
-  .mg-header-logo-image { width: 104px; }
+  .mg-header-container { padding: 0 14px; gap: 6px; }
+  .mg-header-logo-image { width: 100px; }
   
-  /* 仅在手机端隐藏桌面右侧组里的选择框和常规按钮，提取搜索框置于汉堡包左侧 */
+  /* 仅在手机端隐藏桌面右侧组里的选择框和常规按钮，保留搜索框紧挨汉堡包 */
+  .mg-header-right-group {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
   .mg-header-right-group .mg-language-selector-wrap,
   .mg-header-right-group .mg-header-btn {
     display: none !important;
@@ -204,22 +215,23 @@
   .mg-header-search-form {
     display: flex !important;
     position: relative;
-    width: 125px;
+    width: 130px;
   }
   .mg-header-search-input {
     width: 100%;
     height: 34px;
-    padding: 0 30px 0 10px;
+    padding: 0 28px 0 10px;
     font-size: 12px;
   }
   .mg-header-search-input:focus {
-    width: 145px;
+    width: 150px;
   }
   .mg-header-search-btn {
     width: 26px;
     height: 26px;
   }
 
+  /* 🌟 汉堡包按钮：展开时全屏 fixed 在右上角，跟随视口滚动永远可见 */
   .mg-burger-icon {
     position: relative;
     z-index: 1003;
@@ -236,6 +248,15 @@
     border-radius: 0;
     cursor: pointer;
     flex-shrink: 0;
+  }
+
+  .mg-burger-icon.is-open {
+    position: fixed !important;
+    top: 12px !important;
+    right: 14px !important;
+    z-index: 1005 !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
 
   .mg-burger-line {
@@ -255,12 +276,12 @@
     right: 0;
     bottom: 0;
     z-index: 1002;
-    width: min(86vw, 300px);
+    width: min(84vw, 290px);
     height: 100vh;
     height: 100dvh;
     display: flex;
     flex-direction: column;
-    padding: 68px 20px 30px;
+    padding: 64px 20px 30px;
     background: #ffffff;
     border-left: 1px solid rgba(10, 78, 203, 0.12);
     box-shadow: -15px 0 45px rgba(15, 41, 76, 0.15);
@@ -282,7 +303,7 @@
   .mg-header-nav a::after { display: none; }
 
   .mg-mobile-lang-item {
-    padding: 16px 4px;
+    padding: 14px 4px;
   }
   .mg-mobile-lang-box {
     display: flex;
@@ -296,12 +317,12 @@
     color: #515154;
   }
   .mg-mobile-lang-select {
-    width: auto;
+    width: 100%;
     font-size: 13px;
   }
 
   .mg-mobile-consult-item { display: block; border-bottom: 0 !important; padding-top: 18px; margin-top: auto; }
-  .mg-mobile-consult-btn { width: 100%; min-height: 46px; }
+  .mg-mobile-consult-btn { width: 100%; min-height: 44px; }
 
   /* 🌟 完全禁用遮罩弹窗 */
   .mg-menu-backdrop {

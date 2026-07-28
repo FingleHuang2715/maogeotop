@@ -51,6 +51,19 @@ export default function Header() {
       requestAnimationFrame(() => navRef.current?.querySelector<HTMLElement>("a, button")?.focus());
     }
 
+    // 🌟 点击菜单外部空白区域自动关闭抽屉
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMenuOpen &&
+        navRef.current &&
+        !navRef.current.contains(event.target as Node) &&
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isMenuOpen) {
         setIsMenuOpen(false);
@@ -74,9 +87,12 @@ export default function Header() {
         }
       }
     };
+
+    window.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.classList.remove("mg-menu-open");
+      window.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [isMenuOpen]);
@@ -105,28 +121,25 @@ export default function Header() {
                 </li>
               ))}
               <li className="mg-mobile-lang-item">
-                <div className="mg-mobile-lang-box">
-                  <span className="mg-mobile-lang-label">语言 / Language</span>
-                  <select 
-                    className="mg-language-select mg-mobile-lang-select" 
-                    aria-label="选择语言"
-                    value={typeof window !== "undefined" && window.location.hostname.includes("hk.maogeo.top") ? "zh-HK" : "zh-CN"}
-                    onChange={(e) => {
-                      const targetLang = e.target.value;
-                      if (typeof window !== "undefined") {
-                        const currentPath = window.location.pathname + window.location.search;
-                        if (targetLang === "zh-HK") {
-                          window.location.href = `https://hk.maogeo.top${currentPath}`;
-                        } else {
-                          window.location.href = `https://maogeo.top${currentPath}`;
-                        }
+                <select 
+                  className="mg-language-select mg-mobile-lang-select" 
+                  aria-label="选择语言"
+                  value={typeof window !== "undefined" && window.location.hostname.includes("hk.maogeo.top") ? "zh-HK" : "zh-CN"}
+                  onChange={(e) => {
+                    const targetLang = e.target.value;
+                    if (typeof window !== "undefined") {
+                      const currentPath = window.location.pathname + window.location.search;
+                      if (targetLang === "zh-HK") {
+                        window.location.href = `https://hk.maogeo.top${currentPath}`;
+                      } else {
+                        window.location.href = `https://maogeo.top${currentPath}`;
                       }
-                    }}
-                  >
-                    <option value="zh-CN">简体中文</option>
-                    <option value="zh-HK">繁體中文 (香港)</option>
-                  </select>
-                </div>
+                    }
+                  }}
+                >
+                  <option value="zh-CN">简体中文</option>
+                  <option value="zh-HK">繁體中文 (香港)</option>
+                </select>
               </li>
               <li className="mg-mobile-consult-item">
                 <button type="button" onClick={copyWeChatAndShowModal} className="mg-header-btn mg-mobile-consult-btn">
@@ -136,7 +149,7 @@ export default function Header() {
             </ul>
           </nav>
 
-          {/* 🌟 移动端与桌面端通用右侧组：搜索框在汉堡包左侧 */}
+          {/* 🌟 电脑端与移动端通用右侧组 */}
           <div className="mg-header-right-group">
             <div className="mg-language-selector-wrap">
               <select 
