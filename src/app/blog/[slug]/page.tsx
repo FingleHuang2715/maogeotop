@@ -33,9 +33,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${post.title} - 猫哥技术专栏 | 猫哥建站`,
     description: cleanExcerpt,
     keywords: [...categories, ...tags, "猫哥建站", "企业建站", "GEO优化", "谷歌SEO"],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     openGraph: {
       title: `${post.title} - 猫哥技术专栏`,
       description: cleanExcerpt,
+      type: "article",
+      publishedTime: post.date,
+      authors: ["猫哥"],
       images: post.featuredImage ? [{ url: post.featuredImage.node.sourceUrl }] : [],
     },
   };
@@ -89,9 +103,42 @@ export default async function BlogSinglePage({ params }: PageProps) {
 
   // 提取正文目录树并为 HTML 标签打上 Anchor ID
   const { cleanHtml, toc } = parseTocAndInjectIds(post.content || "");
+  const cleanExcerpt = post.excerpt ? post.excerpt.replace(/<[^>]+>/g, "").trim().slice(0, 160) : post.title;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": post.title,
+    "description": cleanExcerpt,
+    "image": post.featuredImage ? [post.featuredImage.node.sourceUrl] : ["https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp"],
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": [{
+      "@type": "Person",
+      "name": "猫哥",
+      "url": "https://maogeo.top"
+    }],
+    "publisher": {
+      "@type": "Organization",
+      "name": "猫哥建站",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002042147.webp"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://maogeo.top/blog/${post.slug}`
+    }
+  };
 
   return (
     <main className="mg-single-wrapper">
+      {/* 🌟 谷歌 JSON-LD 结构化数据，助推搜素富文本摘要收录 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mg-single-container">
 
         {/* 2. 中间正文 */}

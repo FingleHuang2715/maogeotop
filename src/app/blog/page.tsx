@@ -9,6 +9,17 @@ export const metadata: Metadata = {
   title: "猫哥技术专栏 · 企业建站 · GEO & SEO 实战指南 | 猫哥建站",
   description: "专注于企业高转化定制建站、生成式 AI (GEO) 提炼规则与谷歌 SEO 搜索排名优化，助力出海企业打造成本可控、获客高效的数字营销阵地。",
   keywords: ["企业建站", "GEO优化", "谷歌SEO", "外贸建站指南", "出海独立站", "猫哥技术专区"],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export const revalidate = 60; // ISR cache 60s
