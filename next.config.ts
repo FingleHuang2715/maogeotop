@@ -55,6 +55,39 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+  async redirects() {
+    return [
+      {
+        source: "/geo-seo%e4%bc%98%e5%8c%96",
+        destination: "/geo-seo-youhua",
+        permanent: true,
+      },
+      {
+        source: "/geo-seo%E4%BC%98%E5%8C%96",
+        destination: "/geo-seo-youhua",
+        permanent: true,
+      },
+      {
+        source: "/geo-seo优化",
+        destination: "/geo-seo-youhua",
+        permanent: true,
+      },
+      {
+        source: "/%e5%a4%96%e8%b4%b8%e5%bb%ba%e7%ab%99",
+        destination: "/waimaojianzhan",
+        permanent: true,
+      },
+      {
+        source: "/%E5%A4%96%E8%B4%B8%E5%BB%BA%E7%AB%99",
+        destination: "/waimaojianzhan",
+        permanent: true,
+      },
+      {
+        source: "/外贸建站",
+        destination: "/waimaojianzhan",
+        permanent: true,
+      },
+    ];
   },
 };
 

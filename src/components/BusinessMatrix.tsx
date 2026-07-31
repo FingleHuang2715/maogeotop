@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 
 export function DualEngineServices() {
   return (
@@ -34,10 +35,10 @@ export function DualEngineServices() {
               依托香港理工大学 AI 推荐算法学术背景及超过 8 年的海外建站与优化经验，彻底摒弃千篇一律的廉价模板。基于用户交互路径与高转化率 CRO 架构 100% 独立量身定制，全面契合谷歌 E-E-A-T 规范，树立坚实的海外品牌公信力。
             </p>
             <div className="hero-ext-service-footer">
-              <a href="https://maogeo.top/%e5%a4%96%e8%b4%b8%e5%bb%ba%e7%ab%99/" className="hero-ext-service-link" target="_blank" rel="noopener">
+              <Link href="/waimaojianzhan" className="hero-ext-service-link">
                 <span>了解定制建站方案</span>
                 <span className="hero-ext-arrow" aria-hidden="true">➔</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -53,10 +54,10 @@ export function DualEngineServices() {
               针对主流生成式搜索引擎优化（GEO, Generative Engine Optimization），深度穿透大语言模型抓取与检索增强生成（RAG）逻辑。自研 GEO 优化系统，让您的产品信息和技术卖点在谷歌 AI Overviews 及主流 LLMs 的回答中被大模型优先推荐并添加精准引用链接。
             </p>
             <div className="hero-ext-service-footer">
-              <a href="https://maogeo.top/geo-seo%e4%bc%98%e5%8c%96/" className="hero-ext-service-link" target="_blank" rel="noopener">
+              <Link href="/geo-seo-youhua" className="hero-ext-service-link">
                 <span>一键开启 GEO 优化</span>
                 <span className="hero-ext-arrow" aria-hidden="true">➔</span>
-              </a>
+              </Link>
             </div>
           </div>
 
