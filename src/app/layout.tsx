@@ -21,6 +21,14 @@ export const metadata: Metadata = {
     shortcut: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp",
     apple: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp",
   },
+  alternates: {
+    canonical: "https://maogeo.top",
+    languages: {
+      "zh-CN": "https://maogeo.top",
+      "zh-HK": "https://hk.maogeo.top",
+      "x-default": "https://maogeo.top",
+    },
+  },
   openGraph: {
     title: "猫哥建站 - 专业外贸企业建站、GEO优化与谷歌SEO实战服务",
     description: "猫哥建站专注为出海企业提供高端定制外贸网站建设、生成式 AI (GEO) 提炼规则优化与谷歌 SEO 搜索排名提效方案，打造高询盘转化率独立站数字营销资产。",
