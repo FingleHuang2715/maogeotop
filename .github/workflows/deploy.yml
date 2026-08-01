@@ -50,6 +50,8 @@ jobs:
           port: ${{ secrets.SSH_PORT || 6808 }}
           script: |
             cd /www/wwwroot/maogeo-app
+            pkill -f "next" 2>/dev/null || true
+            pkill -f "node_modules" 2>/dev/null || true
             pm2 delete "maogeo-app" 2>/dev/null || true
-            pm2 start server.js --name "maogeo-app"
+            pm2 start server.js --name "maogeo-app" --max-memory-restart 350M
             pm2 save
