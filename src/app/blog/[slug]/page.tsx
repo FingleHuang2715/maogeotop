@@ -92,6 +92,17 @@ function parseTocAndInjectIds(htmlContent: string): {
   return { cleanHtml, toc };
 }
 
+// 辅助函数：将正文中的图片 src 统一转换为 /api/img-proxy 代理模式，消除防盗链与掩护源站印记
+function wrapImagesWithProxy(htmlContent: string): string {
+  if (!htmlContent) return "";
+  return htmlContent.replace(/<img\s+([^>]*?)src=["'](https?:\/\/[^"']+)["']([^>]*?)>/gi, (match, beforeSrc, imgUrl, afterSrc) => {
+    // 避开已经是代理接口的图片
+    if (imgUrl.includes("/api/img-proxy")) return match;
+    const proxiedUrl = `/api/img-proxy?url=${encodeURIComponent(imgUrl)}`;
+    return `<img ${beforeSrc}src="${proxiedUrl}" ${afterSrc}>`;
+  });
+}
+
 export default async function BlogSinglePage({ params }: PageProps) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
@@ -101,8 +112,9 @@ export default async function BlogSinglePage({ params }: PageProps) {
     notFound();
   }
 
-  // 提取正文目录树并为 HTML 标签打上 Anchor ID
-  const { cleanHtml, toc } = parseTocAndInjectIds(post.content || "");
+  // 提取正文目录树并为 HTML 标签打上 Anchor ID，同时全量覆盖代理图片
+  const rawCleanHtml = wrapImagesWithProxy(post.content || "");
+  const { cleanHtml, toc } = parseTocAndInjectIds(rawCleanHtml);
   const cleanExcerpt = post.excerpt ? post.excerpt.replace(/<[^>]+>/g, "").trim().slice(0, 160) : post.title;
 
   const jsonLd = {
