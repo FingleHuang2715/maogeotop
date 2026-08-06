@@ -105,7 +105,7 @@ function wrapImagesWithProxy(htmlContent: string): string {
 
   // 2. 清理或代理 srcset 避免浏览器绕过 proxy 载入高清原图
   result = result.replace(/srcset=["']([^"']+)["']/gi, (match, srcsetVal) => {
-    const proxiedSet = srcsetVal.split(",").map(part => {
+    const proxiedSet = srcsetVal.split(",").map((part: string) => {
       const trimmed = part.trim();
       const spaceIdx = trimmed.indexOf(" ");
       const url = spaceIdx !== -1 ? trimmed.slice(0, spaceIdx) : trimmed;
