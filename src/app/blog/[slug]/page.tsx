@@ -92,15 +92,33 @@ function parseTocAndInjectIds(htmlContent: string): {
   return { cleanHtml, toc };
 }
 
-// 辅助函数：将正文中的图片 src 统一转换为 /api/img-proxy 代理模式，消除防盗链与掩护源站印记
+// 辅助函数：将正文及图片属性（src, srcset, data-src）统一转换为 /api/img-proxy 代理模式
 function wrapImagesWithProxy(htmlContent: string): string {
   if (!htmlContent) return "";
-  return htmlContent.replace(/<img\s+([^>]*?)src=["'](https?:\/\/[^"']+)["']([^>]*?)>/gi, (match, beforeSrc, imgUrl, afterSrc) => {
-    // 避开已经是代理接口的图片
+
+  // 1. 代理 src
+  let result = htmlContent.replace(/<img\s+([^>]*?)src=["'](https?:\/\/[^"']+)["']([^>]*?)>/gi, (match, beforeSrc, imgUrl, afterSrc) => {
     if (imgUrl.includes("/api/img-proxy")) return match;
     const proxiedUrl = `/api/img-proxy?url=${encodeURIComponent(imgUrl)}`;
     return `<img ${beforeSrc}src="${proxiedUrl}" ${afterSrc}>`;
   });
+
+  // 2. 清理或代理 srcset 避免浏览器绕过 proxy 载入高清原图
+  result = result.replace(/srcset=["']([^"']+)["']/gi, (match, srcsetVal) => {
+    const proxiedSet = srcsetVal.split(",").map(part => {
+      const trimmed = part.trim();
+      const spaceIdx = trimmed.indexOf(" ");
+      const url = spaceIdx !== -1 ? trimmed.slice(0, spaceIdx) : trimmed;
+      const descriptor = spaceIdx !== -1 ? trimmed.slice(spaceIdx) : "";
+      if (url.startsWith("http://") || url.startsWith("https://")) {
+        return `/api/img-proxy?url=${encodeURIComponent(url)}${descriptor}`;
+      }
+      return trimmed;
+    }).join(", ");
+    return `srcset="${proxiedSet}"`;
+  });
+
+  return result;
 }
 
 export default async function BlogSinglePage({ params }: PageProps) {
@@ -190,7 +208,7 @@ export default async function BlogSinglePage({ params }: PageProps) {
 
             {post.featuredImage && (
               <div className="mg-post-featured-image">
-                <img src={post.featuredImage.node.sourceUrl} alt={post.title} />
+                <img src={`/api/img-proxy?url=${encodeURIComponent(post.featuredImage.node.sourceUrl)}`} alt={post.title} />
               </div>
             )}
 
