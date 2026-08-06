@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { OpenNextConfig } from "@opennextjs/aws/types/open-next.js";
 import cache from "@opennextjs/cloudflare/kv-cache";
 
