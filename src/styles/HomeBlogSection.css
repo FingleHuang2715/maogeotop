@@ -1,0 +1,269 @@
+/* ==================== 首页新闻风 WordPress 教程博客专栏 ==================== */
+.mg-home-blog-section {
+  width: 100%;
+  background: #ffffff;
+  padding: 5rem 0 4rem 0;
+  border-top: 1px solid rgba(10, 78, 203, 0.08);
+}
+
+.mg-home-blog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.mg-home-blog-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #0A4ECB;
+}
+
+.mg-home-blog-kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #0A4ECB;
+  display: block;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.mg-home-blog-main-title {
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 800;
+  color: #1d1d1f;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.mg-home-blog-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0A4ECB;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mg-home-blog-more-link:hover {
+  color: #083b99;
+}
+
+.mg-home-blog-more-link .mg-home-blog-arrow {
+  transition: transform 0.2s ease;
+}
+
+.mg-home-blog-more-link:hover .mg-home-blog-arrow {
+  transform: translateX(4px);
+}
+
+/* 两列 Grid 布局 */
+.mg-home-blog-grid {
+  display: grid;
+  grid-template-columns: 4.8fr 5.2fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+/* 左侧：核心大图卡片 */
+.mg-home-blog-featured-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  border: 1px solid rgba(10, 78, 203, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mg-home-blog-featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(10, 78, 203, 0.12);
+}
+
+.mg-home-blog-featured-thumb {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  display: block;
+  overflow: hidden;
+  background: #090b10;
+}
+
+.mg-home-blog-featured-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.mg-home-blog-featured-card:hover .mg-home-blog-featured-thumb img {
+  transform: scale(1.05);
+}
+
+.mg-home-blog-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #0A4ECB;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.mg-home-blog-featured-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.mg-home-blog-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #86868b;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.mg-home-blog-author {
+  color: #0A4ECB;
+  font-weight: 700;
+}
+
+.mg-home-blog-featured-title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+}
+
+.mg-home-blog-featured-title a {
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mg-home-blog-featured-title a:hover {
+  color: #0A4ECB;
+}
+
+.mg-home-blog-featured-excerpt {
+  font-size: 14px;
+  color: #515154;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mg-home-blog-read-btn {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0A4ECB;
+  text-decoration: none;
+}
+
+.mg-home-blog-read-btn .arrow {
+  transition: transform 0.2s ease;
+}
+
+.mg-home-blog-featured-card:hover .mg-home-blog-read-btn .arrow {
+  transform: translateX(4px);
+}
+
+/* 右侧：新闻风极简列表 */
+.mg-home-blog-news-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-left: 1px solid rgba(10, 78, 203, 0.1);
+  padding-left: 24px;
+}
+
+.mg-home-blog-news-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.mg-home-blog-news-item:last-child {
+  border-bottom: none;
+}
+
+.mg-home-blog-news-date {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0A4ECB;
+  background: rgba(10, 78, 203, 0.06);
+  padding: 4px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  font-family: monospace, sans-serif;
+}
+
+.mg-home-blog-news-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.mg-home-blog-news-title a {
+  color: #2d3748;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mg-home-blog-news-item:hover .mg-home-blog-news-title a {
+  color: #0A4ECB;
+}
+
+/* 响应式自适应 (手机端 <= 900px) */
+@media (max-width: 900px) {
+  .mg-home-blog-section {
+    padding: 3rem 0;
+  }
+  .mg-home-blog-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .mg-home-blog-news-list {
+    border-left: none;
+    padding-left: 0;
+  }
+  .mg-home-blog-featured-thumb {
+    height: 190px;
+  }
+  .mg-home-blog-news-title {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}

@@ -147,12 +147,16 @@ export async function getPaginatedPosts({
     const whereClause = filters.length > 0 ? `, where: { ${filters.join(', ')} }` : '';
     
     let args = '';
-    if (first !== null) args += `first: ${first}, `;
-    if (after !== null) args += `after: "${after}", `;
-    if (last !== null) args += `last: ${last}, `;
-    if (before !== null) args += `before: "${before}", `;
-    
-    if (args.endsWith(', ')) args = args.slice(0, -2);
+    if (before) {
+      // 🌟 向上翻页：必须只使用 last 和 before，切勿混入 first
+      args = `last: ${last || 10}, before: "${before}"`;
+    } else if (after) {
+      // 🌟 向下翻页：必须只使用 first 和 after
+      args = `first: ${first || 10}, after: "${after}"`;
+    } else {
+      // 🌟 默认第一页：使用 first
+      args = `first: ${first || 10}`;
+    }
     
     const data = await fetchAPI(`
       query GetPaginatedPosts {
@@ -169,6 +173,7 @@ export async function getPaginatedPosts({
             slug
             date
             excerpt
+            content
             isSticky
             categories {
               nodes {
@@ -191,9 +196,27 @@ export async function getPaginatedPosts({
         }
       }
     `);
+
+    // 🌟 无特色图片降级解析：若未设置特色图片，自动提取正文 content 第一张 <img src="...">
+    const processedNodes = data.posts.nodes.map((post: WPPost) => {
+      if (!post.featuredImage?.node?.sourceUrl && post.content) {
+        const imgMatch = post.content.match(/<img\s+[^>]*?src=["'](https?:\/\/[^"']+)["']/i);
+        if (imgMatch && imgMatch[1]) {
+          return {
+            ...post,
+            featuredImage: {
+              node: {
+                sourceUrl: imgMatch[1]
+              }
+            }
+          };
+        }
+      }
+      return post;
+    });
     
     return {
-      posts: data.posts.nodes,
+      posts: processedNodes,
       pageInfo: data.posts.pageInfo,
     };
   } catch (error) {

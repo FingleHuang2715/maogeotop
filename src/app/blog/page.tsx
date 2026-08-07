@@ -146,11 +146,12 @@ export default async function BlogArchivePage({ searchParams }: PageProps) {
             <>
               {posts.map((post) => (
                 <article className="mg-feed-item" key={post.id}>
-                  {post.featuredImage && (
-                    <Link href={"/blog/" + post.slug} className="mg-feed-thumb">
-                      <img src={post.featuredImage.node.sourceUrl} alt={post.title} />
-                    </Link>
-                  )}
+                  <Link href={"/blog/" + post.slug} className="mg-feed-thumb">
+                    <img 
+                      src={post.featuredImage?.node?.sourceUrl ? `/api/img-proxy?url=${encodeURIComponent(post.featuredImage.node.sourceUrl)}` : "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp"} 
+                      alt={post.title} 
+                    />
+                  </Link>
                   <div className="mg-feed-content">
                     <h3 className="mg-feed-title">
                       {post.isSticky && <span className="mg-feed-sticky-tag">置顶</span>}

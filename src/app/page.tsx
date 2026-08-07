@@ -7,6 +7,7 @@ import ReviewsCarousel from "@/components/ReviewsCarousel";
 import GscAchievements from "@/components/GscAchievements";
 import CasesShowcase from "@/components/CasesShowcase";
 import PageSpeedShowcase from "@/components/PageSpeedShowcase";
+import HomeBlogSection from "@/components/HomeBlogSection";
 
 export default function Home() {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
@@ -55,7 +56,10 @@ export default function Home() {
       {/* 1. 首屏 Hero Section (轻科技浅灰底) */}
       <HeroSection />
 
-      {/* 2. 主理人品牌名片与全流程外贸营销方案 (深色极客黑底深层对比) */}
+      {/* 🌟 2. 新增：WordPress 教程博客专栏 (最新 10 篇新闻风排版) */}
+      <HomeBlogSection />
+
+      {/* 3. 主理人品牌名片与全流程外贸营销方案 */}
       <AboutMarketingSection />
 
       {/* 3. 双引擎驱动服务 (苹果极简灰白底) */}
