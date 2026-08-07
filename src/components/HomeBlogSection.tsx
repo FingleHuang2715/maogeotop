@@ -14,7 +14,7 @@ export default function HomeBlogSection() {
     let isMounted = true;
     async function fetchPosts() {
       try {
-        const data = await getPaginatedPosts({ first: 15 });
+        const data = await getPaginatedPosts({ first: 30 });
         if (isMounted) {
           setPosts(data.posts || []);
         }
@@ -34,8 +34,10 @@ export default function HomeBlogSection() {
     ? stickyPosts.slice(0, 5) 
     : posts.slice(0, 5);
 
-  // 右侧极简新闻列表文章（避开轮播，最多取 8 篇）
-  const listPosts = posts.filter(p => !carouselPosts.some(c => c.id === p.id)).slice(0, 8);
+  // 右侧极简新闻列表文章：过滤轮播文章后取 20 篇，分成两列，每列各 10 篇
+  const listPosts = posts.filter(p => !carouselPosts.some(c => c.id === p.id)).slice(0, 20);
+  const leftColPosts = listPosts.slice(0, 10);
+  const rightColPosts = listPosts.slice(10, 20);
 
   const startAutoplay = useCallback(() => {
     if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
@@ -70,7 +72,7 @@ export default function HomeBlogSection() {
             </div>
           </div>
           <div style={{ padding: "30px 0", textAlign: "center", color: "#86868b", fontSize: "14px" }}>
-            正在加载教程专栏...
+            正在加载最新 20 篇教程专栏...
           </div>
         </div>
       </section>
@@ -97,10 +99,10 @@ export default function HomeBlogSection() {
           </Link>
         </div>
 
-        {/* 🌟 2. 左侧 5 连排轮播大卡片 + 右侧双列 8 连排新闻网格 */}
+        {/* 🌟 2. 左侧 5 连排大图轮播 + 右侧 2 列(各 10 篇) 新闻风列表 */}
         <div className="mg-home-blog-grid">
           
-          {/* 左侧：精选 / 置顶 5 篇文章 Swiper 轮播 */}
+          {/* 左侧：精选 5 连排 Swiper 轮播 */}
           <div 
             className="mg-home-blog-carousel-col"
             onMouseEnter={stopAutoplay}
@@ -136,7 +138,7 @@ export default function HomeBlogSection() {
                 </article>
               ))}
 
-              {/* 轮播指示点和控制 */}
+              {/* 轮播指示点 */}
               {carouselPosts.length > 1 && (
                 <div className="mg-home-blog-dots">
                   {carouselPosts.map((_, idx) => (
@@ -153,21 +155,42 @@ export default function HomeBlogSection() {
             </div>
           </div>
 
-          {/* 右侧：新闻风双列 (2 Columns Grid) 8 连排列表 */}
+          {/* 右侧：新闻风两列 (每列 10 篇，共 20 篇) */}
           <div className="mg-home-blog-list-col">
-            <div className="mg-home-blog-news-grid">
-              {listPosts.map((post, idx) => (
-                <article key={post.id || idx} className="mg-home-blog-news-card">
-                  <span className="mg-home-blog-news-date">
-                    {new Date(post.date).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit" })}
-                  </span>
-                  <h4 className="mg-home-blog-news-title">
-                    <Link href={`/blog/${post.slug}`} title={post.title}>
-                      {post.title}
-                    </Link>
-                  </h4>
-                </article>
-              ))}
+            <div className="mg-home-blog-two-cols">
+              
+              {/* 第一列 (1~10 篇) */}
+              <div className="mg-home-blog-news-column">
+                {leftColPosts.map((post, idx) => (
+                  <article key={post.id || idx} className="mg-home-blog-news-item">
+                    <span className="mg-home-blog-news-date">
+                      {new Date(post.date).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit" })}
+                    </span>
+                    <h4 className="mg-home-blog-news-title">
+                      <Link href={`/blog/${post.slug}`} title={post.title}>
+                        {post.title}
+                      </Link>
+                    </h4>
+                  </article>
+                ))}
+              </div>
+
+              {/* 第二列 (11~20 篇) */}
+              <div className="mg-home-blog-news-column">
+                {rightColPosts.map((post, idx) => (
+                  <article key={post.id || idx} className="mg-home-blog-news-item">
+                    <span className="mg-home-blog-news-date">
+                      {new Date(post.date).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit" })}
+                    </span>
+                    <h4 className="mg-home-blog-news-title">
+                      <Link href={`/blog/${post.slug}`} title={post.title}>
+                        {post.title}
+                      </Link>
+                    </h4>
+                  </article>
+                ))}
+              </div>
+
             </div>
           </div>
 

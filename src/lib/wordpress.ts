@@ -197,26 +197,41 @@ export async function getPaginatedPosts({
       }
     `);
 
-    // 🌟 无特色图片降级解析：若未设置特色图片，自动提取正文 content 第一张真正内容插图（排除头像、logo等）
+    // 🌟 无特色图片降级解析：若未设置特色图片，自动提取正文 content 第一张真正内容插图（支持代理API图片，严厉排除头像名片）
     const processedNodes = data.posts.nodes.map((post: WPPost) => {
       if (!post.featuredImage?.node?.sourceUrl && post.content) {
-        // 使用 g 全局匹配遍历所有 <img src="...">
-        const imgMatches = Array.from(post.content.matchAll(/<img\s+[^>]*?src=["'](https?:\/\/[^"']+)["']/gi));
+        // 全局匹配所有 img src
+        const imgMatches = Array.from(post.content.matchAll(/<img\s+[^>]*?src=["']([^"']+)["']/gi));
         for (const match of imgMatches) {
-          const url = match[1];
-          // 过滤猫哥头像、常规头像、logo、二维码等干扰图片
+          let rawUrl = match[1];
+          // 如果是 /api/img-proxy 代理格式，还原出原始 target URL
+          if (rawUrl.includes("/api/img-proxy") && rawUrl.includes("url=")) {
+            try {
+              const urlObj = new URL(rawUrl, "https://maogeo.top");
+              const paramUrl = urlObj.searchParams.get("url");
+              if (paramUrl) rawUrl = paramUrl;
+            } catch {
+              // ignore URL parse error
+            }
+          }
+
+          // 严格避开猫哥头像、微信名片头像、组件 Icon 等干扰图
+          const lowerUrl = rawUrl.toLowerCase();
           if (
-            !url.includes("20260721002037295") && 
-            !url.includes("avatar") && 
-            !url.includes("author") && 
-            !url.includes("head") &&
-            !url.includes("qrcode")
+            !lowerUrl.includes("20260721002037295") &&
+            !lowerUrl.includes("avatar") &&
+            !lowerUrl.includes("author") &&
+            !lowerUrl.includes("head") &&
+            !lowerUrl.includes("profile") &&
+            !lowerUrl.includes("qrcode") &&
+            !lowerUrl.includes("51.la") &&
+            !lowerUrl.includes("logo")
           ) {
             return {
               ...post,
               featuredImage: {
                 node: {
-                  sourceUrl: url
+                  sourceUrl: rawUrl
                 }
               }
             };
