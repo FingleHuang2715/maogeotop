@@ -197,19 +197,30 @@ export async function getPaginatedPosts({
       }
     `);
 
-    // 🌟 无特色图片降级解析：若未设置特色图片，自动提取正文 content 第一张 <img src="...">
+    // 🌟 无特色图片降级解析：若未设置特色图片，自动提取正文 content 第一张真正内容插图（排除头像、logo等）
     const processedNodes = data.posts.nodes.map((post: WPPost) => {
       if (!post.featuredImage?.node?.sourceUrl && post.content) {
-        const imgMatch = post.content.match(/<img\s+[^>]*?src=["'](https?:\/\/[^"']+)["']/i);
-        if (imgMatch && imgMatch[1]) {
-          return {
-            ...post,
-            featuredImage: {
-              node: {
-                sourceUrl: imgMatch[1]
+        // 使用 g 全局匹配遍历所有 <img src="...">
+        const imgMatches = Array.from(post.content.matchAll(/<img\s+[^>]*?src=["'](https?:\/\/[^"']+)["']/gi));
+        for (const match of imgMatches) {
+          const url = match[1];
+          // 过滤猫哥头像、常规头像、logo、二维码等干扰图片
+          if (
+            !url.includes("20260721002037295") && 
+            !url.includes("avatar") && 
+            !url.includes("author") && 
+            !url.includes("head") &&
+            !url.includes("qrcode")
+          ) {
+            return {
+              ...post,
+              featuredImage: {
+                node: {
+                  sourceUrl: url
+                }
               }
-            }
-          };
+            };
+          }
         }
       }
       return post;
