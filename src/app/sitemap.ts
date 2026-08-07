@@ -9,11 +9,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const headersList = await headers();
-    const host = headersList.get("host");
-    const protocol = headersList.get("x-forwarded-proto") || "https";
+    const rawHost = headersList.get("host") || "";
+    // 清理端口号（如 :443 或 :80）
+    const cleanHost = rawHost.replace(/:[0-9]+$/, "");
 
-    if (host) {
-      baseUrl = `${protocol}://${host}`;
+    if (cleanHost) {
+      if (cleanHost.includes("hk.maogeo.top")) {
+        baseUrl = "https://hk.maogeo.top";
+      } else {
+        baseUrl = "https://maogeo.top";
+      }
     }
   } catch {
     // Fallback default baseUrl if headers fail
