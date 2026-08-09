@@ -22,7 +22,6 @@ export const metadata: Metadata = {
     apple: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp",
   },
   alternates: {
-    canonical: "https://maogeo.top",
     languages: {
       "zh-CN": "https://maogeo.top",
       "zh-HK": "https://hk.maogeo.top",

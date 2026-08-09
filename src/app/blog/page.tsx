@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   title: "猫哥技术专栏 · 企业建站 · GEO & SEO 实战指南 | 猫哥建站",
   description: "专注于企业高转化定制建站、生成式 AI (GEO) 提炼规则与谷歌 SEO 搜索排名优化，助力出海企业打造成本可控、获客高效的数字营销阵地。",
   keywords: ["企业建站", "GEO优化", "谷歌SEO", "外贸建站指南", "出海独立站", "猫哥技术专区"],
+  alternates: {
+    canonical: "https://maogeo.top/blog",
+    languages: {
+      "zh-CN": "https://maogeo.top/blog",
+      "zh-HK": "https://hk.maogeo.top/blog",
+      "x-default": "https://maogeo.top/blog",
+    },
+  },
   robots: {
     index: true,
     follow: true,
