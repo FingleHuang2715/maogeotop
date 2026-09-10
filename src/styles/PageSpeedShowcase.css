@@ -8,7 +8,7 @@
   padding: 7rem 0;
   color: #ffffff;
   overflow: hidden;
-  font-family: 'Outfit', 'PingFang SC', sans-serif;
+  font-family: 'Outfit', var(--font-sans);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 

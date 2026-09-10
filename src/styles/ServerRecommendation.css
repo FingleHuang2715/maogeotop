@@ -4,7 +4,7 @@
    ============================================================================ */
 
 .server-recom-root {
-  font-family: 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'Outfit', var(--font-sans);
   color: #1e1b2e;
   background: #fafafa;
 }

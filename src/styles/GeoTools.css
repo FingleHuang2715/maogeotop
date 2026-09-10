@@ -19,7 +19,7 @@
   --geo-text-dim: #434344;
   --geo-text-muted: #86868b;
   
-  --geo-font-sans: 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --geo-font-sans: 'Outfit', var(--font-sans);
   --geo-font-serif: 'Noto Serif SC', 'Georgia', serif;
 }
 
@@ -137,7 +137,7 @@
 }
 
 .geo-section-title {
-  font-family: 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Outfit', var(--font-sans) !important;
   font-size: clamp(2rem, 3.2vw, 2.6rem);
   font-weight: 900;
   line-height: 1.25;

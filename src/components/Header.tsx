@@ -103,7 +103,7 @@ export default function Header() {
         <div className="mg-header-container">
           <Link href="/" className="mg-header-logo" aria-label="猫哥建站首页">
             <Image
-              src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002042147.webp"
+              src="https://cdn.maogeo.top/wp-content/uploads/2026/09/20260910155246618.webp"
               alt="猫哥建站 Logo"
               width={711}
               height={150}

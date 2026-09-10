@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="mg-footer-col mg-footer-about">
           <div style={{ marginBottom: '16px' }}>
             <img 
-              src="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002042147.webp" 
+              src="https://cdn.maogeo.top/wp-content/uploads/2026/09/20260910155246618.webp" 
               alt="猫哥建站 Logo" 
               style={{ height: '38px', width: 'auto', display: 'block' }}
             />

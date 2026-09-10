@@ -7,7 +7,7 @@
 .geo-cases-section {
   background: linear-gradient(180deg, #090b14 0%, #111526 50%, #080911 100%);
   padding: 8rem 0;
-  font-family: 'Outfit', 'PingFang SC', sans-serif;
+  font-family: 'Outfit', var(--font-sans);
   color: #ffffff;
   position: relative;
   overflow: hidden;

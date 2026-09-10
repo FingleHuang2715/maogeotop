@@ -153,7 +153,7 @@ export default async function BlogSinglePage({ params }: PageProps) {
       "name": "猫哥建站",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002042147.webp"
+        "url": "https://cdn.maogeo.top/wp-content/uploads/2026/09/20260910155246618.webp"
       }
     },
     "mainEntityOfPage": {

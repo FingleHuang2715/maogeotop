@@ -58,6 +58,12 @@ export default function RootLayout({
 
         <link rel="preconnect" href="https://cdn.maogeo.top" />
         <link rel="dns-prefetch" href="https://cdn.maogeo.top" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
         <link rel="icon" href="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp" type="image/webp" />
         <link rel="apple-touch-icon" href="https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp" />
       </head>

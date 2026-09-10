@@ -505,7 +505,7 @@ export default function GeoToolsClient() {
                   fill="black" 
                   fontSize="95" 
                   fontWeight="900" 
-                  fontFamily="'PingFang SC', 'Microsoft YaHei', sans-serif"
+                  fontFamily="var(--font-sans), 'Noto Sans SC', sans-serif"
                   letterSpacing="4"
                 >
                   猫哥GEO

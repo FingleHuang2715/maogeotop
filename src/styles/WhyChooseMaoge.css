@@ -9,7 +9,7 @@
   background: #f9fafb; /* 亮色自适应底色 */
   padding: 8rem 0;
   overflow: hidden;
-  font-family: 'Outfit', 'PingFang SC', sans-serif;
+  font-family: 'Outfit', var(--font-sans);
   color: #1e1b2e;
 }
 
