@@ -21,11 +21,15 @@ export const metadata: Metadata = {
     shortcut: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp",
     apple: "https://cdn.maogeo.top/wp-content/uploads/2026/07/20260721002037295.webp",
   },
-  alternates: {
-    languages: {
-      "zh-CN": "https://maogeo.top",
-      "zh-HK": "https://hk.maogeo.top",
-      "x-default": "https://maogeo.top",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
   openGraph: {
@@ -51,10 +55,6 @@ export default function RootLayout({
     <html lang="zh-CN" data-scroll-behavior="smooth">
       <head>
         <meta name="baidu-site-verification" content="codeva-N6DxmzPlZO" />
-        {/* 🌟 谷歌官方规范：多域名简繁体关联标记 (hreflang) */}
-        <link rel="alternate" hrefLang="zh-CN" href="https://maogeo.top" />
-        <link rel="alternate" hrefLang="zh-HK" href="https://hk.maogeo.top" />
-        <link rel="alternate" hrefLang="x-default" href="https://maogeo.top" />
 
         <link rel="preconnect" href="https://cdn.maogeo.top" />
         <link rel="dns-prefetch" href="https://cdn.maogeo.top" />

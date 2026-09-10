@@ -1,4 +1,4 @@
-// 服务端组件：无 "use client"，直接在服务端获取数据并渲染，首屏零等待
+import type { Metadata } from "next";
 import HeroSection from "@/components/HeroSection";
 import AboutMarketingSection from "@/components/AboutMarketingSection";
 import { DualEngineServices, IndustryMatrix } from "@/components/BusinessMatrix";
@@ -8,6 +8,25 @@ import CasesShowcase from "@/components/CasesShowcase";
 import PageSpeedShowcase from "@/components/PageSpeedShowcase";
 import HomeBlogSection from "@/components/HomeBlogSection";
 import GscLightbox from "@/components/GscLightbox";
+
+export const metadata: Metadata = {
+  title: "猫哥建站 - 专业外贸企业建站、GEO优化与谷歌SEO实战服务",
+  description: "猫哥建站专注为出海企业提供高端定制外贸网站建设、生成式 AI (GEO) 提炼规则优化与谷歌 SEO 搜索排名提效方案，打造高询盘转化率独立站数字营销资产。",
+  keywords: ["外贸建站", "企业建站", "GEO优化", "谷歌SEO", "独立站开发", "生成式搜索引擎优化", "出海营销"],
+  alternates: {
+    canonical: "https://maogeo.top",
+    languages: {
+      "zh-CN": "https://maogeo.top",
+      "zh-HK": "https://hk.maogeo.top",
+      "x-default": "https://maogeo.top",
+    },
+  },
+  openGraph: {
+    title: "猫哥建站 - 专业外贸企业建站、GEO优化与谷歌SEO实战服务",
+    description: "猫哥建站专注为出海企业提供高端定制外贸网站建设、生成式 AI (GEO) 提炼规则优化与谷歌 SEO 搜索排名提效方案，打造高询盘转化率独立站数字营销资产。",
+    url: "https://maogeo.top",
+  },
+};
 
 export default function Home() {
   return (

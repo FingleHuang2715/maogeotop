@@ -32,7 +32,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${post.title} - 猫哥技术专栏 | 猫哥建站`,
     description: cleanExcerpt,
-    keywords: [...categories, ...tags, "猫哥建站", "企业建站", "GEO优化", "谷歌SEO"],
+    alternates: {
+      canonical: `https://maogeo.top/blog/${post.slug}`,
+      languages: {
+        "zh-CN": `https://maogeo.top/blog/${post.slug}`,
+        "zh-HK": `https://hk.maogeo.top/blog/${post.slug}`,
+        "x-default": `https://maogeo.top/blog/${post.slug}`,
+      },
+    },
     robots: {
       index: true,
       follow: true,

@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   title: "使用条款 | 猫哥建站 - 专业外贸企业建站与 GEO/SEO 优化服务",
   description: "猫哥建站服务使用条款。规范网站访问、出海建站服务交付、GEO/SEO 优化授权及知识产权声明。",
   keywords: ["使用条款", "服务协议", "猫哥建站版权声明", "知识产权说明"],
+  alternates: {
+    canonical: "https://maogeo.top/terms-of-service",
+    languages: {
+      "zh-CN": "https://maogeo.top/terms-of-service",
+      "zh-HK": "https://hk.maogeo.top/terms-of-service",
+      "x-default": "https://maogeo.top/terms-of-service",
+    },
+  },
 };
 
 export default function TermsOfServicePage() {

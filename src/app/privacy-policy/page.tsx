@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   title: "隐私政策 | 猫哥建站 - 专业外贸企业建站与 GEO/SEO 优化服务",
   description: "猫哥建站隐私政策。了解我们如何收集、使用、保护您的个人隐私信息以及您的相关权利。",
   keywords: ["隐私政策", "猫哥建站隐私声明", "数据保护", "用户数据安全"],
+  alternates: {
+    canonical: "https://maogeo.top/privacy-policy",
+    languages: {
+      "zh-CN": "https://maogeo.top/privacy-policy",
+      "zh-HK": "https://hk.maogeo.top/privacy-policy",
+      "x-default": "https://maogeo.top/privacy-policy",
+    },
+  },
 };
 
 export default function PrivacyPolicyPage() {
