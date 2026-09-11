@@ -1,6 +1,10 @@
-# User-agent: *
 User-agent: *
 Allow: /
+Disallow: /audit-tool
+Disallow: /api/
+Disallow: /*?s=
+Disallow: /*?s=search
 
-# Sitemap
+# Sitemaps
+Sitemap: https://maogeo.top/sitemap-index.xml
 Sitemap: https://maogeo.top/sitemap.xml
