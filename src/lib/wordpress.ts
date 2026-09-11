@@ -312,3 +312,46 @@ export async function getRelatedPosts(categorySlug: string, excludeId: string, l
     return [];
   }
 }
+
+/**
+ * 获取用于站点地图的全部文章 Slug 与日期（通过 GraphQL 游标分页循环抓取全量数据，突破单次 100 篇限制）
+ */
+export async function getAllPostSlugsForSitemap(): Promise<{ slug: string; date: string }[]> {
+  const allPosts: { slug: string; date: string }[] = [];
+  let hasNextPage = true;
+  let afterCursor: string | null = null;
+
+  try {
+    while (hasNextPage) {
+      const data: any = await fetchAPI(
+        `
+        query GetAllPostSlugsForSitemap($after: String) {
+          posts(first: 100, after: $after, where: { status: PUBLISH }) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              slug
+              date
+            }
+          }
+        }
+      `,
+        { after: afterCursor }
+      );
+
+      if (data?.posts?.nodes) {
+        allPosts.push(...data.posts.nodes);
+      }
+
+      hasNextPage = Boolean(data?.posts?.pageInfo?.hasNextPage);
+      afterCursor = data?.posts?.pageInfo?.endCursor || null;
+    }
+  } catch (error) {
+    console.error("Failed to fetch all post slugs for sitemap:", error);
+  }
+
+  return allPosts;
+}
+

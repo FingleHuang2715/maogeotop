@@ -3,18 +3,18 @@ const path = require('path');
 
 const GRAPHQL_ENDPOINT = "https://post.maogeo.top/graphql";
 
-async function fetchGraphQL(query) {
+async function fetchGraphQL(query, variables = {}) {
   const res = await fetch(GRAPHQL_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, variables }),
   });
   const json = await res.json();
   return json.data;
 }
 
 async function generate() {
-  console.log("Generating public/sitemap-index.xml and public/sitemap.xml...");
+  console.log("Generating public/sitemap-index.xml and public/sitemap.xml for ALL posts...");
   const baseUrl = "https://maogeo.top";
   const now = new Date().toISOString();
 
@@ -32,24 +32,40 @@ async function generate() {
 
   let postPages = [];
   try {
-    const data = await fetchGraphQL(`
-      query GetSitemapPosts {
-        posts(first: 100, where: { status: PUBLISH }) {
-          nodes {
-            slug
-            date
+    let hasNextPage = true;
+    let afterCursor = null;
+
+    while (hasNextPage) {
+      const query = `
+        query GetSitemapPosts($after: String) {
+          posts(first: 100, after: $after, where: { status: PUBLISH }) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              slug
+              date
+            }
           }
         }
+      `;
+
+      const data = await fetchGraphQL(query, { after: afterCursor });
+      if (data && data.posts && data.posts.nodes) {
+        const batch = data.posts.nodes.map(p => ({
+          loc: `${baseUrl}/blog/${p.slug}`,
+          priority: "0.8",
+          changefreq: "weekly",
+          lastmod: p.date ? new Date(p.date).toISOString() : now,
+        }));
+        postPages.push(...batch);
+        console.log(`Fetched batch: +${batch.length}, total blog posts so far: ${postPages.length}`);
+        hasNextPage = Boolean(data.posts.pageInfo?.hasNextPage);
+        afterCursor = data.posts.pageInfo?.endCursor || null;
+      } else {
+        break;
       }
-    `);
-    if (data && data.posts && data.posts.nodes) {
-      postPages = data.posts.nodes.map(p => ({
-        loc: `${baseUrl}/blog/${p.slug}`,
-        priority: "0.8",
-        changefreq: "weekly",
-        lastmod: p.date ? new Date(p.date).toISOString() : now,
-      }));
-      console.log(`Fetched ${postPages.length} blog posts from WordPress.`);
     }
   } catch (err) {
     console.warn("Failed to fetch posts from GraphQL, using static pages only:", err.message);
@@ -70,7 +86,7 @@ ${allPages.map(page => `  <url>
   const publicDir = path.join(__dirname, "..", "public");
   fs.writeFileSync(path.join(publicDir, "sitemap-index.xml"), xmlContent, "utf8");
   fs.writeFileSync(path.join(publicDir, "sitemap.xml"), xmlContent, "utf8");
-  console.log(`Successfully generated public/sitemap-index.xml & public/sitemap.xml with ${allPages.length} URLs.`);
+  console.log(`\n🎉 Successfully generated public/sitemap-index.xml & public/sitemap.xml with ${allPages.length} TOTAL URLs (including ${postPages.length} blog posts)!`);
 }
 
 generate();

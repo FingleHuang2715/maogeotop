@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPaginatedPosts } from "@/lib/wordpress";
+import { getAllPostSlugsForSitemap } from "@/lib/wordpress";
 
 export const revalidate = 3600; // 缓存 1 小时，随请求自动更新
 
@@ -27,9 +27,9 @@ export async function GET(request: Request) {
 
   let postPages: { loc: string; priority: string; changefreq: string; lastmod: string }[] = [];
   try {
-    const data = await getPaginatedPosts({ first: 100 });
-    if (data?.posts?.length) {
-      postPages = data.posts.map((post) => ({
+    const posts = await getAllPostSlugsForSitemap();
+    if (posts?.length) {
+      postPages = posts.map((post) => ({
         loc: `${baseUrl}/blog/${post.slug}`,
         priority: "0.8",
         changefreq: "weekly",

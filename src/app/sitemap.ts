@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 import { headers } from "next/headers";
-import { getPaginatedPosts } from "@/lib/wordpress";
+import { getAllPostSlugsForSitemap } from "@/lib/wordpress";
 
 const contentUpdatedAt = new Date();
 
@@ -27,8 +27,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let postRoutes: MetadataRoute.Sitemap = [];
 
   try {
-    const data = await getPaginatedPosts({ first: 100 });
-    postRoutes = data.posts.map((post) => ({
+    const posts = await getAllPostSlugsForSitemap();
+    postRoutes = posts.map((post) => ({
       url: `${baseUrl}/blog/${post.slug}`,
       lastModified: new Date(post.date),
       changeFrequency: "weekly" as const,
