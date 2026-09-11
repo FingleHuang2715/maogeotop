@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { headers } from "next/headers";
 import { getPaginatedPosts } from "@/lib/wordpress";
 
-const contentUpdatedAt = new Date("2026-07-23T00:00:00+08:00");
+const contentUpdatedAt = new Date();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let baseUrl = "https://maogeo.top";

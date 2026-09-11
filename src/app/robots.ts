@@ -15,6 +15,9 @@ export default function robots(): MetadataRoute.Robots {
         ],
       }
     ],
-    sitemap: "https://maogeo.top/sitemap.xml",
+    sitemap: [
+      "https://maogeo.top/sitemap-index.xml",
+      "https://maogeo.top/sitemap.xml",
+    ],
   };
 }
